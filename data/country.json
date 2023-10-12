@@ -1,0 +1,25 @@
+[
+
+    {
+        "countryName":"India",
+        "displayOrder":1,
+        "flagIcon":"",
+        "countryCode":"91",
+        "currencyCode":"INR",
+        "currencySymbol":"₹",
+        "maxMobileLength":10,
+        "isActive":1,
+        "isDeleted":0
+    },
+    {
+        "countryName":"USA",
+        "displayOrder":2,
+        "flagIcon":"",
+        "countryCode":"1",
+        "currencyCode":"USD",
+        "currencySymbol":"$",
+        "maxMobileLength":10,
+        "isActive":1,
+        "isDeleted":0
+    }
+]
