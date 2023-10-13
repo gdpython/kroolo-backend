@@ -4,6 +4,13 @@
  */
 const CUURENT_API_VERSION = process.env.CUURENT_API_VERSION;
 /**
+ * @description The module routes prefix for all routes association.
+ * @type {object}
+ */
+const MODULE_ROUTES = {
+    USERS:"users"
+};
+ /**
  * @description A collection of module names for each API association.
  * @type {object}
  */
@@ -56,5 +63,6 @@ const MODULE_NAME = {
  */
 module.exports = {
     CUURENT_API_VERSION,
+    MODULE_ROUTES,
     MODULE_NAME
 };

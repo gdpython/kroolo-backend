@@ -151,6 +151,10 @@ var UserSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    lastLoginDate: {
+        type: Date,
+        default: date
+    },
     countryID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Country"

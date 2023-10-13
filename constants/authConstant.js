@@ -3,6 +3,8 @@
  * @module authConstant
  */
 
+const {CognitoIdentityProviderClient} = require('@aws-sdk/client-cognito-identity-provider');
+
 /**
  * Test environment.
  * @constant {string}
@@ -122,6 +124,22 @@ const DB_TYPE = {
    */
   NOSQL: "nosql",
 };
+/**
+ * Coginto client constants.
+ * @namespace
+ */
+const COGNITO_CLIENT = new CognitoIdentityProviderClient({
+  apiVersion: process.env.AWS_API_VERSION,
+  region: process.env.DEFAULT_AWS_REGION,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
+
+/**
+ * Coginto password constants.
+ * @namespace
+ */
+const COGNITO_PASSWORD_AUTH = "USER_PASSWORD_AUTH"
 
 module.exports = {
   DB_TYPE,
@@ -134,4 +152,6 @@ module.exports = {
   MEMBER_PATH_NAME,
   PLATFORM,
   PLATFORM_ACCESS,
+  COGNITO_CLIENT,
+  COGNITO_PASSWORD_AUTH
 };

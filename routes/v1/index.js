@@ -23,7 +23,7 @@ const router = express.Router();
  * @param {object} res - Express response object.
  * @param {function} next - The next middleware function.
  */
-router.use(CUURENT_API_VERSION,(req, res, next) => {
+router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.USERS}` ,(req, res, next) => {
   /**
    * The module name for authentication.
    * @type {string}
@@ -41,7 +41,7 @@ router.use(CUURENT_API_VERSION,(req, res, next) => {
  * @param {object} res - Express response object.
  * @param {function} next - The next middleware function.
  */
-router.use(CUURENT_API_VERSION,(req, res, next) => {
+router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.CHANNELS}` ,(req, res, next) => {
   /**
    * The module name for authentication.
    * @type {string}
