@@ -124,60 +124,44 @@ const paginateAll = async (model, query, options = {}) => {
 };
 
 
-const paginateAllGroup = async (model, data) => {
-  // if (options && options.select && options.select.length) {
-  //   options.attributes = options.select;
-  //   delete options.select;
-  // }
-  // if (options && options.sort) {
-  //   options.order = sortParser(options.sort);
-  //   delete options.sort;
-  // }
-  // // console.log("options",options.include.include);
-  // // return
-  // if (options && options.include && options.include.length) {
-  //   // console.log("options.include", options.include);
-  //   //   return
-  //   const include = [];
-  //   const include2 = [];
-  //   options.include.forEach((i) => {
-  //     // console.log("i.include", i.include);
-  //     if (i.include.length > 0) {
-  //       i.include.forEach((z) => {
-  //         z.model = models[z.model];
-  //         include2.push(z);
-  //       })
-  //     }
-  //     i.model = models[i.model];
-  //     if (i.query) {
-  //       i.where = queryBuilderParser(i.query);
-  //     }
-  //     include.push(i);
-  //   });
-  //   options.include = [...include, ...include2];
-  // }
-  // console.log("options",options);
-  // // return
+const paginateAllGroup = async (model, options) => {
+  // Assuming 'options' contains the necessary parameters for pagination and filtering
+  const { page, paginate, select, sort, include, query } = options;
 
-  // options = {
-  //   where: query,
-  //   ...options,
-  // };
+  // Build the query based on the provided options
+  const where = queryBuilderParser(query);
+  const attributes = select ? select.join(' ') : undefined;
+  const order = sortParser(sort);
+  const includeModels = include.map((i) => ({
+    model: models[i.model],
+    where: i.query ? queryBuilderParser(i.query) : undefined,
+  }));
 
-  // console.log("options",options);
-  // return
-  // const result = await model.paginate(data);
-  // const data = {
-  //   data: result.docs,
-  //   paginator: {
-  //     itemCount: result.total,
-  //     perPage: options.paginate || 25,
-  //     pageCount: result.pages,
-  //     currentPage: options.page || 1,
-  //   },
-  // };
-  // return data;
+  // Execute the query using Sequelize's findAndCountAll method
+  const result = await model.findAndCountAll({
+    where,
+    attributes,
+    order,
+    include: includeModels,
+    limit: paginate,
+    offset: (page - 1) * paginate,
+  });
+
+  // Format the result for pagination
+  const data = {
+    data: result.rows,
+    paginator: {
+      itemCount: result.count,
+      perPage: paginate || 25,
+      pageCount: Math.ceil(result.count / paginate),
+      currentPage: page || 1,
+    },
+  };
+
+  // Return the formatted data
+  return data;
 };
+
 
 // find multiple records without pagination
 const findAll = async (model, query, options = {}) => {
@@ -277,18 +261,21 @@ const findOneSelected = async (model, query, selectOptions) => {
     where: query,
   });
 };
-module.exports.createOne = createOne;
-module.exports.createMany = createMany;
-module.exports.update = update;
-module.exports.destroy = destroy;
-module.exports.deleteByPk = deleteByPk;
-module.exports.findOne = findOne;
-module.exports.paginate = paginate;
-module.exports.findAll = findAll;
-module.exports.count = count;
-module.exports.upsert = upsert;
-module.exports.queryBuilderParser = queryBuilderParser;
-module.exports.sortParser = sortParser;
-module.exports.findOneSelected = findOneSelected;
-module.exports.paginateAll = paginateAll;
-module.exports.paginateAllGroup = paginateAllGroup;
+
+module.exports = {
+  createOne,
+  createMany,
+  update,
+  destroy,
+  deleteByPk,
+  findOne,
+  paginate,
+  findAll,
+  count,
+  upsert,
+  queryBuilderParser,
+  sortParser,
+  findOneSelected,
+  paginateAll,
+  paginateAllGroup,
+};

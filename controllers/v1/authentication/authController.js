@@ -4,7 +4,7 @@
  */
 
 const ownerAuthService = require('../../../services/mongoose/auth');
-const model = require('../../../model/sequalize');
+const model = require('../../../model/mongoose');
 const { PLATFORM_ACCESS } = require('../../../constants/authConstant');
 const formidable = require('formidable');
 

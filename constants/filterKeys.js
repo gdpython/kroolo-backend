@@ -7,7 +7,7 @@
  * ID key for filtering.
  * @constant {string}
  */
-const ID = 'id';
+const ID = '_id';
 
 /**
  * Exported constant for filtering.

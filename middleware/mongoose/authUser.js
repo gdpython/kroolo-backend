@@ -5,8 +5,6 @@
 
 const passport = require('passport');
 const { PLATFORM_ACCESS } = require('../../constants/authConstant');
-const model = require('../../model/mongoose');
-const mongooseService = require('../../utils/mongooseService');
 const { checkRolePermission } = require('./checkRolePermission');
 
 /**
@@ -18,7 +16,45 @@ const { checkRolePermission } = require('./checkRolePermission');
  * @param {Function} reject - The reject callback for an error.
  * @param {number} platform - The platform.
  */
+const verifyCallback = (req, resolve, reject, platform) => async (err, user, info) => {
+  try {
+    if (err || info || !user) {
+      return reject('Unauthorized User');
+    }
+    req.user = user;
 
+    if (!user.isActive) {
+      return reject('User is deactivated');
+    }
+    let userToken = await mongooseService.findOne(model.UserToken, {
+      token: (req.headers.authorization).replace('Bearer ', ''),
+      userId: user.id
+    });
+    if (!userToken) {
+      return reject('Token not found');
+    }
+    if (userToken.isTokenExpired) {
+      return reject('Token is Expired');
+    }
+    if (user.userRole) {
+      let allowedRoles
+      if (platform == PLATFORM_ACCESS.OWNER) {
+        allowedRoles = user.roleName.split(",")
+      }else if (platform == PLATFORM_ACCESS.OWNER) {
+        allowedRoles = user.userRole
+      }
+      if (!allowedRoles.includes(platform)) {
+        return reject('Unauthorized user');
+      }
+    }
+    //here we can check role for particular permission
+    checkRolePermission()
+    resolve();
+  } catch (error) {
+    console.log('error', error.message)
+    reject();
+  }
+};
 /**
  * Authentication middleware for checking user authentication and authorization.
  *
@@ -36,13 +72,11 @@ const auth = (platform, module) => async (req, res, next) => {
       );
     })
       .then(() => {
-        checkRouteRolePermission(module)(req, res, next);
+        checkRolePermission(module)(req, res, next);
       })
       .catch((err) => {
         return res.unAuthorized();
       });
-  } else if (platform == PLATFORM_ACCESS.SCHOOL_ADMIN) {
-    // Handle other platforms if needed.
   }
 };
 

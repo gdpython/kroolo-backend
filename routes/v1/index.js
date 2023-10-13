@@ -1,9 +1,14 @@
 /**
- * index.js
- * @description Main index route of all modules.
+ * Main entry point for the API routes.
+ * @module index
  */
 
 const express = require('express');
+const { MODULE_NAME, CUURENT_API_VERSION } = require('../../constants/appConstants');
+
+const authenticationRoutes = require('./authentication');
+const channelsRoutes = require('./channels');
+
 
 /**
  * Express router for the main index route.
@@ -12,8 +17,39 @@ const express = require('express');
 const router = express.Router();
 
 /**
- * Include the routes for the authentication module.
+ * Middleware to set the module name and include authentication routes.
+ * @function
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @param {function} next - The next middleware function.
  */
-router.use(require('./authentication'));
+router.use(CUURENT_API_VERSION,(req, res, next) => {
+  /**
+   * The module name for authentication.
+   * @type {string}
+   */
+  req.modulename = MODULE_NAME.AUTHENTICATION;
+
+  // Call the next middleware to authentication route
+  next();
+}, authenticationRoutes);
+
+/**
+ * Middleware to set the module name and include authentication routes.
+ * @function
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @param {function} next - The next middleware function.
+ */
+router.use(CUURENT_API_VERSION,(req, res, next) => {
+  /**
+   * The module name for authentication.
+   * @type {string}
+   */
+  req.modulename = MODULE_NAME.CHANNELS;
+
+  // Call the next middleware to authentication route
+  next();
+}, channelsRoutes);
 
 module.exports = router;
