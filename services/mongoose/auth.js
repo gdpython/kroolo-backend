@@ -8,11 +8,14 @@ const {
   ENVIRONMENT,
   COGNITO_CLIENT,
   COGNITO_PASSWORD_AUTH,
+  ADMIN_USER_PASSWORD_AUTH,
 } = require("../../constants/authConstant");
 const { EMAIL_VERIFY } = require("../../constants/emailConstants");
 const {
   InitiateAuthCommand,
   AdminCreateUserCommand,
+  AdminUpdateUserAttributesCommand,
+  AdminSetUserPasswordCommand,
 } = require("@aws-sdk/client-cognito-identity-provider"); // CommonJS import
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -197,6 +200,117 @@ const signUp = async (req, email, modelName, ip) => {
         };
       }
     }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const emailVerify = async (token, modelName) => {
+  try {
+    const query = { emailVerifyCode: token };
+    const user = await findOne(modelName, query);
+    if (!user) {
+      return {
+        flag: true,
+        data: "Invalid Link",
+      };
+    }
+    const userData = user.toObject();
+    if (userData.emailVerifyExpiryTime) {
+      if (
+        dayjs(new Date()).isAfter(dayjs(userData.emailVerifyExpiryTime)) &&
+        userData.emailVerfiyStatus === false
+      ) {
+        return {
+          flag: true,
+          data: "Your email verification link is expired or invalid",
+        };
+      }
+    }
+    const input = {
+      UserPoolId: process.env.COGNITO_USER_POOL_ID,
+      Username: user.email,
+      UserAttributes: [
+        {
+          Name: "email_verified",
+          Value: "true",
+        },
+      ],
+    };
+    const command = new AdminUpdateUserAttributesCommand(input);
+    const response = await COGNITO_CLIENT.send(command);
+    if (response) {
+      const updateData = {
+        emailVerfiyStatus: true,
+      };
+      await updateOne(modelName, { _id: userData._id }, updateData);
+      return {
+        flag: false,
+        data: user.email,
+      };
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const completeSignUp = async (name, email, password, modelName, ip) => {
+  try {
+    const query = { email: email };
+    const user = await findOne(modelName, query);
+    if (!user) {
+      return {
+        flag: true,
+        data: "User not exists",
+      };
+    }
+    const userData = user.toObject();
+    if (userData.emailVerfiyStatus === false) {
+      return {
+        flag: true,
+        data: "Please verify your email first",
+      };
+    }
+
+    const input = {
+      UserPoolId: process.env.COGNITO_USER_POOL_ID,
+      Username: user.email,
+      UserAttributes: [
+        {
+          Name: "name",
+          Value: name,
+        },
+      ],
+    };
+    const command = new AdminUpdateUserAttributesCommand(input);
+    const cognitoNameChange = await COGNITO_CLIENT.send(command);
+    console.log(cognitoNameChange, "cognitoNameChange");
+
+    const changePasswordInput = {
+      UserPoolId: process.env.COGNITO_USER_POOL_ID,
+      Username: email,
+      Password: password,
+      Permanent: true,
+    };
+    const commandPasswordChange = new AdminSetUserPasswordCommand(
+      changePasswordInput
+    );
+    const response = await COGNITO_CLIENT.send(commandPasswordChange);
+    console.log(response, "password change doneeeee");
+    const updateData = {
+      fullName: name,
+      password: password,
+      emailVerifyCode: "",
+      emailVerifyExpiryTime: "",
+      emailVerfiyStatus: false,
+    };
+    await updateOne(modelName, { _id: userData._id }, updateData);
+    const loginUserData = await login(email, password, modelName, ip);
+    console.log(loginUserData, "loginUserData");
+    return {
+      flag: false,
+      data: loginUserData,
+    };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -636,6 +750,8 @@ const forgotPassword = async (modelName, where, getViewType, attributes) => {
 module.exports = {
   login,
   signUp,
+  emailVerify,
+  completeSignUp,
   forgotUser,
   createPassword,
   submitPassword,

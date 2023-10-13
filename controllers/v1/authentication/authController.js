@@ -97,11 +97,38 @@ const emailVerify = async (req, res) => {
   }
   return res.success({
     message: "Email verified.",
+    data: result.data,
+  });
+};
+
+const completeSignUp = async (req, res) => {
+  let {name, email, password} = req.body;
+  if (!name || !email || !password) {
+    return res.badRequest({
+      message:
+        "Insufficient request parameters! name, email and password are required.",
+    });
+  }
+  var ip = req.socket.remoteAddress;
+  let result = await ownerAuthService.completeSignUp(
+    name,
+    email,
+    password,
+    model.User,
+    ip,
+  );
+  if (result.flag) {
+    return res.badRequest({ message: result.data });
+  }
+  return res.success({
+    message: "Signup complete successful.",
+    data: result.data,
   });
 };
 
 module.exports = {
   ownerLogin,
   signUp,
-  emailVerify
+  emailVerify,
+  completeSignUp,
 };

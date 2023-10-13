@@ -29,5 +29,8 @@ const authController = require(`../../../controllers/${CUURENT_API_VERSION}/auth
  */
 router.post('/login', authController.ownerLogin);
 router.post('/signup', authController.signUp);
+router.get('/email-verify/:token', authController.emailVerify);
+router.post('/complete-signup', authController.completeSignUp);
+
 
 module.exports = router;
