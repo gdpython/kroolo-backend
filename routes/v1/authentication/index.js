@@ -39,6 +39,6 @@ const auth = require('../../../middleware/mongoose/authUser');
  * @param {string} project - The project for authentication.
  * @param {function} authController.ownerLogin - The controller method for owner login.
  */
-router.post('/login', auth(PLATFORM_ACCESS.OWNER, "PROJECT"), authController.ownerLogin);
+router.post('/login', authController.ownerLogin);
 
 module.exports = router;

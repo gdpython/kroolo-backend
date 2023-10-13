@@ -112,6 +112,12 @@ const upsert = async (model, data) => {
   return result;
 };
 
+// update one record
+const updateOne = async (model, query, data) => {
+  const result = await model.updateOne(query, data);
+  return result;
+};
+
 // find single selected record
 const findOneSelected = async (model, query, selectOptions) => {
   query = queryBuilderParser(query);
@@ -167,6 +173,7 @@ module.exports.paginate = paginate;
 module.exports.findAll = findAll;
 module.exports.count = count;
 module.exports.upsert = upsert;
+module.exports.updateOne = updateOne;
 module.exports.queryBuilderParser = queryBuilderParser;
 module.exports.sortParser = sortParser;
 module.exports.findOneSelected = findOneSelected;

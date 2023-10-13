@@ -4,6 +4,7 @@
  */
 
 const express = require('express');
+const { CUURENT_API_VERSION, MODULE_ROUTES } = require('../../constants/appConstants');
 
 /**
  * Express router for the main index route.
@@ -14,6 +15,6 @@ const router = express.Router();
 /**
  * Include the routes for the authentication module.
  */
-router.use(require('./authentication'));
+router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.USERS}` ,require('./authentication'));
 
 module.exports = router;

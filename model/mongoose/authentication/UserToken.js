@@ -35,7 +35,11 @@ var UserTokenSchema = new mongoose.Schema({
         required: true,
         default: ''
     },
-    tokeExpiredTime: {
+    cognitoTokeExpiredTime: {
+        type: Date,
+        default: date
+    },
+    jwtTokeExpiredTime: {
         type: Date,
         default: date
     },
