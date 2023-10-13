@@ -6,6 +6,7 @@ var CountrySchema = new mongoose.Schema({
     countryName: {
         type: String,
         trim: true,
+        required: true,
         default: ''
     },
     displayOrder:{
@@ -14,22 +15,27 @@ var CountrySchema = new mongoose.Schema({
     },
     flagIcon: {
         type: String,
+        required: true,
         default: ''
     },
     countryCode: {
         type: String,
+        required: true,
         default: "1"
     },
     currencyCode: {
         type: String,
+        required: true,
         default: ""
     },
     currencySymbol: {
         type: String,
+        required: true,
         default: ""
     },
     maxMobileLength: {
         type: Number,
+        required: true,
         default: 10
     },
     createdBy: {

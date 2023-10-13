@@ -6,6 +6,7 @@ var OrganizationSchema = new mongoose.Schema({
     organizationName: {
         type: String,
         trim: true,
+        required: true,
         default: ''
     },
     createdBy: {

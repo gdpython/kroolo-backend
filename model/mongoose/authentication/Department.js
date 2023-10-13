@@ -6,12 +6,12 @@ var DepartmentSchema = new mongoose.Schema({
     departmentName: {
         type: String,
         trim: true,
-        require:true,
+        required:true,
         default: ''
     },
     organizationID: {
         type: mongoose.Schema.Types.ObjectId,
-        require:true,
+        required:true,
         ref: "Organization"
     },
     createdBy: {

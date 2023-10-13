@@ -13,11 +13,13 @@ var UserSchema = new mongoose.Schema({
     email: {
         type: String,
         trim: true,
+        required: true,
         default: ''
     },
     username: {
         type: String,
         trim: true,
+        required: true,
         default: this.email
     },
     mobile: {

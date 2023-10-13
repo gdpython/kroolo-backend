@@ -8,11 +8,12 @@ var OrganizationMemberSchema = new mongoose.Schema({
     organizationID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Organization",
-        require: true
+        required: true
     },
     userID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     reportingMannagerID: {
         type: mongoose.Schema.Types.ObjectId,
@@ -20,7 +21,8 @@ var OrganizationMemberSchema = new mongoose.Schema({
     },
     roleID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Role'
+        ref: 'Role',
+        required: true
     },
     departmentID: {
         type: mongoose.Schema.Types.ObjectId,
@@ -44,7 +46,7 @@ var OrganizationMemberSchema = new mongoose.Schema({
     },
     workspaceID: [{
         type: mongoose.Schema.Types.ObjectId,
-        require: true,
+        required: true,
         ref:"Workspace"
     }],
     createdBy: {

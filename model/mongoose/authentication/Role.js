@@ -6,11 +6,13 @@ var RoleSchema = new mongoose.Schema({
     moduleName: {
         type: String,
         trim: true,
+        required: true,
         default:''
     },
     roleName: {
         type: String,
         trim: true,
+        required: true,
         default:''
     },
     createdBy: {

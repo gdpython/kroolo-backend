@@ -28,12 +28,12 @@ const checkRolePermission = (mod) => async (req, res, next) => {
       { attributes: ['roleId'] });//we using id so change attr 
     if (rolesOfUser && rolesOfUser.length) {
       rolesOfUser = [...new Set((rolesOfUser).map((item) => item.roleId))];
-      const route = await mongooseService.findOne(model.projectRoute, {
-        route_name: replaceAll((req.route.path.toLowerCase()), '/', '_'),
-        uri: req.route.path.toLowerCase(),
+      const route = await mongooseService.findOne(model.Route, {
+        routeName: replaceAll((req.route.path.toLowerCase()), '/', '_'),
+        routeURI: req.route.path.toLowerCase(),
       });
       if (route) {
-        const allowedRoute = await mongooseService.findAll(model.routeRole, {
+        const allowedRoute = await mongooseService.findAll(model.RouteRole, {
           $and: [
             { routeId: route.id },
             { roleId: { $in: rolesOfUser } },
