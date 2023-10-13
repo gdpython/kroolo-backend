@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "efb8ff00-d0cc-4f7c-b36e-57949388d6a8",
+		"name": "New Kroolo Api's",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2792494",
+		"_collection_link": "https://interstellar-shuttle-415905.postman.co/workspace/My-Workspace~4ced5717-87f6-4365-80a9-529c7d0d86b8/collection/2792494-efb8ff00-d0cc-4f7c-b36e-57949388d6a8?action=share&source=collection_link&creator=2792494"
+	},
+	"item": [
+		{
+			"name": "workspace api",
+			"item": [
+				{
+					"name": "http://localhost:3000/api/v1/workspace/updateWorkeSpaceColor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhMTE5NmIyYi02NzExLTQzZTMtOTNjNC02NjA2MjM2NzJjNDMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjgyYjkxNDgxLTJkMmUtNDUyZi1iZTE4LThjNzM3YWIxMDU1OSIsImV2ZW50X2lkIjoiYzAzYzEwNjYtN2YyZi00ZWFmLWJhMWEtNDc1OTc2Njc1YTYxIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY4OTY2NTYxOCwiZXhwIjoxNjg5NzUyMDE4LCJpYXQiOjE2ODk2NjU2MTgsImp0aSI6IjU0Y2E3NDE2LTBlNmItNDM0Ni1hZWZmLTVmMzhhNzM3NmZiYiIsInVzZXJuYW1lIjoiYnVkZHkxMTYwQHlvcG1haWwuY29tIn0.uMLKOYbHqdeMbmZbeH9hDPMjG2aXN6LXqmtWVSm95wA61i5fiHELC7Wy9VpENJC5bG2ck09GnDEJ1GlMbWL1KKpQGfA5kQT__dpBbExlQcjHRRl4zj6F4N7xSoT3jBJLM5HwyXTOB8c5VhE33G8mPSAf0UaTa65dtq1SLoXut0inve0VtHo5miIcivf9scgoNkMRiqpLIvs-Yqev23w6gksZJb8dBZUo7hlz1q3xlm78PuMVhOBW_cO1zKc2V_bLxf9yXYTgAUpP4fdl__Kj006sfDgu5PCRPm-gyz49veBxGIbOmFgMbems8CSvTnQ21iKS6cKbyonymH84w-M8SA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"colorCode\":\"#343432\",\r\n    \"createdBy\":\"641544bfbaf299860d76b935\",\r\n    \"workSpaceId\":\"640080fcc6b6373338972d9f\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/workspace/updateWorkeSpaceColor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"workspace",
+								"updateWorkeSpaceColor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/api/v1/workspace/duplicate-workspaceName-find",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhMTE5NmIyYi02NzExLTQzZTMtOTNjNC02NjA2MjM2NzJjNDMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjgyYjkxNDgxLTJkMmUtNDUyZi1iZTE4LThjNzM3YWIxMDU1OSIsImV2ZW50X2lkIjoiYzAzYzEwNjYtN2YyZi00ZWFmLWJhMWEtNDc1OTc2Njc1YTYxIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY4OTY2NTYxOCwiZXhwIjoxNjg5NzUyMDE4LCJpYXQiOjE2ODk2NjU2MTgsImp0aSI6IjU0Y2E3NDE2LTBlNmItNDM0Ni1hZWZmLTVmMzhhNzM3NmZiYiIsInVzZXJuYW1lIjoiYnVkZHkxMTYwQHlvcG1haWwuY29tIn0.uMLKOYbHqdeMbmZbeH9hDPMjG2aXN6LXqmtWVSm95wA61i5fiHELC7Wy9VpENJC5bG2ck09GnDEJ1GlMbWL1KKpQGfA5kQT__dpBbExlQcjHRRl4zj6F4N7xSoT3jBJLM5HwyXTOB8c5VhE33G8mPSAf0UaTa65dtq1SLoXut0inve0VtHo5miIcivf9scgoNkMRiqpLIvs-Yqev23w6gksZJb8dBZUo7hlz1q3xlm78PuMVhOBW_cO1zKc2V_bLxf9yXYTgAUpP4fdl__Kj006sfDgu5PCRPm-gyz49veBxGIbOmFgMbems8CSvTnQ21iKS6cKbyonymH84w-M8SA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"wsId\":\"640080fcc6b6373338972d9f\",\r\n    \"workSpaceName\":\"Hell Space\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/workspace/duplicate-workspaceName-find",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"workspace",
+								"duplicate-workspaceName-find"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Color Code",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhMTE5NmIyYi02NzExLTQzZTMtOTNjNC02NjA2MjM2NzJjNDMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjgyYjkxNDgxLTJkMmUtNDUyZi1iZTE4LThjNzM3YWIxMDU1OSIsImV2ZW50X2lkIjoiYzAzYzEwNjYtN2YyZi00ZWFmLWJhMWEtNDc1OTc2Njc1YTYxIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY4OTY2NTYxOCwiZXhwIjoxNjg5NzUyMDE4LCJpYXQiOjE2ODk2NjU2MTgsImp0aSI6IjU0Y2E3NDE2LTBlNmItNDM0Ni1hZWZmLTVmMzhhNzM3NmZiYiIsInVzZXJuYW1lIjoiYnVkZHkxMTYwQHlvcG1haWwuY29tIn0.uMLKOYbHqdeMbmZbeH9hDPMjG2aXN6LXqmtWVSm95wA61i5fiHELC7Wy9VpENJC5bG2ck09GnDEJ1GlMbWL1KKpQGfA5kQT__dpBbExlQcjHRRl4zj6F4N7xSoT3jBJLM5HwyXTOB8c5VhE33G8mPSAf0UaTa65dtq1SLoXut0inve0VtHo5miIcivf9scgoNkMRiqpLIvs-Yqev23w6gksZJb8dBZUo7hlz1q3xlm78PuMVhOBW_cO1zKc2V_bLxf9yXYTgAUpP4fdl__Kj006sfDgu5PCRPm-gyz49veBxGIbOmFgMbems8CSvTnQ21iKS6cKbyonymH84w-M8SA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/workspace/getColorCode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"workspace",
+								"getColorCode"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "task api",
+			"item": [
+				{
+					"name": "Task List Public",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhMTE5NmIyYi02NzExLTQzZTMtOTNjNC02NjA2MjM2NzJjNDMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjZmZjc0ZTU1LWRhNWYtNGNhMy1hYjVlLTlhNzlhYTViMGZlMSIsImV2ZW50X2lkIjoiN2U2Mjc3YzQtOTU3OC00ZDBlLTg0NGEtNGYzYjc4NWEyMjdiIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5MDc4MTQwNSwiZXhwIjoxNjkwODY3ODA1LCJpYXQiOjE2OTA3ODE0MDUsImp0aSI6ImVhMjFjYjU0LWI5NDMtNDQzMi1hY2Q4LTY3Y2Y1YjM0MTUzZCIsInVzZXJuYW1lIjoiYnVkZHkxMTYwQHlvcG1haWwuY29tIn0.HBFs8iPocblHTUO0SZUcpD-Y_FyVGDpbnUmiNtgNrXj29J-Ke8883zHHvM-iC-JGbYTHOfvhJdMY97rTVKNj4mp5XJNqzbtM3vhzLRAXJsmpECJJ1ZehWaG_obsZ9M7SXzszJ-Nh4k8bl5KeVlXNp0YuQnvxesh9aQ1MZHMelgZVn5DThafsi3yrYVDuXSEXfzQZ11o3m8yr-GmbySGjUFCtG7OvHAlBBuGQsygwUP0qNAku6aQisrHgaZku0Ugfm5cJv8i8m1fmHlTK-xT7AFNP4diMeV4ppk1TROKOqv_Fm1umIl1v3mnVJdlz575uaPeyZDp0rKQ9xjosnCGYXA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/goal/list/6408cd874a5435f82ffc582b?search=yash goal223",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"goal",
+								"list",
+								"6408cd874a5435f82ffc582b"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "yash goal223"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Task Publick",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhMTE5NmIyYi02NzExLTQzZTMtOTNjNC02NjA2MjM2NzJjNDMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjZmZjc0ZTU1LWRhNWYtNGNhMy1hYjVlLTlhNzlhYTViMGZlMSIsImV2ZW50X2lkIjoiN2U2Mjc3YzQtOTU3OC00ZDBlLTg0NGEtNGYzYjc4NWEyMjdiIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5MDc4MTQwNSwiZXhwIjoxNjkwODY3ODA1LCJpYXQiOjE2OTA3ODE0MDUsImp0aSI6ImVhMjFjYjU0LWI5NDMtNDQzMi1hY2Q4LTY3Y2Y1YjM0MTUzZCIsInVzZXJuYW1lIjoiYnVkZHkxMTYwQHlvcG1haWwuY29tIn0.HBFs8iPocblHTUO0SZUcpD-Y_FyVGDpbnUmiNtgNrXj29J-Ke8883zHHvM-iC-JGbYTHOfvhJdMY97rTVKNj4mp5XJNqzbtM3vhzLRAXJsmpECJJ1ZehWaG_obsZ9M7SXzszJ-Nh4k8bl5KeVlXNp0YuQnvxesh9aQ1MZHMelgZVn5DThafsi3yrYVDuXSEXfzQZ11o3m8yr-GmbySGjUFCtG7OvHAlBBuGQsygwUP0qNAku6aQisrHgaZku0Ugfm5cJv8i8m1fmHlTK-xT7AFNP4diMeV4ppk1TROKOqv_Fm1umIl1v3mnVJdlz575uaPeyZDp0rKQ9xjosnCGYXA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/activity/task/all-list?page=1&limit=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"activity",
+								"task",
+								"all-list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "taskName",
+									"value": "eee",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

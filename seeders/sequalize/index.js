@@ -1,7 +1,17 @@
+/**
+ * index.js
+ * @description Seeder functions for Sequelize models.
+ */
+
 const model = require('../../model/sequalize');
 const sqlService = require('../../utils/sqlService');
-const { country} = require('../../data/index');
+const { country } = require('../../data/index');
 const { replaceAll } = require('../../utils/common');
+
+/**
+ * Seed the 'country' model with data if it doesn't exist.
+ * @function
+ */
 async function countrySeed() {
     try {
         let countryToBeInserted = {};
@@ -9,10 +19,16 @@ async function countrySeed() {
         if (!countryToBeInserted) {
             await sqlService.createMany(model.country, country);
         }
-    } catch ({message}) {
+    } catch ({ message }) {
         console.log('Country seeder failed due to ', message);
     }
 }
+
+/**
+ * Seed the 'Route' model with data if routes are provided.
+ * @function
+ * @param {Object[]} routes - An array of route objects.
+ */
 async function routeSeed(routes) {
     try {
         if (routes) {
@@ -38,15 +54,22 @@ async function routeSeed(routes) {
                 if (result) console.info('Route model seeded 🍺');
                 else console.info('Route seeder failed.');
             } else {
-                console.info('Route is upto date 🍺');
+                console.info('Route is up to date 🍺');
             }
         }
     } catch (error) {
         console.log('Route seeder failed due to ', error.message);
     }
 }
+
+/**
+ * Seed data for various models.
+ * @function
+ * @param {Object[]} allRegisterRoutes - An array of registered routes.
+ */
 async function seedData(allRegisterRoutes) {
     await countrySeed();
-    await routeSeed(allRegisterRoutes)
-};
+    await routeSeed(allRegisterRoutes);
+}
+
 module.exports = seedData;

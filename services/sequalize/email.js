@@ -1,16 +1,27 @@
-/** 
+/**
  * emailService.js
- * @description :: exports function used in sending mails using mailgun provider
+ * @description Exports functions used in sending emails using different providers.
+ * @module emailService
  */
 
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 const { SESClient, SendEmailCommand } = require("@aws-sdk/client-ses");
 
+/**
+ * Sends an email using Amazon SES (Simple Email Service).
+ *
+ * @async
+ * @function sendMailSES
+ * @param {object} object - The email parameters and content.
+ * @param {string} object.to - The recipient's email address.
+ * @param {string} object.subject - The email subject.
+ * @param {string} object.template - The path to the email template.
+ * @param {object} [object.data] - Data to be injected into the email template.
+ * @param {Array<object>} [object.attachments] - An array of email attachments.
+ * @returns {Promise<boolean>} Returns true if the email is sent successfully, or false if there is an error.
+ */
 const sendMailSES = async (object) => {
-    console.log('====================================');
-    console.log(object);
-    console.log('====================================');
     try {
         const sesClient = new SESClient({
             region: 'us-east-1',
@@ -41,16 +52,30 @@ const sendMailSES = async (object) => {
         const command = new SendEmailCommand(params);
         const response = await sesClient.send(command);
         console.log("Email sent:", response.MessageId);
-        return true
+        return true;
     } catch (error) {
         console.error("Error sending email:", error);
-        return false
+        return false;
     }
 }
 
-
+/**
+ * Sends an email using SMTP (Simple Mail Transfer Protocol).
+ *
+ * @async
+ * @function sendMailSMTP
+ * @param {object} obj - The email parameters and content.
+ * @param {string} [obj.from] - The sender's email address.
+ * @param {string} [obj.subject] - The email subject.
+ * @param {string} obj.to - The recipient's email address.
+ * @param {Array<string>} [obj.cc] - An array of email addresses to be cc'd.
+ * @param {Array<string>} [obj.bcc] - An array of email addresses to be bcc'd.
+ * @param {string} [obj.template] - The path to the email template.
+ * @param {object} [obj.data] - Data to be injected into the email template.
+ * @param {Array<object>} [obj.attachments] - An array of email attachments.
+ * @returns {Promise<boolean>} Returns true if the email is sent successfully, or false if there is an error.
+ */
 async function sendMailSMTP(obj) {
-    // return new Promise(async (resolve, reject) => {
     let transporter = nodemailer.createTransport({
         host: "smtpout.secureserver.net",
         port: 465,
@@ -61,7 +86,7 @@ async function sendMailSMTP(obj) {
         tls: {
             rejectUnauthorized: false
         }
-    })
+    });
     let htmlText = '';
     if (obj.template) {
         htmlText = await ejs.renderFile(`${__basedir}${obj.template}/html.ejs`, obj.data || null);
@@ -76,18 +101,18 @@ async function sendMailSMTP(obj) {
         html: htmlText,
         attachments: obj.attachments || []
     };
-    transporter.sendMail(mailOpts, function (err, success) {
-        if (err) {
-            console.log(`inerror`, err.message);
-            resolve(err);
-        } else {
-            console.log(`sucess`, true);
-            resolve(true);
-        }
-    })
-    // })
+
+    return new Promise((resolve, reject) => {
+        transporter.sendMail(mailOpts, function (err, success) {
+            if (err) {
+                console.error(`Error sending email: ${err.message}`);
+                resolve(false);
+            } else {
+                console.log(`Email sent successfully.`);
+                resolve(true);
+            }
+        });
+    });
 }
 
-
-/////////////////////////////////////////
-module.exports = { sendMail:sendMailSMTP, sendSesEmail: sendMailSES };
+module.exports = { sendMail: sendMailSMTP, sendSesEmail: sendMailSES };

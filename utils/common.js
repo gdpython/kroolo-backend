@@ -181,7 +181,7 @@ function sendMail(mail, subject, message) {
       auth: {
         user: process.env.DEFAULT_EMAIL,
         pass: process.env.DEFAULT_EMAIL_PASSWORD
-      },  
+      },
       port: 465,
       tls: {
         rejectUnauthorized: false
@@ -197,9 +197,9 @@ function sendMail(mail, subject, message) {
         {
           filename: 'demo-doc.pdf',
           path: __dirname + '/demo-logo.png',
-          cid: 'uniq-mailtrap.png' 
+          cid: 'uniq-mailtrap.png'
         }
-      ]      
+      ]
     }
     transporter.sendMail(mailOptions, function (err, success) {
       if (err) {
@@ -477,10 +477,10 @@ const uploadFileOns3Bucket = async (req, res) => {
         return res.badRequest({ message: 'No File Data Available' });
       }
       let fileExt = files.image.originalFilename.split('.')
-      let extensionDoc = fileExt[fileExt.length-1].toLowerCase()
+      let extensionDoc = fileExt[fileExt.length - 1].toLowerCase()
       let myFile = `${Date.now().toString()}.${fileExt[1]}`
 
-      uploadToS3(fs.readFileSync(files.image.filepath), myFile,extensionDoc).then((result) => {
+      uploadToS3(fs.readFileSync(files.image.filepath), myFile, extensionDoc).then((result) => {
         return res.success({
           data: {
             location: result.Location, Key: result.Key
@@ -494,10 +494,10 @@ const uploadFileOns3Bucket = async (req, res) => {
   }
 }
 
-const uploadToS3 = (fileData, myFile,extensionDoc) => {
+const uploadToS3 = (fileData, myFile, extensionDoc) => {
   let fileExt = myFile.split('.')
-  if(!extensionDoc){
-      extensionDoc = fileExt[fileExt.length-1].toLowerCase()
+  if (!extensionDoc) {
+    extensionDoc = fileExt[fileExt.length - 1].toLowerCase()
   }
   return new Promise((resolve, reject) => {
     const s3 = new S3Client({
@@ -507,16 +507,16 @@ const uploadToS3 = (fileData, myFile,extensionDoc) => {
         secretAccessKey: process.env.S3_BUCKET_SECRET_ACCESS_KEY_ID,
       },
     });
-    const imageExt = ["png","jpeg","jpg"]
+    const imageExt = ["png", "jpeg", "jpg"]
     const params = {
       Bucket: process.env.S3_BUCKET,
       Key: myFile,
       Body: fileData,
     };
-    if(imageExt.includes(extensionDoc)){
-      params.ContentType =  "image/jpeg"
-    }else if(extensionDoc==="pdf"){
-      params.ContentType =  "application/pdf"
+    if (imageExt.includes(extensionDoc)) {
+      params.ContentType = "image/jpeg"
+    } else if (extensionDoc === "pdf") {
+      params.ContentType = "application/pdf"
     }
     const command = new PutObjectCommand(params);
     s3.send(command)
@@ -534,7 +534,7 @@ const uploadToS3 = (fileData, myFile,extensionDoc) => {
 };
 
 
-const deleteS3File = async (req, res) => {  
+const deleteS3File = async (req, res) => {
   return new Promise((resolve, reject) => {
     const params = {
       Bucket: process.env.S3_BUCKET,
@@ -613,7 +613,7 @@ const getS3File = async (req, res) => {
         reject(err); // Reject the promise with the error
       } else {
         const imageUrl = `https://${params.Bucket}.s3.amazonaws.com/${params.Key}`;
-        resolve({imageUrl}); // Resolve the promise with a value indicating success
+        resolve({ imageUrl }); // Resolve the promise with a value indicating success
       }
     });
   });
@@ -676,7 +676,7 @@ async function uniqueUsername(modelName, value, key, init) {
 async function sendNotification(data) {
   try {
     playerId = data.player_ids.split(',');
-    console.log("playerId",playerId);
+    console.log("playerId", playerId);
     let logo = `${process.env.BASE_URL}/public/assets/imagesuser-school-2.png`;
     var logo_path = logo
     var sendData = {
@@ -729,15 +729,25 @@ async function sendNotification(data) {
 }
 
 function noSpecialChars(str) {
-  const noSpecialChars = str.replace(/[^a-zA-Z0-9 ]/g, '');  
+  const noSpecialChars = str.replace(/[^a-zA-Z0-9 ]/g, '');
   return noSpecialChars
 }
 
 
-function aadharFormat (str) {
+function aadharFormat(str) {
   var value = str
   value = value.toString().replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter(s => s.length > 0).join(" ");
   return value
+}
+
+function catchAll({ message, res }) {
+  console.log("------------------------------------");
+  console.log(message)
+  console.log("------------------------------------");
+  if (res) {
+    res.serverError({ message })
+  }
+  return
 }
 
 function activeInactive(modelName, id, type) {
@@ -786,7 +796,7 @@ module.exports = {
   getDifferenceOfTwoDatesInTime,
   checkUniqueFieldsInDatabase,
   sendMail,
-  randomString, 
+  randomString,
   passwordCheck,
   generatePassword,
   passwordConvert,
@@ -804,8 +814,9 @@ module.exports = {
   isValidEmail,
   checkIFSCcode,
   alphaNumericSort,
-  sendNotification,  
+  sendNotification,
   noSpecialChars,
   aadharFormat,
-  activeInactive
+  activeInactive,
+  catchAll
 };

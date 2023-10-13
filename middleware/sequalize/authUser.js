@@ -1,6 +1,6 @@
 /**
- * auth.js
- * @description :: middleware that checks authentication and authorization of user
+ * @file Middleware that checks authentication and authorization of the user using Sequelize.
+ * @module middleware/sequalize/authUser
  */
 
 const passport = require('passport');
@@ -10,62 +10,32 @@ const sqlService = require('../utils/sqlService');
 const { checkRolePermission } = require('./checkRolePermission');
 
 /**
- * @description : returns callback that verifies required access
- * @param {obj} req : request of route.
- * @param {callback} resolve : resolve callback for succeeding method.
- * @param {callback} reject : reject callback for error.
- * @param {int} platform : platform.
+ * Returns a callback function for verifying required access.
+ *
+ * @callback VerifyCallback
+ * @param {Error} err - An error object.
+ * @param {object} user - The authenticated user object.
+ * @param {object} info - Additional information.
  */
-const verifyCallback = (req, resolve, reject, platform) => async (err, user, info) => {
-  try {
-    if (err || info || !user) {
-      return reject('Unauthorized User');
-    }
-    req.user = user;
-
-    if (!user.isActive) {
-      return reject('User is deactivated');
-    }
-    let userToken = await sqlService.findOne(model.userTokens, {
-      token: (req.headers.authorization).replace('Bearer ', ''),
-      userId: user.id
-    });
-    if (!userToken) {
-      return reject('Token not found');
-    }
-    if (userToken.isTokenExpired) {
-      return reject('Token is Expired');
-    }
-    if (user.userRole || user.roleName) {
-      let allowedPlatforms
-      //if single value role or comma seprated
-      if (platform == PLATFORM_ACCESS.OWNER) {
-        allowedPlatforms = user.roleName.split(",")
-      }else if (platform == PLATFORM_ACCESS.OWNER) {
-        allowedPlatforms = [user.userRole]
-      }
-      if (!allowedPlatforms.includes(platform)) {
-        return reject('Unauthorized user');
-      }
-    }
-    //here we can check role for particular permission
-    /* checkRolePermission() */
-    resolve();
-  } catch (error) {
-    console.log('error', error.message)
-    reject();
-  }
-};
 
 /**
- * @description : authentication middleware for request.
- * @param {obj} req : request of route.
- * @param {obj} res : response of route.
- * @param {callback} next : executes the next middleware succeeding the current middleware.
- * @param {int} platform : platform.
+ * Callback function for verifying required access.
+ *
+ * @typedef {function} VerifyCallback
+ * @param {object} req - The request object of the route.
+ * @param {VerifyCallback} resolve - Resolve callback for the succeeding method.
+ * @param {VerifyCallback} reject - Reject callback for error.
+ * @param {int} platform - The platform for which access is required.
+ */
+
+/**
+ * Middleware for authentication and authorization of the user.
+ *
+ * @param {int} platform - The platform for which access is required (e.g., PLATFORM_ACCESS.OWNER or PLATFORM_ACCESS.SCHOOL_ADMIN).
+ * @returns {Function} Middleware function for authentication and authorization.
  */
 const auth = (platform) => async (req, res, next) => {
-  if (platform == PLATFORM_ACCESS.OWNER) {
+  if (platform === PLATFORM_ACCESS.OWNER) {
     return new Promise((resolve, reject) => {
       passport.authenticate('client-rule', { session: false }, verifyCallback(req, resolve, reject, platform))(
         req,
@@ -79,7 +49,7 @@ const auth = (platform) => async (req, res, next) => {
       .catch((err) => {
         return res.unAuthorized();
       });
-  } else if (platform == PLATFORM_ACCESS.SCHOOL_ADMIN) {
+  } else if (platform === PLATFORM_ACCESS.SCHOOL_ADMIN) {
     //
   }
 };

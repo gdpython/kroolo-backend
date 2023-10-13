@@ -1,6 +1,6 @@
 /**
- * loginUser.js
- * @description :: middleware that verifies user's JWT token
+ * @file Middleware that verifies user's JWT token.
+ * @module middleware/sequalize/loginUser
  */
 
 const jwt = require('jsonwebtoken');
@@ -8,10 +8,14 @@ const { PLATFORM } = require('../constants/authConstant');
 const { JWT } = require('../constants/authConstant');
 
 /**
- * @description : middleware for authenticate user with JWT token
- * @param {obj} req : request of route.
- * @param {obj} res : response of route.
- * @param {callback} next : executes the next middleware succeeding the current middleware.
+ * Middleware for authenticating the user with a JWT token.
+ *
+ * @param {number} platform - The platform type (e.g., PLATFORM.APP).
+ * @returns {Function} Middleware function.
+ *
+ * @param {object} req - The request object of the route.
+ * @param {object} res - The response object of the route.
+ * @param {Function} next - Executes the next middleware succeeding the current middleware.
  */
 const authenticateJWT = (platform) => async (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -20,13 +24,12 @@ const authenticateJWT = (platform) => async (req, res, next) => {
     }
     const token = authHeader.split(' ')[1];
     let secret = JWT.WEB_SECRET;
-    if (platform == PLATFORM.APP) {
-        JWT.APP_SECRET
+    if (platform === PLATFORM.APP) {
         secret = JWT.APP_SECRET;
     }
     jwt.verify(token, secret, (error, user) => {
         if (error) {
-            if (error.name == "TokenExpiredError") {
+            if (error.name === "TokenExpiredError") {
                 return res.unAuthorized({ message: 'Your Session Has Expired...' });
             } else {
                 return res.unAuthorized();

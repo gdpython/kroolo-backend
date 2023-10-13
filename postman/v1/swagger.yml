@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info:
+  title: New Kroolo Api's
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: workspace api
+  - name: task api
+paths:
+  /api/v1/workspace/updateWorkeSpaceColor:
+    post:
+      tags:
+        - workspace api
+      summary: http://localhost:3000/api/v1/workspace/updateWorkeSpaceColor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                colorCode: '#343432'
+                createdBy: 641544bfbaf299860d76b935
+                workSpaceId: 640080fcc6b6373338972d9f
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/workspace/duplicate-workspaceName-find:
+    post:
+      tags:
+        - workspace api
+      summary: http://localhost:3000/api/v1/workspace/duplicate-workspaceName-find
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                wsId: 640080fcc6b6373338972d9f
+                workSpaceName: Hell Space
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/workspace/getColorCode:
+    get:
+      tags:
+        - workspace api
+      summary: Color Code
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/goal/list/6408cd874a5435f82ffc582b:
+    get:
+      tags:
+        - task api
+      summary: Task List Public
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+          example: yash goal223
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/activity/task/all-list:
+    get:
+      tags:
+        - task api
+      summary: All Task Publick
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '5'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
