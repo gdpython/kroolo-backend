@@ -28,23 +28,15 @@ const { WORKSPACE_TYPE } = require('../../../constants/schemaConstants');
  * @class
  */
 const WorkspaceSchema = new mongoose.Schema({
-    companyID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Company',
-    },
     workspaceName: {
         type: String,
         maxlength: 200,
         trim: true,
         required: true,
     },
-    workspaceOwnerID: {
+    companyID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-    },
-    reportingID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Company',
     },
     description: {
         type: String,
@@ -55,21 +47,6 @@ const WorkspaceSchema = new mongoose.Schema({
         type: String,
         enum: WORKSPACE_TYPE,
         default: WORKSPACE_TYPE[0],
-    },
-    isFavourite: {
-        type: Boolean,
-        default: false
-    },
-    membersID: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-    }],
-    colorCode: {
-        type: String,
-        validate: {
-            validator: (value) => /^#(?:[0-9a-fA-F]{3}){1,2}$/.test(value),
-            message: 'Invalid color hex code format.'
-        }
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
@@ -92,7 +69,7 @@ const WorkspaceSchema = new mongoose.Schema({
 });
 
 /**
- * @typedef WorkSpace
+ * @typedef Workspace
  */
 
 WorkspaceSchema.set('toObject', { virtuals: true });
@@ -116,5 +93,6 @@ WorkspaceSchema.virtual('WorkspaceMember', {
  *
  * @type {mongoose.Model<Workspace>}
  */
-Workspace.syncIndexes();
-module.exports = mongoose.model("Workspace", WorkspaceSchema);
+const workspace = mongoose.model("Workspace", WorkspaceSchema);
+workspace.syncIndexes();
+module.exports = workspace;

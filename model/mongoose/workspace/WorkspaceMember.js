@@ -10,11 +10,6 @@ const WorkspaceMemberSchema = new mongoose.Schema({
         ref: 'Workspace',
         required: true,
     },
-    organizationMemberID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'OrganizationMember',
-        required: true,
-    },
     workspaceRoleID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'OrganizationMember',
@@ -23,6 +18,17 @@ const WorkspaceMemberSchema = new mongoose.Schema({
     userID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+    },
+    isFavourite: {
+        type: Boolean,
+        default: false
+    },
+    colorCode: {
+        type: String,
+        validate: {
+            validator: (value) => /^#(?:[0-9a-fA-F]{3}){1,2}$/.test(value),
+            message: 'Invalid color hex code format.'
+        }
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
@@ -50,5 +56,6 @@ const WorkspaceMemberSchema = new mongoose.Schema({
  *
  * @type {mongoose.Model<WorkspaceMember>}
  */
+const WorkspaceMember =  mongoose.model("WorkspaceMember", WorkspaceMemberSchema);
 WorkspaceMember.syncIndexes();
-module.exports = mongoose.model("WorkspaceMember", WorkspaceMemberSchema);
+module.exports =WorkspaceMember;

@@ -43,6 +43,13 @@ const ownerLogin = async (req, res) => {
   }
 };
 
+/**
+ * Handles the signup of a user.
+ * @function
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ */
+
 const signUp = async (req, res) => {
   let { email } = req.body;
   if (!email) {
@@ -66,7 +73,35 @@ const signUp = async (req, res) => {
   });
 };
 
+/**
+ * Handles the verify of a user.
+ * @function
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ */
+
+const emailVerify = async (req, res) => {
+  let { token } = req.params;
+  if (!token) {
+    return res.badRequest({
+      message:
+        "Insufficient request parameters! token are required.",
+    });
+  }
+  let result = await ownerAuthService.emailVerify(
+    token,
+    model.User,
+  );
+  if (result.flag) {
+    return res.badRequest({ message: result.data });
+  }
+  return res.success({
+    message: "Email verified.",
+  });
+};
+
 module.exports = {
   ownerLogin,
-  signUp
+  signUp,
+  emailVerify
 };
