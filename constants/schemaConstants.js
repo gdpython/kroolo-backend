@@ -26,9 +26,17 @@ const INVITATION_STATUS = ["PENDING", "ACCEPT"];
  */
 const ROUTE_METHOD = ["GET", "POST", "PUT", "PATCH", "DELETE"];
 
+/**
+ * Constants for workspace types.
+ * @constant
+ * @enum {string}
+ */
+const WORKSPACE_TYPE = ['PUBLIC', 'PRIVATE'];
+
 module.exports = {
     TASK_VIEW,
     COGNITO_STATUS,
     INVITATION_STATUS,
-    ROUTE_METHOD
+    ROUTE_METHOD,
+    WORKSPACE_TYPE,
 };
