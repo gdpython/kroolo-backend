@@ -12,7 +12,6 @@ const Role = require("./authentication/Role");
 const Route = require("./authentication/Route");
 const RouteRole = require("./authentication/RouteRole");
 const UserToken = require("./authentication/UserToken");
-
 /**
  * A module that exports all Mongoose models for authentication and related entities.
  *
@@ -26,6 +25,17 @@ const UserToken = require("./authentication/UserToken");
  * @property {mongoose.Model<Route>} Route - Mongoose model for the Route entity.
  * @property {mongoose.Model<RouteRole>} RouteRole - Mongoose model for the RouteRole entity.
  * @property {mongoose.Model<UserToken>} UserToken - Mongoose model for the UserToken entity.
+ */
+
+const Workspace = require("./workspace/Workspace");
+const WorkspaceMember = require("./workspace/WorkspaceMember");
+
+/**
+ * A module that exports all Mongoose models for authentication and related entities.
+ *
+ * @typedef {object} MongooseModels
+ * @property {mongoose.Model<Workspace>} Workspace - Mongoose model for the Workspace entity.
+ * @property {mongoose.Model<WorkspaceMember>} WorkspaceMember - Mongoose model for the WorkspaceMember entity.
  */
 
 /**
@@ -42,5 +52,7 @@ module.exports = {
     Role,
     Route,
     RouteRole,
-    UserToken
+    UserToken,
+    Workspace,
+    WorkspaceMember
 };
