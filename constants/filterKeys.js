@@ -1,5 +1,15 @@
 /**
- * filterKeys.js
+ * Constants for filtering keys.
+ * @module filterKeys
  */
 
-module.exports = { FILTER_KEYS: { ID: 'id' } };
+/**
+ * ID key for filtering.
+ * @constant {string}
+ */
+const ID = 'id';
+
+/**
+ * Exported constant for filtering.
+ */
+module.exports = { FILTER_KEYS: { ID } };

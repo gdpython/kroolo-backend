@@ -1,6 +1,6 @@
 /**
- * checkRolePermission.js
- * @description :: middleware that checks access of APIs for logged-in user
+ * @file Middleware that checks access of APIs for logged-in users.
+ * @module middleware/checkrolepermission
  */
 
 const model = require('../../model/mongoose');
@@ -8,12 +8,11 @@ const mongooseService = require('../../utils/mongooseService');
 const { replaceAll } = require('../../utils/common');
 
 /**
- * @description : middleware for authentication with role and permission.
- * @param {obj} req : request of route.
- * @param {obj} res : response of route.
- * @param {callback} next : executes the next middleware succeeding the current middleware.
+ * Middleware for authentication with role and permission.
+ *
+ * @param {Object} mod - The module related to the route.
+ * @returns {Function} Middleware function for role and permission checking.
  */
-
 const checkRolePermission = (mod) => async (req, res, next) => {
   try {
     if (!req.user) {
@@ -25,7 +24,7 @@ const checkRolePermission = (mod) => async (req, res, next) => {
       isActive: true,
       isDeleted: false,
     },
-      { attributes: ['roleId'] });//we using id so change attr 
+    { attributes: ['roleId'] });
     if (rolesOfUser && rolesOfUser.length) {
       rolesOfUser = [...new Set((rolesOfUser).map((item) => item.roleId))];
       const route = await mongooseService.findOne(model.Route, {
@@ -40,15 +39,14 @@ const checkRolePermission = (mod) => async (req, res, next) => {
             { isActive: true },
             { isDeleted: false },
           ],
-  
         });
         if (allowedRoute && allowedRoute.length) {
           next();
         } else {
-          return res.unAuthorized({ message: 'You are not having permission to access this route!' });
+          return res.unAuthorized({ message: 'You do not have permission to access this route!' });
         }
       } else {
-        return res.unAuthorized({ message: 'You are not having permission to access this route!' });
+        return res.unAuthorized({ message: 'You do not have permission to access this route!' });
       }
     } else {
       next();
@@ -57,6 +55,5 @@ const checkRolePermission = (mod) => async (req, res, next) => {
     return res.unAuthorized({ message: 'Something went wrong...' });
   }
 };
-
 
 module.exports = { checkRolePermission };

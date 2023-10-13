@@ -3,15 +3,11 @@
  * @description :: service functions used in authentication
  */
 
-const { JWT, FORGOT_PASSWORD_WITH, ENVIROMENT } = require('../../constants/authConstant');
-const model = require('../../model/sequalize');
-const sqlService = require('../../utils/sqlService');
-const emailService = require('./email');
+const { JWT, FORGOT_PASSWORD_WITH, ENVIRONMENT } = require('../../constants/authConstant');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dayjs = require('dayjs');
 const uuid = require('uuid').v4;
-const { Op } = require('sequelize');
 
 /**
  * @description: service to generate JWT token for authentication.
@@ -21,7 +17,7 @@ const { Op } = require('sequelize');
  */
 const generateToken = async (user, secret) => {
     return jwt.sign({
-        id: user.id,
+        id: user._id,
         username: user.username
     }, secret, { expiresIn: JWT.EXPIRES_IN * 60 });
 };
@@ -30,7 +26,7 @@ const generateToken = async (user, secret) => {
  * @description: service for user login.
  * @param {string} username - User's username.
  * @param {string} password - User's password.
- * @param {string} modelName - Model name for user data.
+ * @param {string} modelName - Model name for user data (Mongoose model).
  * @param {string[]} attributes - Attributes to select.
  * @param {string} ip - User's IP address.
  * @param {string} platformName - Platform name.
@@ -38,14 +34,14 @@ const generateToken = async (user, secret) => {
  */
 const login = async (username, password, modelName, attributes, ip, platformName) => {
     try {
-        let where;
+        let query;
         if (platformName !== '') {
-            where = { loginUsername: username };
+            query = { loginUsername: username };
         } else {
-            where = { username: username };
+            query = { username: username };
         }
 
-        const user = await sqlService.findOneSelected(modelName, where, attributes);
+        const user = await modelName.findOne(query).select(attributes.join(' '));
 
         if (!user) {
             return {
@@ -54,7 +50,7 @@ const login = async (username, password, modelName, attributes, ip, platformName
             };
         }
 
-        const userData = user.toJSON();
+        const userData = user.toObject();
 
         if (ip !== '') {
             if (userData.roleName !== null) {
@@ -64,7 +60,7 @@ const login = async (username, password, modelName, attributes, ip, platformName
                     return { flag: true, data: `You have no access ${platformName} panel` };
                 }
 
-                const roleData = await sqlService.findOne(model.adminUserRoles, { roleName: result });
+                const roleData = await model.adminUserRoles.findOne({ roleName: result });
                 if (!roleData) {
                     return { flag: true, data: 'Role not exists' };
                 }
@@ -81,14 +77,7 @@ const login = async (username, password, modelName, attributes, ip, platformName
                 lastLoginDate: new Date()
             };
 
-            const updatedUser = sqlService.update(modelName, { id: userData.id }, updateData);
-
-            if (!updatedUser) {
-                return {
-                    flag: true,
-                    data: 'Data could not be updated due to an error. Please try again.'
-                };
-            }
+            await modelName.updateOne({ _id: userData._id }, updateData);
 
             if (userData.isActive === 0) {
                 return {
@@ -115,7 +104,7 @@ const login = async (username, password, modelName, attributes, ip, platformName
             }
         } else {
             if (password) {
-                const isPasswordMatched = await user.isPasswordMatch(password);
+                const isPasswordMatched = await user.isPasswordMatch(password); // You should implement this in your Mongoose model
                 if (!isPasswordMatched) {
                     return {
                         flag: true,
@@ -128,13 +117,13 @@ const login = async (username, password, modelName, attributes, ip, platformName
         let token = await generateToken(userData, JWT.CLIENT_SECRET);
         let expire = dayjs().add(JWT.EXPIRES_IN, 'second').toISOString();
 
-        await sqlService.createOne(model.userTokens, {
-            userId: userData.id,
+        await model.userTokens.create({
+            userId: userData._id,
             token: token,
             tokenExpiredTime: expire
         });
 
-        let currentSessionData = await FUNC.getCurrentSession();
+        let currentSessionData = await FUNC.getCurrentSession(); // Implement FUNC.getCurrentSession() according to your requirements
         let userToReturn = {
             ...userData,
             token,
@@ -153,7 +142,7 @@ const login = async (username, password, modelName, attributes, ip, platformName
 
 /**
  * @description: service for forgotUser.
- * @param {string} modelName - Model name for user data.
+ * @param {string} modelName - Model name for user data (Mongoose model).
  * @param {Object} getWhere - Where condition.
  * @param {string} getViewType - View type.
  * @param {string[]} attributes - Attributes to select.
@@ -165,7 +154,7 @@ const forgotUser = async (modelName, getWhere, getViewType, attributes, platform
         let token = uuid();
         let expires = dayjs().add(FORGOT_PASSWORD_WITH.EXPIRE_TIME, 'minute').toISOString();
         let where = getWhere;
-        const user = await sqlService.findOneSelected(modelName, where, attributes);
+        const user = await modelName.findOne(where).select(attributes.join(' '));
 
         if (!user) {
             return {
@@ -173,7 +162,7 @@ const forgotUser = async (modelName, getWhere, getViewType, attributes, platform
                 data: 'Email not exists'
             };
         } else {
-            const userData = user.toJSON();
+            const userData = user.toObject();
 
             if (userData.roleName !== null) {
                 let text = userData.roleName;
@@ -182,7 +171,7 @@ const forgotUser = async (modelName, getWhere, getViewType, attributes, platform
                     return { flag: true, data: 'User Not found' };
                 }
 
-                const roleData = await sqlService.findOne(model.adminUserRoles, { roleName: result });
+                const roleData = await model.adminUserRoles.findOne({ roleName: result });
 
                 if (!roleData) {
                     return { flag: true, data: 'Role not exists' };
@@ -205,7 +194,7 @@ const forgotUser = async (modelName, getWhere, getViewType, attributes, platform
                 linkExpiryTime: expires,
                 linkStatus: 0
             };
-            await sqlService.update(modelName, where, updateData);
+            await modelName.updateOne(where, updateData);
 
             let viewType = getViewType;
             let mailObj = {
@@ -213,8 +202,8 @@ const forgotUser = async (modelName, getWhere, getViewType, attributes, platform
                 to: userData.email,
                 template: '/views/email/ResetPassword',
                 data: {
-                    userName: user.username || '-',
-                    link: `${process.env.BASE_URL + (process.env.NODE_ENV == ENVIROMENT.prod ? "" : ":" + process.env.PORT)}` + viewType + token,
+                    userName: userData.username || '-',
+                    link: `${process.env.BASE_URL + (process.env.NODE_ENV == ENVIRONMENT.prod ? "" : ":" + process.env.PORT)}` + viewType + token,
                     linkText: 'Reset Password',
                     url: ''
                 }
@@ -231,11 +220,10 @@ const forgotUser = async (modelName, getWhere, getViewType, attributes, platform
         throw new Error(error.message);
     }
 };
-
 /**
  * @description: service for createPassword.
  * @param {string} recovery_code - Recovery code.
- * @param {string} modelName - Model name for user data.
+ * @param {string} modelName - Model name for user data (Mongoose model).
  * @param {string[]} attributes - Attributes to select.
  * @returns {Object} - User data.
  */
@@ -246,7 +234,7 @@ const createPassword = async (recovery_code, modelName, attributes) => {
             isActive: true,
             isDeleted: false
         };
-        const user = await sqlService.findOneSelected(modelName, where, attributes);
+        const user = await modelName.findOne(where).select(attributes.join(' '));
 
         if (!user) {
             return {
@@ -255,7 +243,7 @@ const createPassword = async (recovery_code, modelName, attributes) => {
             };
         }
 
-        let userAuth = await sqlService.findOne(modelName, where);
+        let userAuth = await modelName.findOne(where);
 
         if (userAuth && userAuth.linkExpiryTime) {
             if (dayjs(new Date()).isAfter(dayjs(userAuth.linkExpiryTime))) {
@@ -266,7 +254,7 @@ const createPassword = async (recovery_code, modelName, attributes) => {
             }
         }
 
-        const userData = user.toJSON();
+        const userData = user.toObject();
 
         return {
             flag: false,
@@ -276,12 +264,11 @@ const createPassword = async (recovery_code, modelName, attributes) => {
         throw new Error(error.message);
     }
 };
-
 /**
  * @description: service for submitPassword.
  * @param {string} password - Password.
  * @param {Object} getWhere - Where condition.
- * @param {string} modelName - Model name for user data.
+ * @param {string} modelName - Model name for user data (Mongoose model).
  * @returns {Object} - Password update status: { flag, data }.
  */
 const submitPassword = async (password, getWhere, modelName) => {
@@ -289,7 +276,7 @@ const submitPassword = async (password, getWhere, modelName) => {
         let where = getWhere;
         where.isActive = true;
         where.isDeleted = false;
-        const user = await sqlService.findOne(modelName, where);
+        const user = await modelName.findOne(where);
 
         if (!user) {
             return {
@@ -298,7 +285,7 @@ const submitPassword = async (password, getWhere, modelName) => {
             };
         }
 
-        const userData = user.toJSON();
+        const userData = user.toObject();
         let linkStatus = userData.linkStatus;
 
         if (linkStatus === 1) {
@@ -314,7 +301,7 @@ const submitPassword = async (password, getWhere, modelName) => {
             password = common.passwordConvert(password, 'encrypt');
         }
 
-        let updatedUser = sqlService.update(modelName, where, { password, linkStatus: 1, recoveryCode: common.randomString(60) });
+        let updatedUser = await modelName.updateOne(where, { password, linkStatus: 1, recoveryCode: common.randomString(60)});
 
         if (!updatedUser) {
             return {
@@ -331,18 +318,16 @@ const submitPassword = async (password, getWhere, modelName) => {
         throw new Error(error.message);
     }
 };
-
 /**
  * @description: service for checking the old password.
  * @param {string} password - Old password.
  * @param {string} id - User's ID.
- * @param {string} modelName - Model name for user data.
+ * @param {Model} modelName - Mongoose model for user data.
  * @returns {Object} - Password check status: { flag, data }.
  */
 const checkPassword = async (password, id, modelName) => {
     try {
-        let where = { id: id, isActive: true, isDeleted: false };
-        const userData = await sqlService.findOne(modelName, where);
+        const userData = await modelName.findOne({ _id: id, isActive: true, isDeleted: false });
 
         if (!userData) {
             return {
@@ -352,24 +337,13 @@ const checkPassword = async (password, id, modelName) => {
         }
 
         if (userData.name !== null) {
-            if (userData.userRole === 'SUPER_ADMIN') {
-                const isPasswordMatched = await bcrypt.compare(password, userData.password);
+            const isPasswordMatched = await bcrypt.compare(password, userData.password);
 
-                if (!isPasswordMatched) {
-                    return {
-                        flag: true,
-                        data: 'Incorrect Old Password'
-                    };
-                }
-            } else {
-                const decryptPassword = common.passwordConvert(userData.password, 'decrypt');
-
-                if (decryptPassword !== password) {
-                    return {
-                        flag: true,
-                        data: 'Incorrect Old Password'
-                    };
-                }
+            if (!isPasswordMatched) {
+                return {
+                    flag: true,
+                    data: 'Incorrect Old Password'
+                };
             }
         } else {
             const decryptPassword = common.passwordConvert(userData.password, 'decrypt');
@@ -396,13 +370,12 @@ const checkPassword = async (password, id, modelName) => {
  * @param {string} password - New password.
  * @param {string} oldPassword - Old password.
  * @param {string} id - User's ID.
- * @param {string} modelName - Model name for user data.
+ * @param {Model} modelName - Mongoose model for user data.
  * @returns {Object} - Password change status: { flag, data }.
  */
 const changePassword = async (password, id, oldPassword, modelName) => {
     try {
-        let where = { id: id, isActive: true, isDeleted: false };
-        const user = await sqlService.findOne(modelName, where);
+        const user = await modelName.findOne({ _id: id, isActive: true, isDeleted: false });
 
         if (!user) {
             return {
@@ -439,7 +412,7 @@ const changePassword = async (password, id, oldPassword, modelName) => {
                 password = common.passwordConvert(password, 'encrypt');
             }
 
-            let updatedUser = sqlService.update(modelName, where, { password });
+            const updatedUser = await modelName.updateOne({ _id: id }, { password });
 
             if (!updatedUser) {
                 return {
@@ -463,72 +436,10 @@ const changePassword = async (password, id, oldPassword, modelName) => {
     }
 };
 
-/**
- * @description: service for schoolForgotPassword.
- * @param {string} email - User's email.
- * @returns {Object} - Password reset status: { flag, data }.
- */
-const schoolForgotPassword = async (email) => {
-    try {
-        let token = uuid();
-        let expires = dayjs().add(FORGOT_PASSWORD_WITH.EXPIRE_TIME, 'minute').toISOString();
-        let where = { passwordReCoveryEmail: email.toString().toLowerCase() };
-        const userCheck = await sqlService.findOne(model.generalSetting, where);
-
-        if (!userCheck) {
-            return {
-                flag: true,
-                data: 'Email not exists'
-            };
-        } else {
-            const userCheckData = userCheck.toJSON();
-            const user = await sqlService.findOne(model.adminUser);
-            const userData = user.toJSON();
-
-            if (userData.isActive === 0) {
-                return {
-                    flag: true,
-                    data: 'You are blocked by Admin, please contact Admin.'
-                };
-            }
-
-            let updateData = {
-                recoveryCode: token,
-                linkExpiryTime: expires,
-                linkStatus: 0
-            };
-            await sqlService.update(model.adminUser, { id: { [Op.ne]: '' } }, updateData);
-
-            let viewType = '/school-admin/create-password/';
-            let mailObj = {
-                subject: 'Reset Password',
-                to: userCheckData.passwordReCoveryEmail,
-                template: '/views/email/ResetPassword',
-                data: {
-                    userName: user.username || '-',
-                    link: `${process.env.BASE_URL + (process.env.NODE_ENV == ENVIROMENT.prod ? '' : ':' + process.env.PORT)}` + viewType + token,
-                    linkText: 'Reset Password',
-                    url: ''
-                }
-            };
-
-            try {
-                await emailService.sendSesEmail(mailObj);
-                return {
-                    flag: false
-                };
-            } catch (error) {
-                throw new Error(error.message);
-            }
-        }
-    } catch (error) {
-        throw new Error(error.message);
-    }
-};
 
 /**
  * @description: service for forgotPassword.
- * @param {string} modelName - Model name for user data.
+ * @param {Model} modelName - Mongoose model for user data.
  * @param {Object} where - Where condition.
  * @param {string} getViewType - View type.
  * @param {string[]} attributes - Attributes to select.
@@ -538,7 +449,7 @@ const forgotPassword = async (modelName, where, getViewType, attributes) => {
     try {
         let token = uuid();
         let expires = dayjs().add(FORGOT_PASSWORD_WITH.EXPIRE_TIME, 'minute').toISOString();
-        const userCheck = await sqlService.findOneSelected(modelName, where, attributes);
+        const userCheck = await modelName.findOne(where, attributes);
 
         if (!userCheck) {
             return {
@@ -546,7 +457,7 @@ const forgotPassword = async (modelName, where, getViewType, attributes) => {
                 data: 'Email not exists'
             };
         } else {
-            const userData = userCheck.toJSON();
+            const userData = userCheck.toObject();
 
             if (userData.isActive === 0) {
                 return {
@@ -560,7 +471,7 @@ const forgotPassword = async (modelName, where, getViewType, attributes) => {
                 linkExpiryTime: expires,
                 linkStatus: 0
             };
-            await sqlService.update(modelName, where, updateData);
+            await modelName.updateOne(where, updateData);
 
             let viewType = getViewType;
             let mailObj = {
@@ -596,6 +507,5 @@ module.exports = {
     submitPassword,
     checkPassword,
     changePassword,
-    schoolForgotPassword,
     forgotPassword
 };

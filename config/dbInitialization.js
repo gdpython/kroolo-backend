@@ -2,14 +2,22 @@ const dbConnection = require("./dbConnection")
 const sequalize = require("../model/sequalize")
 const YAML = require('yamljs');
 const path = require('path');
+const { CUURENT_API_VERSION } = require("../constants/appConstants") 
 const { beautifyLog } = require("../helpers/function");
 const listEndpoints = require('express-list-endpoints');
-const routes = require('../routes');
+const routes = require(`../routes/${CUURENT_API_VERSION}`);
 const seederSequalize = require('../seeders/mongoose');
 const seederMongoose = require('../seeders/mongoose');
 const postmanToOpenApi = require('postman-to-openapi');
 const { DB_TYPE } = require("../constants/authConstant");
+const swaggerUi = require('swagger-ui-express');
 
+/**
+ * Sets up the application after the database connection is established.
+ *
+ * @param {express.Application} app - The Express application.
+ * @param {string} type - The type of database (SQL or NoSQL).
+ */
 const afterDB = (app,type) => {
   app.use(routes);
   const allRegisterRoutes = listEndpoints(app);
@@ -18,12 +26,17 @@ const afterDB = (app,type) => {
   }else if(type===DB_TYPE.NOSQL){
     seederMongoose(allRegisterRoutes).then(() => { console.log('Seeding done.'); });
   }
-  // postmanToOpenApi(`postman/${process.env.CUURENT_API_VERSION}/postman-collection.json`, path.join('postman/swagger.yml'), { defaultTag: 'General' }).then(data => {
-  //   let result = YAML.load('postman/swagger.yml');
-  //   result.servers[0].url = '/';
-  //   app.use('/swagger', swaggerUi.serve, swaggerUi.setup(result));
-  // })
+  postmanToOpenApi(`postman/${CUURENT_API_VERSION}/postman-collection.json`, path.join(`postman/${CUURENT_API_VERSION}/swagger.yml`), { defaultTag: 'General' }).then(data => {
+    let result = YAML.load(`postman/${CUURENT_API_VERSION}/swagger.yml`);
+    result.servers[0].url = '/';
+    app.use('/swagger', swaggerUi.serve, swaggerUi.setup(result));
+  })
 }
+/**
+ * Connects to the SQL database and sets up the application.
+ *
+ * @param {express.Application} app - The Express application.
+ */
 const connectSQL = async (app) => {
   // dbConnection.sequelize
   sequalize.sequelize.sync({ alter: true }).then(() => {
@@ -34,6 +47,12 @@ const connectSQL = async (app) => {
     beautifyLog(`ERROR(${name}): ${message}`)
   })
 }
+
+/**
+ * Connects to the MongoDB database and sets up the application.
+ *
+ * @param {express.Application} app - The Express application.
+ */
 const connectMongoDB = async (app) => {
   dbConnection.mongoose().then((res, error) => {
     if (res) {

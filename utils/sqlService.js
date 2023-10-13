@@ -277,7 +277,6 @@ const findOneSelected = async (model, query, selectOptions) => {
     where: query,
   });
 };
-
 module.exports.createOne = createOne;
 module.exports.createMany = createMany;
 module.exports.update = update;

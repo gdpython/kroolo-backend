@@ -1,7 +1,17 @@
+/**
+ * index.js
+ * @description Seeder functions for MongoDB models.
+ */
+
 const model = require('../../model/mongoose');
 const mongooseService = require('../../utils/mongooseService');
-const { country, roles} = require('../../data/index');
-const { replaceAll } = require('../../utils/common');
+const { country, roles } = require('../../data/index');
+const { replaceAll, catchAll } = require('../../utils/common');
+
+/**
+ * Seed the 'Country' model with data if it doesn't exist.
+ * @function
+ */
 async function countrySeed() {
     try {
         let countryToBeInserted = {};
@@ -9,11 +19,19 @@ async function countrySeed() {
         if (!countryToBeInserted) {
             const result = await mongooseService.createMany(model.Country, country);
             if (result) console.info('Country model seeded 🍺');
+        } else {
+            console.info('Country is up to date 🍺');
         }
-    } catch ({message}) {
-        console.log('Country seeder failed due to ', message);
+    } catch ({ message }) {
+        catchAll({ message: `Country seeder failed due to ${message}` });
     }
 }
+
+/**
+ * Seed the 'Route' model with data if routes are provided.
+ * @function
+ * @param {Object[]} routes - An array of route objects.
+ */
 async function routeSeed(routes) {
     try {
         if (routes) {
@@ -39,13 +57,18 @@ async function routeSeed(routes) {
                 if (result) console.info('Route model seeded 🍺');
                 else console.info('Route seeder failed.');
             } else {
-                console.info('Route is upto date 🍺');
+                console.info('Route is up to date 🍺');
             }
         }
-    } catch (error) {
-        console.log('Route seeder failed due to ', error.message);
+    } catch ({ message }) {
+        catchAll({ message: `Route seeder failed due to ${message}` });
     }
 }
+
+/**
+ * Seed the 'Role' model with data if it doesn't exist.
+ * @function
+ */
 async function roleSeed() {
     try {
         let roleBeInserted = {};
@@ -53,15 +76,23 @@ async function roleSeed() {
         if (!roleBeInserted) {
             const result = await mongooseService.createMany(model.Role, roles);
             if (result) console.info('Role model seeded 🍺');
-
+        } else {
+            console.info('Role is up to date 🍺');
         }
-    } catch ({message}) {
-        console.log('Roles seeder failed due to ', message);
+    } catch ({ message }) {
+        catchAll({ message: `Roles seeder failed due to ${message}` });
     }
 }
+
+/**
+ * Seed data for various models.
+ * @function
+ * @param {Object[]} allRegisterRoutes - An array of registered routes.
+ */
 async function seedData(allRegisterRoutes) {
     await countrySeed();
     await routeSeed(allRegisterRoutes);
     await roleSeed();
-};
+}
+
 module.exports = seedData;

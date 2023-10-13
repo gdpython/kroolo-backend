@@ -1,6 +1,6 @@
 /**
- * checkRolePermission.js
- * @description :: middleware that checks access of APIs for logged-in user
+ * @file Middleware that checks access of APIs for logged-in user using Sequelize.
+ * @module middleware/sequalize/checkRolePermission
  */
 
 const model = require('../model/sequalize');
@@ -8,12 +8,12 @@ const sqlService = require('../utils/sqlService');
 const { replaceAll } = require('../utils/common');
 
 /**
- * @description : middleware for authentication with role and permission.
- * @param {obj} req : request of route.
- * @param {obj} res : response of route.
- * @param {callback} next : executes the next middleware succeeding the current middleware.
+ * Middleware for authentication with role and permission.
+ *
+ * @param {object} req - The request object of the route.
+ * @param {object} res - The response object of the route.
+ * @param {Function} next - Executes the next middleware succeeding the current middleware.
  */
-
 const checkRolePermission = async (req, res, next) => {
   try {
     if (!req.user) {
@@ -25,11 +25,11 @@ const checkRolePermission = async (req, res, next) => {
       isActive: true,
       isDeleted: false,
     },
-      { attributes: ['roleId'] });//we using id so change attr 
+      { attributes: ['roleId'] });
     if (rolesOfUser && rolesOfUser.length) {
-      rolesOfUser = [...new Set((rolesOfUser).map((item) => item.roleId))];
+      rolesOfUser = [...new Set(rolesOfUser.map((item) => item.roleId))];
       const route = await sqlService.findOne(model.projectRoute, {
-        route_name: replaceAll((req.route.path.toLowerCase()), '/', '_'),
+        route_name: replaceAll(req.route.path.toLowerCase(), '/', '_'),
         uri: req.route.path.toLowerCase(),
       });
       if (route) {
@@ -40,15 +40,14 @@ const checkRolePermission = async (req, res, next) => {
             { isActive: true },
             { isDeleted: false },
           ],
-  
         });
         if (allowedRoute && allowedRoute.length) {
           next();
         } else {
-          return res.unAuthorized({ message: 'You are not having permission to access this route!' });
+          return res.unAuthorized({ message: 'You do not have permission to access this route!' });
         }
       } else {
-        return res.unAuthorized({ message: 'You are not having permission to access this route!' });
+        return res.unAuthorized({ message: 'You do not have permission to access this route!' });
       }
     } else {
       next();
@@ -57,6 +56,5 @@ const checkRolePermission = async (req, res, next) => {
     return res.unAuthorized({ message: 'Something went wrong...' });
   }
 };
-
 
 module.exports = { checkRolePermission };

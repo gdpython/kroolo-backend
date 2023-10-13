@@ -1,7 +1,36 @@
 /**
  * index.js
- * @description :: exports all the models and its relationships among other models
+ * @description Exports all the models and their relationships among other models.
  */
+
+/**
+ * Represents the database object containing all models and their relationships.
+ * @typedef {object} Database
+ * @property {sequelize} sequelize - The Sequelize database connection.
+ * @property {Model} user - The User model.
+ * // Define other model properties here...
+ */
+
+/**
+ * Sequelize database connection.
+ * @typedef {object} sequelize
+ */
+
+/**
+ * Sequelize model for the User.
+ * @typedef {sequelize.Model<User>} Model
+ */
+
+/**
+ * Sequelize model for the User.
+ * @typedef {object} User
+ * @property {string} _id - The unique ID of the user.
+ * @property {string} fullName - The full name of the user.
+ * @property {string} email - The email address of the user.
+ * // Include other user properties here...
+ */
+
+// Define other model typedefs and properties as needed...
 
 const { sequelize: dbConnection } = require('../../config/dbConnection');
 const db = {};
@@ -9,23 +38,6 @@ db.sequelize = dbConnection;
 
 db.user = require('./authentication/User');
 
-
-//demo relations btw two schemas
-/* db.menu.belongsTo(db.adminUserRoles, {
-    foreignKey: 'roleId',
-    as: 'roleData',
-    sourceKey: 'id'
-});
-db.subscriptionPlan.hasOne(db.purchasePlan, {
-    foreignKey: 'planId',
-    as: 'purchasePlanData',
-    sourceKey: 'id'
-});
-db.staffManagement.hasMany(db.assignSubject, {
-    foreignKey: 'teacherId',
-    as: 'assignSubjectData',
-    sourceKey: 'id'
-});
- */
+// Define model relationships and associations here...
 
 module.exports = db;
