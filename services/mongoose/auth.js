@@ -5,13 +5,14 @@
 
 const {
   JWT,
-  FORGOT_PASSWORD_WITH,
   ENVIRONMENT,
   COGNITO_CLIENT,
   COGNITO_PASSWORD_AUTH,
 } = require("../../constants/authConstant");
+const { EMAIL_VERIFY } = require("../../constants/emailConstants");
 const {
   InitiateAuthCommand,
+  AdminCreateUserCommand,
 } = require("@aws-sdk/client-cognito-identity-provider"); // CommonJS import
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -23,6 +24,8 @@ const {
   findOne,
   updateOne,
 } = require("../../utils/mongooseService");
+const { generatePassword } = require("../../utils/common");
+const { sendMail } = require("../email");
 
 /**
  * @description: service to generate JWT token for authentication.
@@ -88,9 +91,17 @@ const login = async (username, password, modelName, ip) => {
         lastLoginDate: new Date(),
       };
       await updateOne(modelName, { _id: userData._id }, updateData);
-      const orgnaization = await findOne(model.Organizations, {_id:userData._id});
-      let accessToken = await generateToken({orgId:orgnaization._id,cognitoToken: AccessToken}, JWT.CLIENT_SECRET);
-      let refershToken = await generateToken({orgId:orgnaization._id,cognitoToken: RefreshToken}, JWT.CLIENT_SECRET);
+      const orgnaization = await findOne(model.Organizations, {
+        _id: userData._id,
+      });
+      let accessToken = await generateToken(
+        { orgId: orgnaization._id, cognitoToken: AccessToken },
+        JWT.CLIENT_SECRET
+      );
+      let refershToken = await generateToken(
+        { orgId: orgnaization._id, cognitoToken: RefreshToken },
+        JWT.CLIENT_SECRET
+      );
       let expireJWT = dayjs().add(JWT.EXPIRES_IN, "second").toISOString();
 
       createUserToken(model.UserToken, {
@@ -116,6 +127,82 @@ const login = async (username, password, modelName, ip) => {
 };
 
 /**
+ * @description: service for user SignUp.
+ * @param {string} req - User's signup request for origin.
+ * @param {string} email - User's email.
+ * @param {string} modelName - Model name for user data (Mongoose model).
+ * @param {string} ip - User's IP address.
+ * @returns {Object} - Authentication status: { flag, data }.
+ */
+
+const signUp = async (req, email, modelName, ip) => {
+  try {
+    const query = { username: email };
+    const user = await findOne(modelName, query);
+    if (user) {
+      return {
+        flag: true,
+        data: "User already exists",
+      };
+    }
+    let token = uuid();
+    let expires = dayjs().add(EMAIL_VERIFY.EXPIRE_TIME, "minute").toISOString();
+
+    const password = generatePassword(20);
+    const input = {
+      UserPoolId: process.env.COGNITO_USER_POOL_ID,
+      Username: email,
+      DesiredDeliveryMediums: ["EMAIL"],
+      TemporaryPassword: password,
+      MessageAction: "SUPPRESS",
+      UserAttributes: [
+        {
+          Name: "email",
+          Value: email,
+        },
+      ],
+    };
+    const command = new AdminCreateUserCommand(input);
+    const response = await COGNITO_CLIENT.send(command);
+    if (response.User) {
+      const createdUser = await createOne(modelName, {
+        ...query,
+        email,
+        password,
+        cogintoStatus: response.User.UserStatus,
+      });
+      let updateData = {
+        emailVerifyCode: token,
+        emailVerifyExpiryTime: expires,
+      };
+      await updateOne(modelName, { _id: createdUser._id }, updateData);
+      let mailObj = {
+        subject: EMAIL_VERIFY.SUBJECT,
+        to: email,
+        template: "/views/email/EmailVerification.ejs",
+        data: {
+          link: `${req}/verifyLink/` + token,
+        },
+      };
+      const isEmailSend = await sendMail(mailObj);
+      if (isEmailSend) {
+        return {
+          flag: false,
+          data: createdUser,
+        };
+      } else {
+        return {
+          flag: true,
+          data: createdUser,
+        };
+      }
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+/**
  * @description: service for createUserToken.
  * @param {string} modelName - Model name for user data (Mongoose model).
  * @param {Object} user - Login user object.
@@ -126,7 +213,6 @@ const login = async (username, password, modelName, ip) => {
 
 const createUserToken = async (modelName, ...data) => {
   const createdUserToken = await createOne(modelName, data);
-  console.log(createdUserToken, "userTokenData");
   if (!createdUserToken) {
     return {
       flag: true,
@@ -158,9 +244,7 @@ const forgotUser = async (
 ) => {
   try {
     let token = uuid();
-    let expires = dayjs()
-      .add(FORGOT_PASSWORD_WITH.EXPIRE_TIME, "minute")
-      .toISOString();
+    let expires = dayjs().add(EMAIL_VERIFY.EXPIRE_TIME, "minute").toISOString();
     let where = getWhere;
     const user = await modelName.findOne(where).select(attributes.join(" "));
 
@@ -489,9 +573,7 @@ const changePassword = async (password, id, oldPassword, modelName) => {
 const forgotPassword = async (modelName, where, getViewType, attributes) => {
   try {
     let token = uuid();
-    let expires = dayjs()
-      .add(FORGOT_PASSWORD_WITH.EXPIRE_TIME, "minute")
-      .toISOString();
+    let expires = dayjs().add(EMAIL_VERIFY.EXPIRE_TIME, "minute").toISOString();
     const userCheck = await modelName.findOne(where, attributes);
 
     if (!userCheck) {
@@ -553,6 +635,7 @@ const forgotPassword = async (modelName, where, getViewType, attributes) => {
 
 module.exports = {
   login,
+  signUp,
   forgotUser,
   createPassword,
   submitPassword,

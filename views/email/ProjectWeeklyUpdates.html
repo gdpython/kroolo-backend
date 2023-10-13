@@ -1,0 +1,1827 @@
+<html>
+
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Salsa&display=swap" rel="stylesheet">
+
+    <style>
+        .logo-size {
+            width: 200px;
+            height: 38px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block
+        }
+
+        .logo-container {
+            padding: 24px;
+
+            box-sizing: border-box;
+        }
+
+        .third-container {
+
+            padding: 32px 24px;
+            box-sizing: border-box;
+            gap: 32px;
+        }
+
+        p {
+            margin-block-start: 1px;
+            margin-block-end: 1px;
+        }
+
+        .center-text {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            color: #475467;
+
+        }
+
+        .center-text-1 {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            color: #475467;
+            margin-bottom: 20px;
+
+        }
+
+        .center-text-3 {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            color: #475467;
+            margin-bottom: 35px;
+
+        }
+
+
+        .center-text-1 a[href] {
+            color: #f63d68;
+            text-decoration: none;
+        }
+
+        .second-container {
+            box-sizing: border-box;
+            gap: 32px;
+            padding: 0px 24px;
+            border-radius: 4px 4px 0px 0px;
+        }
+
+        .container {
+            box-sizing: border-box;
+            width: 632px;
+            margin: auto;
+        }
+
+        .project-detail-container-1 {
+            border-radius: 8px;
+            border: 1px solid #EAECF0;
+            padding: 12px;
+            /* height: 330px; */
+        }
+
+        .project-detail-container-2 {
+            margin-top: 12px;
+        }
+
+
+        .project-details {
+            border-radius: 12px;
+            border: 1px solid #EAECF0;
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .table-container {
+            width: 552px;
+            white-space: nowrap;
+        }
+
+        .overdueTask-heading {
+            height: 42px;
+            background: #F9FAFB;
+            border-bottom: 1px solid #EAECF0;
+            width: 100%;
+
+        }
+
+
+        .overdueTask-heading-1 {
+            border-top: 1px solid #eaecf0;
+            height: 72px;
+        }
+
+        .task-name {
+            padding: 12px 24px;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            font-style: normal;
+            color: #475467;
+            font-family: 'Roboto';
+            width: 100px;
+            text-align: start;
+            border-bottom: 1px solid #EAECF0;
+        }
+
+        .task-name-1 {
+            padding: 26px 24px;
+            display: inline-block;
+            font-size: 15px;
+            font-weight: 400;
+            font-style: normal;
+            color: #101828;
+            font-family: 'Roboto';
+            width: 100px;
+            line-height: 20px;
+
+        }
+
+        .status-name {
+            padding: 12px 24px;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            font-style: normal;
+            color: #475467;
+            font-family: 'Roboto';
+            width: 80px;
+            text-align: start;
+            border-bottom: 1px solid #EAECF0;
+        }
+
+
+        .status-name-1 {
+            padding: 26px 24px;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            font-style: normal;
+            color: #475467;
+            font-family: 'Roboto';
+            width: 80px;
+        }
+
+        .priority-name {
+            padding: 12px 24px;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            font-style: normal;
+            color: #475467;
+            font-family: 'Roboto';
+            width: 60px;
+            text-align: start;
+            border-bottom: 1px solid #EAECF0;
+
+        }
+
+        .priority-name-1 {
+            padding: 26px 24px;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            font-style: normal;
+            color: #475467;
+            font-family: 'Roboto';
+            width: 60px;
+        }
+
+        .taskprogress-name {
+            padding: 12px 24px;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            font-style: normal;
+            color: #475467;
+            font-family: 'Roboto';
+            width: 120px;
+            text-align: start;
+            border-bottom: 1px solid #EAECF0;
+
+        }
+
+        .taskprogress-name-1 {
+            padding: 26px 24px;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            font-style: normal;
+            color: #475467;
+            font-family: 'Roboto';
+            width: 120px;
+        }
+
+        .proj-status {
+            background: #F1F5F0;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: 400;
+            border-radius: 16px;
+            text-align: center;
+            color: #333;
+        }
+
+        .proj-priority {
+            background: #FCEC9C;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: 400;
+            border-radius: 16px;
+            text-align: center;
+            color: #333;
+        }
+
+
+
+        .text-1 {
+            font-family: 'Arial';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 26px;
+            line-height: 38px;
+            margin-bottom: 24px;
+            width: 100%;
+            text-align: center;
+            color: #2D2F34;
+        }
+
+        .myimg {
+            width: 217.425px;
+            height: 200px;
+            margin: auto;
+            margin-bottom: 24px;
+
+        }
+
+        .mytextmain {
+            margin-bottom: none !important;
+        }
+
+        .main-img {
+            width: 217.425px;
+            height: 200px;
+        }
+
+        .text-2 {
+            color: #2D2F34;
+            font-family: 'Arial';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .text-3 {
+            font-family: 'Arial';
+            font-style: normal;
+            color: #2D2F34;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 400;
+            width: 100%;
+        }
+
+        .text-4 {
+            font-family: 'Arial';
+            font-style: normal;
+            color: #344054;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 400;
+            margin-top: 20px;
+        }
+
+        .text-5 {
+            color: #2D2F34;
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: 20px;
+        }
+
+        .mytextmain {
+            font-family: 'Arial';
+            font-style: normal;
+            color: #2D2F34;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 400;
+            margin-top: 25px;
+        }
+
+        .text-extra {
+            color: #2D2F34;
+            font-family: 'Arial';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 20px;
+        }
+
+        .mybtn {
+            margin-top: 24px;
+            margin-bottom: 24px;
+            padding: 10px 18px;
+            width: 200px;
+            height: 44px;
+            background: #F63D68;
+            border: 1px solid #F63D68;
+            box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+            color: #ffffff;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 24px;
+            border-radius: 50px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        .mybtn-1 {
+            margin-top: 24px;
+            padding: 10px 18px;
+            width: 200px;
+            height: 44px;
+            background: #F63D68;
+            border: 1px solid #F63D68;
+            box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+            color: #ffffff;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 24px;
+            border-radius: 50px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        .second-sec-para {
+            font-family: 'Arial';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 24px;
+
+            color: #344054;
+        }
+
+        .icon-container-bottom {
+            width: 16px;
+            height: 16px;
+        }
+
+        .bottom-text {
+            font-family: 'Salsa', cursive;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            color: #ACB1B9;
+
+        }
+
+        .img-background {
+            padding: 6px;
+            border-radius: 12px;
+            background: #F4F3FF;
+            float: left;
+            margin-right: 12px;
+        }
+
+
+        .color-highlight {
+            color: #F63D68;
+        }
+
+        .ulist {
+            display: inline;
+        }
+
+        .ulist li {
+            display: inline;
+        }
+
+        .social-icons {
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        /* .social-icons span {
+            margin-right: 10px;
+        } */
+
+        .bottom-container {
+            color: #ACB1B9;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            font-family: 'Roboto';
+            height: 135px;
+        }
+
+        .bottom-text {
+            position: absolute;
+
+        }
+
+
+        .icons-background {
+            width: 32;
+            height: 32;
+            border-radius: 50%;
+            border: 1px solid #ACB1B9;
+            text-align: center;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+
+        .circle-img {
+            margin-top: 9px;
+        }
+
+        .row {
+            width: 100%;
+        }
+
+
+        .div-1 {
+            border-radius: 50%;
+            border: 1px solid #FFFAEB;
+            background: #FFFAEB;
+            position: relative;
+            width: 75px;
+            height: 75px;
+            display: block;
+            margin-bottom: 12px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .div-2 {
+            border-radius: 50%;
+            background: #FEF0C7;
+            border: 1px solid #FEF0C7;
+            position: absolute;
+            /* padding: 12px; */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+
+        }
+
+        .column-1 {
+            border-radius: 6px;
+            border: 1px solid #EAECF0;
+            background-color: #FFF;
+            /* Set your desired background color */
+            color: white;
+            text-align: center;
+            padding: 32px;
+            width: 35%;
+            display: inline-block;
+            margin-right: 31px;
+            height: 127px;
+
+        }
+
+        .column-2 {
+            border-radius: 6px;
+            border: 1px solid #EAECF0;
+            background-color: #FFF;
+            /* Set your desired background color */
+            color: white;
+            text-align: center;
+            padding: 32px;
+            width: 35%;
+            display: inline-block;
+            height: 127px;
+        }
+
+        .col-1-text {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: "Roboto";
+            font-style: normal;
+            color: #475467;
+            margin-bottom: 6px;
+        }
+
+
+        .col-1-text-1 {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: "Roboto";
+            font-style: normal;
+            color: #475467;
+            margin-bottom: 6px;
+        }
+
+        .col-1-number {
+            display: block;
+            font-size: 24px;
+            font-weight: 600;
+            font-style: normal;
+            font-family: "Roboto";
+            color: #101828;
+        }
+
+
+        .progress {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            border: none;
+            border-radius: 10px;
+            height: 10px;
+            margin-bottom: 2px;
+        }
+
+        .progress::-webkit-progress-bar {
+            background-color: #f0f0f0;
+        }
+
+        .progress::-webkit-progress-bar,
+        .progress::-webkit-progress-value {
+            border-radius: 10px;
+        }
+
+        .progress::-moz-progress-bar {
+            border-radius: 10px;
+        }
+
+        .progress1::-webkit-progress-value {
+            background: #06a333;
+        }
+
+
+        @media screen and (max-width:375px) {
+            .bottom-text {
+                font-size: 11px;
+            }
+
+            .social-icons span img {
+                width: 15px;
+                height: 15px;
+                margin-top: 3px;
+
+            }
+
+            .social-icons span {
+                margin-right: 5px;
+
+            }
+
+            .myimg {
+                width: 80%;
+            }
+
+            .main-img {
+                width: 100%;
+            }
+
+
+
+        }
+
+        @media screen and (max-width:640px) {
+            .container {
+                width: 640px;
+                margin: auto;
+
+            }
+
+        }
+
+        @media screen and (min-width:320px) and (max-width:640px) {
+            .container {
+                width: 100%;
+
+            }
+
+        }
+
+        @media screen and (max-width:320px) {
+            .container {
+                width: 100%;
+
+            }
+
+        }
+
+        @media screen and (max-width:421px) {
+            .logo-container {
+                padding: 21px;
+
+            }
+
+        }
+
+        @media screen and (max-width:421px) {
+            .second-container {
+                padding: 21px;
+
+            }
+
+        }
+
+        @media screen and (max-width:421px) {
+            .third-container {
+                padding: 21px;
+
+            }
+
+        }
+
+        @media (max-width: 640px) {
+            .table-container {
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width:432px) {
+            .col-1-text {
+                height: 28px;
+
+            }
+
+        }
+
+        @media (max-width: 640px) {
+            .column-1 {
+                width: 34%;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .column-2 {
+                width: 34%;
+            }
+        }
+
+        @media (max-width: 639px) {
+            .column-1 {
+                width: 34%;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 639px) {
+            .column-2 {
+                width: 34%;
+            }
+        }
+
+        @media (max-width: 629px) {
+            .column-1 {
+                width: 178px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 629px) {
+            .column-2 {
+                width: 178px;
+            }
+        }
+
+        @media (max-width: 628px) {
+            .column-1 {
+                width: 175px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 629px) {
+            .column-2 {
+                width: 175px;
+            }
+        }
+
+        @media (max-width: 626px) {
+            .column-1 {
+                width: 174px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 626px) {
+            .column-2 {
+                width: 174px;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .column-1 {
+                width: 173px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .column-2 {
+                width: 173px;
+            }
+        }
+
+        @media (max-width: 619px) {
+            .column-1 {
+                width: 171px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 619px) {
+            .column-2 {
+                width: 171px;
+            }
+        }
+
+        @media (max-width: 614px) {
+            .column-1 {
+                width: 170px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 614px) {
+            .column-2 {
+                width: 170px;
+            }
+        }
+
+        @media (max-width: 612px) {
+            .column-1 {
+                width: 168px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 612px) {
+            .column-2 {
+                width: 168px;
+            }
+        }
+
+        @media (max-width: 608px) {
+            .column-1 {
+                width: 166px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 608px) {
+            .column-2 {
+                width: 166px;
+            }
+        }
+
+        @media (max-width: 604px) {
+            .column-1 {
+                width: 164px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 604px) {
+            .column-2 {
+                width: 164px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .column-1 {
+                width: 162px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .column-2 {
+                width: 162px;
+            }
+        }
+
+        @media (max-width: 596px) {
+            .column-1 {
+                width: 160px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 596px) {
+            .column-2 {
+                width: 160px;
+            }
+        }
+
+
+        @media (max-width: 592px) {
+            .column-1 {
+                width: 158px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 592px) {
+            .column-2 {
+                width: 158px;
+            }
+        }
+
+        @media (max-width: 588px) {
+            .column-1 {
+                width: 156px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 588px) {
+            .column-2 {
+                width: 156px;
+            }
+        }
+
+
+        @media (max-width: 584px) {
+            .column-1 {
+                width: 154px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 584px) {
+            .column-2 {
+                width: 154px;
+            }
+        }
+
+
+        @media (max-width: 580px) {
+            .column-1 {
+                width: 152px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 580px) {
+            .column-2 {
+                width: 152px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .column-1 {
+                width: 150px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .column-2 {
+                width: 150px;
+            }
+        }
+
+        @media (max-width: 572px) {
+            .column-1 {
+                width: 148px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 572px) {
+            .column-2 {
+                width: 148px;
+            }
+        }
+
+
+        @media (max-width: 568px) {
+            .column-1 {
+                width: 146px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 568px) {
+            .column-2 {
+                width: 146px;
+            }
+        }
+
+        @media (max-width: 564px) {
+            .column-1 {
+                width: 144px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 564px) {
+            .column-2 {
+                width: 144px;
+            }
+        }
+
+
+        @media (max-width: 560px) {
+            .column-1 {
+                width: 142px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .column-2 {
+                width: 142px;
+            }
+        }
+
+        @media (max-width: 556px) {
+            .column-1 {
+                width: 140px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 556px) {
+            .column-2 {
+                width: 140px;
+            }
+        }
+
+        @media (max-width: 552px) {
+            .column-1 {
+                width: 138px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 552px) {
+            .column-2 {
+                width: 138px;
+            }
+        }
+
+        @media (max-width: 548px) {
+            .column-1 {
+                width: 136px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 548px) {
+            .column-2 {
+                width: 136px;
+            }
+        }
+
+        @media (max-width: 544px) {
+            .column-1 {
+                width: 134px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 544px) {
+            .column-2 {
+                width: 134px;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .column-1 {
+                width: 132px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .column-2 {
+                width: 132px;
+            }
+        }
+
+        @media (max-width: 536px) {
+            .column-1 {
+                width: 130px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 536px) {
+            .column-2 {
+                width: 130px;
+            }
+        }
+
+        @media (max-width: 532px) {
+            .column-1 {
+                width: 128px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 532px) {
+            .column-2 {
+                width: 128px;
+            }
+        }
+
+        @media (max-width: 528px) {
+            .column-1 {
+                width: 126px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 528px) {
+            .column-2 {
+                width: 126px;
+            }
+        }
+
+        @media (max-width: 524px) {
+            .column-1 {
+                width: 124px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 524px) {
+            .column-2 {
+                width: 124px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .column-1 {
+                width: 122px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .column-2 {
+                width: 122px;
+            }
+        }
+
+
+        @media (max-width: 516px) {
+            .column-1 {
+                width: 120px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 516px) {
+            .column-2 {
+                width: 120px;
+            }
+        }
+
+        @media (max-width: 512px) {
+            .column-1 {
+                width: 118px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 512px) {
+            .column-2 {
+                width: 118px;
+            }
+        }
+
+        @media (max-width: 508px) {
+            .column-1 {
+                width: 116px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 508px) {
+            .column-2 {
+                width: 116px;
+            }
+        }
+
+        @media (max-width: 504px) {
+            .column-1 {
+                width: 114px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 504px) {
+            .column-2 {
+                width: 114px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .column-1 {
+                width: 112px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .column-2 {
+                width: 112px;
+            }
+        }
+
+        @media (max-width: 496px) {
+            .column-1 {
+                width: 110px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 496px) {
+            .column-2 {
+                width: 110px;
+            }
+        }
+
+        @media (max-width: 492px) {
+            .column-1 {
+                width: 108px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 492px) {
+            .column-2 {
+                width: 108px;
+            }
+        }
+
+        @media (max-width: 490px) {
+            .column-1 {
+                width: 106px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 490px) {
+            .column-2 {
+                width: 106px;
+            }
+        }
+
+        @media (max-width: 484px) {
+            .column-1 {
+                width: 104px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 484px) {
+            .column-2 {
+                width: 104px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .column-1 {
+                width: 102px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .column-2 {
+                width: 102px;
+            }
+        }
+
+        @media (max-width: 476px) {
+            .column-1 {
+                width: 100px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 476px) {
+            .column-2 {
+                width: 100px;
+            }
+        }
+
+        @media (max-width: 472px) {
+            .column-1 {
+                width: 98px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 472px) {
+            .column-2 {
+                width: 98px;
+            }
+        }
+
+        @media (max-width: 468px) {
+            .column-1 {
+                width: 96px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 468px) {
+            .column-2 {
+                width: 96px;
+            }
+        }
+
+        @media (max-width: 464px) {
+            .column-1 {
+                width: 94px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 464px) {
+            .column-2 {
+                width: 94px;
+            }
+        }
+
+        @media (max-width: 460px) {
+            .column-1 {
+                width: 92px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 460px) {
+            .column-2 {
+                width: 92px;
+            }
+        }
+
+        @media (max-width: 456px) {
+            .column-1 {
+                width: 90px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 456px) {
+            .column-2 {
+                width: 90px;
+            }
+        }
+
+        @media (max-width: 452px) {
+            .column-1 {
+                width: 88px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 452px) {
+            .column-2 {
+                width: 88px;
+            }
+        }
+
+        @media (max-width: 448px) {
+            .column-1 {
+                width: 86px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 448px) {
+            .column-2 {
+                width: 86px;
+            }
+        }
+
+        @media (max-width: 444px) {
+            .column-1 {
+                width: 84px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 444px) {
+            .column-2 {
+                width: 84px;
+            }
+        }
+
+        @media (max-width: 440px) {
+            .column-1 {
+                width: 82px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 440px) {
+            .column-2 {
+                width: 82px;
+            }
+        }
+
+        @media (max-width: 436px) {
+            .column-1 {
+                width: 80px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 436px) {
+            .column-2 {
+                width: 80px;
+            }
+        }
+
+        @media (max-width: 432px) {
+            .column-1 {
+                width: 78px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 432px) {
+            .column-2 {
+                width: 78px;
+            }
+        }
+
+        @media (max-width: 428px) {
+            .column-1 {
+                width: 76px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 428px) {
+            .column-2 {
+                width: 76px;
+            }
+        }
+
+
+        @media (max-width: 424px) {
+            .column-1 {
+                width: 74px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 424px) {
+            .column-2 {
+                width: 74px;
+            }
+        }
+
+
+        @media (max-width: 420px) {
+            .column-1 {
+                width: 72px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .column-2 {
+                width: 72px;
+            }
+        }
+
+        @media (max-width: 410px) {
+            .column-1 {
+                width: 70px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 410px) {
+            .column-2 {
+                width: 70px;
+            }
+        }
+
+        @media (max-width: 406px) {
+            .column-1 {
+                width: 68px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 406px) {
+            .column-2 {
+                width: 68px;
+            }
+        }
+
+        @media (max-width: 402px) {
+            .column-1 {
+                width: 66px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 402px) {
+            .column-2 {
+                width: 66px;
+            }
+        }
+
+        @media (max-width: 398px) {
+            .column-1 {
+                width: 64px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 398px) {
+            .column-2 {
+                width: 64px;
+            }
+        }
+
+        @media (max-width: 394px) {
+            .column-1 {
+                width: 62px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 394px) {
+            .column-2 {
+                width: 62px;
+            }
+        }
+
+        @media (max-width: 390px) {
+            .column-1 {
+                width: 60px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 390px) {
+            .column-2 {
+                width: 60px;
+            }
+        }
+
+
+        @media (max-width: 386px) {
+            .column-1 {
+                width: 58px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 386px) {
+            .column-2 {
+                width: 58px;
+            }
+        }
+
+        @media (max-width: 382px) {
+            .column-1 {
+                width: 56px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 382px) {
+            .column-2 {
+                width: 56px;
+            }
+        }
+
+        @media (max-width: 378px) {
+            .column-1 {
+                width: 54px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 378px) {
+            .column-2 {
+                width: 54px;
+            }
+        }
+
+
+        @media (max-width: 374px) {
+            .column-1 {
+                width: 52px;
+                margin-right: 32px;
+            }
+        }
+
+        @media (max-width: 374px) {
+            .column-2 {
+                width: 52px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class=" logo-container">
+            <img class="logo-size" src="https://kroolo-public-images.s3.ap-south-1.amazonaws.com/emailTemplate/header.svg"
+                alt="">
+        </div>
+        <div class="second-container">
+            <div class="myimg">
+                <img src="https://kroolo-public-images.s3.ap-south-1.amazonaws.com/emailTemplate/WeeklyUpdates.svg" alt="img" class="main-img">
+            </div>
+            <p class="text-1">Weekly Update of your Projects</p>
+            <p class="second-sec-para">If you are facing any issue, please contact your system administrator or manager.
+            </p>
+
+
+            <div class="project-detail-container-1">
+                <div class="project-details">
+                    <table class="table-container">
+                        <thead class="overdueTask-heading">
+                            <tr>
+                                <th scope="col" class="task-name">Project Name</th>
+                                <th scope="col" class="status-name">Status</th>
+                                <th scope="col" class="priority-name">Priority</th>
+                                <th scope="col" class="taskprogress-name">Task Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody class="overdueTask-heading-1">
+                            <tr>
+                                <td class="task-name-1">Kroolo One</td>
+                                <td class="status-name-1">
+                                    <div class="proj-status">
+                                        Not Started
+
+                                    </div>
+                                </td>
+                                <td class="priority-name-1">
+                                    <div class="proj-priority">
+                                        Medium
+
+                                    </div>
+                                </td>
+                                <td class="taskprogress-name-1">
+                                    <div style="display: inline-block; margin-right: 12px; width: 93px;">
+                                        <progress class="progress progress1" max="100" value="0"></progress>
+                                    </div>
+                                    <div
+                                        style="display: inline-block; font-size: 14px; font-weight: 500; font-family: 'Roboto';">
+                                        0%
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="project-detail-container-2">
+                    <div class="row">
+                        <div class="column-1">
+                            <div class="div-1">
+                                <div class="div-2">
+                                    <img src="https://kroolo-public-images.s3.ap-south-1.amazonaws.com/emailTemplate/file.svg" style="margin-top: 12px;" alt="img">
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-1-text">
+                                Open Tasks
+                            </div>
+                            <div class="col-1-number">
+                                10
+                            </div>
+
+
+                        </div>
+
+                        <div class="column-2">
+                            <div class="div-1">
+                                <div class="div-2">
+                                    <img src="https://kroolo-public-images.s3.ap-south-1.amazonaws.com/emailTemplate/file.svg" style="margin-top: 12px;" alt="img">
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-1-text-1">
+                                OverDue Tasks
+                            </div>
+
+                            <div class="col-1-number">
+                                4
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+
+
+            <Button class="mybtn">
+                <a href={{link}} style="text-decoration: none; color: #ffffff;">Take me to Project</a>
+            </Button>
+
+            <div class="project-detail-container-1">
+                <div class="project-details">
+                    <table class="table-container">
+                        <thead class="overdueTask-heading">
+                            <tr>
+                                <th scope="col" class="task-name">Project Name</th>
+                                <th scope="col" class="status-name">Status</th>
+                                <th scope="col" class="priority-name">Priority</th>
+                                <th scope="col" class="taskprogress-name">Task Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody class="overdueTask-heading-1">
+                            <tr>
+                                <td class="task-name-1">Kroolo One</td>
+                                <td class="status-name-1">
+                                    <div class="proj-status">
+                                        Not Started
+
+                                    </div>
+                                </td>
+                                <td class="priority-name-1">
+                                    <div class="proj-priority">
+                                        Medium
+
+                                    </div>
+                                </td>
+                                <td class="taskprogress-name-1">
+                                    <div style="display: inline-block; margin-right: 12px; width: 93px;">
+                                        <progress class="progress progress1" max="100" value="40"></progress>
+                                    </div>
+                                    <div
+                                        style="display: inline-block; font-size: 14px; font-weight: 500; font-family: 'Roboto';">
+                                        40%
+                                    </div>
+
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="project-detail-container-2">
+                    <div class="row">
+                        <div class="column-1">
+                            <div class="div-1">
+                                <div class="div-2">
+                                    <img src="https://kroolo-public-images.s3.ap-south-1.amazonaws.com/emailTemplate/file.svg" style="margin-top: 12px;" alt="img">
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-1-text">
+                                Open Tasks
+                            </div>
+                            <div class="col-1-number">
+                                10
+                            </div>
+
+
+                        </div>
+
+                        <div class="column-2">
+                            <div class="div-1">
+                                <div class="div-2">
+                                    <img src="https://kroolo-public-images.s3.ap-south-1.amazonaws.com/emailTemplate/file.svg" style="margin-top: 12px;" alt="img">
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-1-text-1">
+                                OverDue Tasks
+                            </div>
+
+                            <div class="col-1-number">
+                                4
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+            <Button class="mybtn-1">
+                <a href={{link}} style="text-decoration: none; color: #ffffff;">Take me to Project</a>
+            </Button>
+
+
+        </div>
+
+        <div class="third-container">
+
+            <div class="bottom-container">
+                <div class="social-icons">
+
+                    <a href="https://qastage01.kroolo.com/" style="text-decoration: none;">
+                        <div class="icons-background" style="margin-top: 2px;"><img class="circle-img"
+                                src="https://kroolo-public-images.s3.ap-south-1.amazonaws.com/emailTemplate/Facebook.svg"
+                                alt="" height="13px" width="7.2px"></div>
+                    </a>
+<!-- 
+                    <a href="https://qastage01.kroolo.com/" style="text-decoration: none;">
+                        <div class="icons-background"><img class="circle-img"
+                                src="https://kroolo-public-images.s3.ap-south-1.amazonaws.com/emailTemplate/Insta.svg" alt=""
+                                height="12px" width="12px">
+                        </div>
+                    </a> -->
+
+                    <a href="https://qastage01.kroolo.com/" style="text-decoration: none;"><div class="icons-background"> <img class="circle-img"
+                            src="https://kroolo-public-images.s3.ap-south-1.amazonaws.com/emailTemplate/Twitter.svg" alt=""
+                            height="12px" width="12px"></div>
+                    </a> 
+
+                    <a href="https://qastage01.kroolo.com/" style="text-decoration: none;">
+                    <div class="icons-background"><img class="circle-img"
+                            src="https://kroolo-public-images.s3.ap-south-1.amazonaws.com/emailTemplate/Linkedin.svg" alt=""
+                            height="12px" width="12px"></div>
+                    </a>
+
+                </div>
+
+
+                <p style="margin-bottom: 12px;">Copyright © Kroolo, All rights reserved.</p>
+                <!-- <p style="margin-bottom: 12px;">Unsubscribe</p> -->
+
+
+                <span class="bottom-text">Made with
+                    <img src="https://kroolo-public-images.s3.ap-south-1.amazonaws.com/heart.png" alt="" height="12"
+                        width="14">
+
+
+                    By Kroolo
+                </span>
+
+
+            </div>
+
+        </div>
+</body>
+
+</html>

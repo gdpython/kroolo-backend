@@ -17,7 +17,6 @@ const formidable = require('formidable');
 const ownerLogin = async (req, res) => {
   try {
     let { email, password } = req.body;
-    console.log(email, password,'000000000000000');
 
     if (!email || !password) {
       return res.badRequest({
@@ -26,7 +25,6 @@ const ownerLogin = async (req, res) => {
       });
     }
     var ip = req.socket.remoteAddress;
-    console.log(email, password, ip,'111111111111');
     let result = await ownerAuthService.login(
       email,
       password,
@@ -45,6 +43,30 @@ const ownerLogin = async (req, res) => {
   }
 };
 
+const signUp = async (req, res) => {
+  let { email } = req.body;
+  if (!email) {
+    return res.badRequest({
+      message:
+        "Insufficient request parameters! email are required.",
+    });
+  }
+  var ip = req.socket.remoteAddress;
+  let result = await ownerAuthService.signUp(
+    req.get("origin"),
+    email,
+    model.User,
+    ip,
+  );
+  if (result.flag) {
+    return res.badRequest({ message: result.data });
+  }
+  return res.success({
+    message: "Signup successful.",
+  });
+};
+
 module.exports = {
   ownerLogin,
+  signUp
 };

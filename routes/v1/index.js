@@ -4,7 +4,7 @@
  */
 
 const express = require('express');
-const { MODULE_NAME, CUURENT_API_VERSION } = require('../../constants/appConstants');
+const { MODULE_NAME, CUURENT_API_VERSION, MODULE_ROUTES } = require('../../constants/appConstants');
 
 const authenticationRoutes = require('./authentication');
 const channelsRoutes = require('./channels');

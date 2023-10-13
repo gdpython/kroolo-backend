@@ -139,7 +139,10 @@ const COGNITO_CLIENT = new CognitoIdentityProviderClient({
  * Coginto password constants.
  * @namespace
  */
-const COGNITO_PASSWORD_AUTH = "USER_PASSWORD_AUTH"
+const COGNITO_PASSWORD_AUTH = "USER_PASSWORD_AUTH";
+
+const MAX_LOGIN_RETRY_LIMIT = 3;
+const LOGIN_REACTIVE_TIME = 20;
 
 module.exports = {
   DB_TYPE,
@@ -153,5 +156,7 @@ module.exports = {
   PLATFORM,
   PLATFORM_ACCESS,
   COGNITO_CLIENT,
-  COGNITO_PASSWORD_AUTH
+  COGNITO_PASSWORD_AUTH,
+  MAX_LOGIN_RETRY_LIMIT,
+  LOGIN_REACTIVE_TIME
 };

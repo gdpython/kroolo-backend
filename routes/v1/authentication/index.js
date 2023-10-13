@@ -28,5 +28,6 @@ const authController = require(`../../../controllers/${CUURENT_API_VERSION}/auth
  * @param {function} authController.ownerLogin - The controller method for owner login.
  */
 router.post('/login', authController.ownerLogin);
+router.post('/signup', authController.signUp);
 
 module.exports = router;

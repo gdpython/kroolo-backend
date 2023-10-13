@@ -105,7 +105,6 @@ var UserSchema = new mongoose.Schema({
         refID: {
             type: mongoose.Schema.Types.ObjectId,
             trim: true,
-            default: ''
         },
         status: {
             type: Boolean,
@@ -126,6 +125,26 @@ var UserSchema = new mongoose.Schema({
         type: String,
         enum: COGNITO_STATUS,
         default: COGNITO_STATUS[0]
+    },
+    countryID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Country"
+    },
+     countryID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Country"
+    },
+    emailVerifyCode: {
+        type: String,
+       default:''
+    },
+    emailVerifyExpiryTime: {
+        type: Date,
+       default: date
+    },
+    emailVerfiyStatus: {
+        type: Boolean,
+       default: false
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
@@ -154,10 +173,6 @@ var UserSchema = new mongoose.Schema({
     lastLoginDate: {
         type: Date,
         default: date
-    },
-    countryID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Country"
     },
 }, {
     timestamps: true
