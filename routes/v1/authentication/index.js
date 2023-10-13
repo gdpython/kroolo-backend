@@ -20,18 +20,6 @@ const { CUURENT_API_VERSION } = require('../../../constants/appConstants');
 const authController = require(`../../../controllers/${CUURENT_API_VERSION}/authentication/authController`);
 
 /**
- * Constants for platform access levels.
- * @type {object}
- */
-const { PLATFORM_ACCESS } = require('../../../constants/authConstant');
-
-/**
- * Middleware for user authentication and authorization.
- * @type {function}
- */
-const auth = require('../../../middleware/mongoose/authUser');
-
-/**
  * Route for user login.
  * @name POST /login
  * @function

@@ -20,6 +20,20 @@ const swaggerUi = require('swagger-ui-express');
  */
 const afterDB = (app,type) => {
   app.use(routes);
+  app.use((req, res, next) => {
+    console.log(`Hit route: ${req.method} ${req.path}`);
+    let availableRoutes = getAllRoutes(app);
+    availableRoutes = availableRoutes.map((route) => '/' + route.split(')')[1]);
+    if (!availableRoutes.includes(req.path)) {
+        console.log(`Route not found: ${req.path}`);
+        const jsonResponse = {
+            message: 'Route not found',
+            error: `${req.path} not exist`,
+        };
+        return res.status(404).send(jsonResponse);
+    }
+    next();
+});
   const allRegisterRoutes = listEndpoints(app);
   if(type===DB_TYPE.SQL){
     seederSequalize(allRegisterRoutes).then(() => { console.log('Seeding done.'); });

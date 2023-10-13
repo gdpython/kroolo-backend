@@ -1,5 +1,47 @@
 const models = require('../model/mongoose');
 
+// Your queryBuilderParser function
+const queryBuilderParser = (data) => {
+  const mongooseQuery = {};
+
+  if (data) {
+    Object.entries(data).forEach(([key, value]) => {
+      if (typeof value === 'object') {
+        // Recursively handle nested conditions
+        mongooseQuery[key] = queryBuilderParser(value);
+      } else if (key === '$eq') {
+        mongooseQuery[key] = value;
+      } else if (key === '$ne') {
+        mongooseQuery[key] = { $ne: value };
+      } else if (key === '$in') {
+        mongooseQuery[key] = { $in: value };
+      } else if (key === '$nin') {
+        mongooseQuery[key] = { $nin: value };
+      } else {
+        // Handle other conditions as needed
+        mongooseQuery[key] = value;
+      }
+    });
+  }
+
+  return mongooseQuery;
+};
+
+// Your sortParser function
+const sortParser = (input) => {
+  const newSortedObject = [];
+  if (input) {
+    Object.entries(input).forEach(([key, value]) => {
+      if (value === 1) {
+        newSortedObject.push([key, '1']);
+      } else if (value === -1) {
+        newSortedObject.push([key, '-1']);
+      }
+    });
+  }
+  return newSortedObject;
+};
+
 // create one record
 const createOne = async (model, data) => {
   try {
@@ -123,57 +165,19 @@ const findOneSelected = async (model, query, selectOptions) => {
   query = queryBuilderParser(query);
   return model.findOne(query).select(selectOptions);
 };
-// Your queryBuilderParser function
-const queryBuilderParser = (data) => {
-  const mongooseQuery = {};
 
-  if (data) {
-    Object.entries(data).forEach(([key, value]) => {
-      if (typeof value === 'object') {
-        // Recursively handle nested conditions
-        mongooseQuery[key] = queryBuilderParser(value);
-      } else if (key === '$eq') {
-        mongooseQuery[key] = value;
-      } else if (key === '$ne') {
-        mongooseQuery[key] = { $ne: value };
-      } else if (key === '$in') {
-        mongooseQuery[key] = { $in: value };
-      } else if (key === '$nin') {
-        mongooseQuery[key] = { $nin: value };
-      } else {
-        // Handle other conditions as needed
-        mongooseQuery[key] = value;
-      }
-    });
-  }
-
-  return mongooseQuery;
+module.exports = {
+  createOne,
+  createMany,
+  update,
+  destroy,
+  findOne,
+  paginate,
+  findAll,
+  count,
+  upsert,
+  updateOne,
+  queryBuilderParser,
+  sortParser,
+  findOneSelected,
 };
-
-// Your sortParser function
-const sortParser = (input) => {
-  const newSortedObject = [];
-  if (input) {
-    Object.entries(input).forEach(([key, value]) => {
-      if (value === 1) {
-        newSortedObject.push([key, '1']);
-      } else if (value === -1) {
-        newSortedObject.push([key, '-1']);
-      }
-    });
-  }
-  return newSortedObject;
-};
-module.exports.createOne = createOne;
-module.exports.createMany = createMany;
-module.exports.update = update;
-module.exports.destroy = destroy;
-module.exports.findOne = findOne;
-module.exports.paginate = paginate;
-module.exports.findAll = findAll;
-module.exports.count = count;
-module.exports.upsert = upsert;
-module.exports.updateOne = updateOne;
-module.exports.queryBuilderParser = queryBuilderParser;
-module.exports.sortParser = sortParser;
-module.exports.findOneSelected = findOneSelected;
