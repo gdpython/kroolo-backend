@@ -44,7 +44,7 @@ const JWT = {
    * Expiration time for JWT tokens.
    * @constant {number}
    */
-  EXPIRES_IN: 10000,
+  EXPIRES_IN: process.env.TOKEN_EXPIRE_TIME,
 };
 
 /**

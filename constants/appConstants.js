@@ -8,7 +8,7 @@ const CUURENT_API_VERSION = process.env.CUURENT_API_VERSION;
  * @type {object}
  */
 const MODULE_ROUTES = {
-    USERS:"users"
+    USERS: "users"
 };
 
 /**
@@ -28,6 +28,11 @@ const MODULE_NAME = {
      * @type {string}
      */
     AUTHENTICATION: "AUTHENTICATION",
+    /**
+        * The module name for workspace-related APIs.
+        * @type {string}
+        */
+    WORKSPACE: "WORKSPACE",
 
     /**
      * The module name for channels-related APIs.
