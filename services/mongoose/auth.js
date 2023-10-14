@@ -10,12 +10,17 @@ const {
   COGNITO_PASSWORD_AUTH,
   ADMIN_USER_PASSWORD_AUTH,
 } = require("../../constants/authConstant");
-const { EMAIL_VERIFY } = require("../../constants/emailConstants");
+const {
+  EMAIL_VERIFY,
+  EMAIL_FORGOT_PASSWORD,
+} = require("../../constants/emailConstants");
 const {
   InitiateAuthCommand,
   AdminCreateUserCommand,
   AdminUpdateUserAttributesCommand,
   AdminSetUserPasswordCommand,
+  ChangePasswordCommand,
+  ForgotPasswordCommand,
 } = require("@aws-sdk/client-cognito-identity-provider"); // CommonJS import
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -205,6 +210,13 @@ const signUp = async (req, email, modelName, ip) => {
   }
 };
 
+/**
+ * @description: service for user email verify.
+ * @param {string} token - User's token.
+ * @param {string} modelName - Model name for user data (Mongoose model).
+ * @returns {Object} - Authentication status: { flag, data }.
+ */
+
 const emailVerify = async (token, modelName) => {
   try {
     const query = { emailVerifyCode: token };
@@ -239,9 +251,11 @@ const emailVerify = async (token, modelName) => {
     };
     const command = new AdminUpdateUserAttributesCommand(input);
     const response = await COGNITO_CLIENT.send(command);
+    console.log(response, "response")
     if (response) {
       const updateData = {
         emailVerfiyStatus: true,
+        cogintoStatus: COGNITO_STATUS[1],
       };
       await updateOne(modelName, { _id: userData._id }, updateData);
       return {
@@ -253,6 +267,16 @@ const emailVerify = async (token, modelName) => {
     throw new Error(error.message);
   }
 };
+
+/**
+ * @description: service for user complete signup.
+ * @param {string} name - User's name.
+ * @param {string} email - User's email.
+ * @param {string} password - User's new password.
+ * @param {string} ip - User's IP address.
+ * @param {string} modelName - Model name for user data (Mongoose model).
+ * @returns {Object} - Authentication status: { flag, data }.
+ */
 
 const completeSignUp = async (name, email, password, modelName, ip) => {
   try {
@@ -305,16 +329,264 @@ const completeSignUp = async (name, email, password, modelName, ip) => {
       emailVerfiyStatus: false,
     };
     await updateOne(modelName, { _id: userData._id }, updateData);
-    const loginUserData = await login(email, password, modelName, ip);
-    console.log(loginUserData, "loginUserData");
+    // const loginUserData = await login(email, password, modelName, ip);
+    // console.log(loginUserData, "loginUserData");
+    // return {
+    //   flag: false,
+    //   data: loginUserData,
+    // };
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+/**
+ * @description: service for resend email.
+ * @param {string} modelName - Model name for user data (Mongoose model).
+ * @param {string} email - user email.
+ * @returns {Object} - Authentication status: { flag, data }.
+ */
+
+const resendEmail = async (modelName, email, req) => {
+  try {
+    const query = { email: email };
+    const user = await findOne(modelName, query);
+    if (!user) {
+      return {
+        flag: true,
+        data: "User not exists",
+      };
+    }
+    const userData = user.toObject();
+    if (userData.emailVerfiyStatus === true) {
+      return {
+        flag: true,
+        data: "Email already verified",
+      };
+    }
+    let token = uuid();
+    let expires = dayjs().add(EMAIL_VERIFY.EXPIRE_TIME, "minute").toISOString();
+    let updateData = {
+      emailVerifyCode: token,
+      emailVerifyExpiryTime: expires,
+    };
+    await updateOne(modelName, { _id: userData._id }, updateData);
+    let mailObj = {
+      subject: EMAIL_VERIFY.SUBJECT,
+      to: email,
+      template: "/views/email/EmailVerification.ejs",
+      data: {
+        link: `${req}/verifyLink/` + token,
+      },
+    };
+    const isEmailSend = await sendMail(mailObj);
+    if (isEmailSend) {
+      return {
+        flag: false,
+        data: "Email sent successfully",
+      };
+    } else {
+      return {
+        flag: true,
+        data: "Email not sent",
+      };
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+/**
+ * @description: service for changing the password.
+ * @param {string} newPassword - New password.
+ * @param {string} oldPassword - Old password.
+ * @param {string} id - User's ID.
+ * @param {string} token - User's token.
+ * @param {string} modelName - Mongoose model for user data.
+ * @returns {Object} - Password change status: { flag, data }.
+ */
+const changePassword = async (
+  id,
+  token,
+  oldPassword,
+  newPassword,
+  modelName
+) => {
+  try {
+    const user = await modelName.findOne({
+      _id: id,
+      isActive: true,
+      isDeleted: false,
+    });
+
+    if (!user) {
+      return {
+        flag: true,
+        data: "User not exists",
+      };
+    }
+
+    var input = {
+      AccessToken: token /* required */,
+      PreviousPassword: oldPassword /* required */,
+      ProposedPassword: newPassword /* required */,
+    };
+
+    const command = new ChangePasswordCommand(input);
+    const response = await client.send(command);
+    if (response) {
+      const updateData = {
+        password: newPassword,
+      };
+      await updateOne(modelName, { _id: id }, updateData);
+    } else {
+      return {
+        flag: true,
+        data: "Password could not be changed due to an error. Please try again",
+      };
+    }
+
     return {
       flag: false,
-      data: loginUserData,
+      data: [],
     };
   } catch (error) {
     throw new Error(error.message);
   }
 };
+
+/**
+ * @description: service for forgotPassword.
+ * @param {Model} modelName - Mongoose model for user data.
+ * @param {string} email - user's email.
+ * @param {string} ip - user's IP Address.
+ * @returns {Object} - Password reset status: { flag, data }.
+ */
+const forgotPassword = async (email, modelName, req) => {
+  try {
+    let query = { email: email };
+    const userCheck = await modelName.findOne(query);
+    if (!userCheck) {
+      return {
+        flag: true,
+        data: "Email not exists",
+      };
+    }
+    const userData = userCheck.toObject();
+    if (userData.isActive === 0) {
+      return {
+        flag: true,
+        data: "You are blocked by Admin, please contact Admin.",
+      };
+    }
+
+    const input = {
+      ClientId: process.env.COGNITO_APP_CLIENT_ID,
+      Username: email,
+    };
+
+    const command = new ForgotPasswordCommand(input);
+    const response = await COGNITO_CLIENT.send(command);
+    console.log(response, "response");
+    if (response) {
+      let token = uuid();
+      let expires = dayjs()
+        .add(EMAIL_FORGOT_PASSWORD.EXPIRE_TIME, "minute")
+        .toISOString();
+
+      let updateData = {
+        emailVerifyCode: token,
+        emailVerifyExpiryTime: expires,
+        emailVerfiyStatus: false,
+      };
+      await updateOne(modelName, query, updateData);
+
+      let mailObj = {
+        subject: EMAIL_FORGOT_PASSWORD.SUBJECT,
+        to: email,
+        template: "/views/email/ForgetPassword.ejs",
+        data: {
+          link: `${req}/resetPassword/` + token,
+        },
+      };
+
+      const isEmailSend = await sendMail(mailObj);
+      if (isEmailSend) {
+        return {
+          flag: false,
+          data: "Email sent successfully",
+        };
+      } else {
+        return {
+          flag: true,
+          data: "Email not sent",
+        };
+      }
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const resetPassword = async (email, newPassword, modelName) => {
+  try {
+    const user = await modelName.findOne({
+      email: email,
+      isActive: true,
+      isDeleted: false,
+    });
+
+    if (!user) {
+      return {
+        flag: true,
+        data: "User not exists",
+      };
+    }
+
+    const userData = user.toObject();
+
+    if (userData.emailVerifyExpiryTime) {
+      if (dayjs(new Date()).isAfter(dayjs(userData.emailVerifyExpiryTime))) {
+        return {
+          flag: true,
+          data: "Your reset password link is expired or invalid",
+        };
+      }
+    }
+
+    const input = {
+      UserPoolId: process.env.COGNITO_USER_POOL_ID,
+      Username: email,
+      Password: newPassword,
+      Permanent: true,
+    };
+
+    const command = new AdminSetUserPasswordCommand(input);
+    const response = await COGNITO_CLIENT.send(command);
+    console.log(response, "response")
+    if (response) {
+      const updateData = {
+        password: newPassword,
+        emailVerifyCode: "",
+        emailVerifyExpiryTime: "",
+        emailVerfiyStatus: false,
+      };
+      await updateOne(modelName, { _id: userData._id }, updateData);
+    } else {
+      return {
+        flag: true,
+        data: "Password could not be changed due to an error. Please try again",
+      };
+    }
+
+    return {
+      flag: false,
+      data: [],
+    };
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 
 /**
  * @description: service for createUserToken.
@@ -595,164 +867,14 @@ const checkPassword = async (password, id, modelName) => {
   }
 };
 
-/**
- * @description: service for changing the password.
- * @param {string} password - New password.
- * @param {string} oldPassword - Old password.
- * @param {string} id - User's ID.
- * @param {Model} modelName - Mongoose model for user data.
- * @returns {Object} - Password change status: { flag, data }.
- */
-const changePassword = async (password, id, oldPassword, modelName) => {
-  try {
-    const user = await modelName.findOne({
-      _id: id,
-      isActive: true,
-      isDeleted: false,
-    });
-
-    if (!user) {
-      return {
-        flag: true,
-        data: "User not exists",
-      };
-    }
-
-    var checkPass = await common.passwordCheck(password);
-    password = password.replaceAll(/ /g, "");
-
-    if (checkPass === true) {
-      if (user.name !== null) {
-        const isPasswordMatched = await bcrypt.compare(
-          oldPassword,
-          user.password
-        );
-
-        if (!isPasswordMatched) {
-          return {
-            flag: true,
-            data: "Incorrect Old Password",
-          };
-        }
-
-        password = await bcrypt.hash(password, 8);
-      } else {
-        const decryptPassword = common.passwordConvert(
-          user.password,
-          "decrypt"
-        );
-
-        if (decryptPassword !== oldPassword) {
-          return {
-            flag: true,
-            data: "Incorrect Old Password",
-          };
-        }
-
-        password = common.passwordConvert(password, "encrypt");
-      }
-
-      const updatedUser = await modelName.updateOne({ _id: id }, { password });
-
-      if (!updatedUser) {
-        return {
-          flag: true,
-          data: "Password could not be changed due to an error. Please try again",
-        };
-      }
-    } else {
-      return {
-        flag: true,
-        data: checkPass,
-      };
-    }
-
-    return {
-      flag: false,
-      data: [],
-    };
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
-/**
- * @description: service for forgotPassword.
- * @param {Model} modelName - Mongoose model for user data.
- * @param {Object} where - Where condition.
- * @param {string} getViewType - View type.
- * @param {string[]} attributes - Attributes to select.
- * @returns {Object} - Password reset status: { flag, data }.
- */
-const forgotPassword = async (modelName, where, getViewType, attributes) => {
-  try {
-    let token = uuid();
-    let expires = dayjs().add(EMAIL_VERIFY.EXPIRE_TIME, "minute").toISOString();
-    const userCheck = await modelName.findOne(where, attributes);
-
-    if (!userCheck) {
-      return {
-        flag: true,
-        data: "Email not exists",
-      };
-    } else {
-      const userData = userCheck.toObject();
-
-      if (userData.isActive === 0) {
-        return {
-          flag: true,
-          data: "You are blocked by Admin, please contact Admin.",
-        };
-      }
-
-      let updateData = {
-        recoveryCode: token,
-        linkExpiryTime: expires,
-        linkStatus: 0,
-      };
-      await modelName.updateOne(where, updateData);
-
-      let viewType = getViewType;
-      let mailObj = {
-        subject: "Reset Password",
-        to: userData.email,
-        template: "/views/email/ResetPassword",
-        data: {
-          userName: userData.username || "-",
-          link:
-            `${
-              process.env.BASE_URL +
-              (process.env.NODE_ENV == ENVIROMENT.prod
-                ? ""
-                : ":" + process.env.PORT)
-            }` +
-            viewType +
-            token,
-          linkText: "Reset Password",
-          url: "",
-        },
-      };
-
-      try {
-        await emailService.sendSesEmail(mailObj);
-        return {
-          flag: false,
-        };
-      } catch (error) {
-        throw new Error(error.message);
-      }
-    }
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
 module.exports = {
   login,
   signUp,
   emailVerify,
   completeSignUp,
+  resendEmail,
   forgotUser,
+  resetPassword,
   createPassword,
   submitPassword,
   checkPassword,

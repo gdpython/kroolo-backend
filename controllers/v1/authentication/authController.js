@@ -101,6 +101,13 @@ const emailVerify = async (req, res) => {
   });
 };
 
+/**
+ * Handles the complete signup.
+ * @function
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ */
+
 const completeSignUp = async (req, res) => {
   let {name, email, password} = req.body;
   if (!name || !email || !password) {
@@ -126,9 +133,131 @@ const completeSignUp = async (req, res) => {
   });
 };
 
+
+
+/**
+ * Handles the resed email.
+ * @function
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ */
+
+const resendEmail = async (req, res) => {
+  let { email } = req.body;
+  if (!email) {
+    return res.badRequest({
+      message:
+        "Insufficient request parameters! email are required.",
+    });
+  }
+  let result = await ownerAuthService.resendEmail(
+    model.User,
+    email,
+    req.get("origin")
+  );
+
+  if (result.flag) {
+    return res.badRequest({ message: result.data });
+  }
+  return res.success({
+    message: "Email resent successfully.",
+  });
+};
+
+/**
+ * Handles the change password.
+ * @function
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ */
+
+const changePassword = async (req, res) => {
+  let { currentPassword, newPassword, token } = req.body;
+  let {id} = req.params;
+  if (!currentPassword || !newPassword || !token || !id) {
+    return res.badRequest({
+      message:
+        "Insufficient request parameters! currentPassword and newPassword and token and id are required.",
+    });
+  }
+  let result = await ownerAuthService.changePassword(
+    id,
+    token,
+    currentPassword,
+    newPassword,
+    model.User,
+  );
+
+  if (result.flag) {
+    return res.badRequest({ message: result.data });
+  }
+  return res.success({
+    message: "Password changed successfully.",
+  });
+};
+
+/**
+ * Handles the forgot password.
+ * @function
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ */
+
+const forgotPassword = async (req, res) => {
+  let { email } = req.body;
+  if (!email) {
+    return res.badRequest({
+      message:
+        "Insufficient request parameters! email are required.",
+    });
+  }
+  let result = await ownerAuthService.forgotPassword(
+    email,
+    model.User,
+    req.get("origin")
+  );
+
+  if (result.flag) {
+    return res.badRequest({ message: result.data });
+  }
+  return res.success({
+    message: "Forgot password email sent successfully.",
+  });
+};
+
+const resetPassword = async (req, res) => {
+  let { newPassword, email } = req.body;
+  if (!newPassword || !email) {
+    return res.badRequest({
+      message:
+        "Insufficient request parameters! newPassword and email are required.",
+    });
+  }
+  let result = await ownerAuthService.resetPassword(
+    email,
+    newPassword,
+    model.User,
+  );
+
+  if (result.flag) {
+    return res.badRequest({ message: result.data });
+  }
+  return res.success({
+    message: "Password reset successfully.",
+  });
+};
+
+
+
+
+
 module.exports = {
   ownerLogin,
   signUp,
   emailVerify,
   completeSignUp,
+  resendEmail,
+  changePassword,
+  forgotPassword,
+  resetPassword
 };
