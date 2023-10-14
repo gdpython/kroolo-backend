@@ -4,6 +4,7 @@
  */
 
 var mongoose = require('mongoose');
+const { ROUTE_METHOD } = require('../../../constants/schemaConstants');
 
 /**
  * Represents the schema for a Route document in MongoDB.
@@ -34,8 +35,8 @@ var RouteSchema = new mongoose.Schema({
     method: {
         type: String,
         trim: true,
-        enum: ['GET', 'POST', 'PUT', 'DELETE'], // Replace with actual HTTP methods
-        default: 'GET' // Set the default method
+        enum: ROUTE_METHOD,
+        default: ROUTE_METHOD[0]
     },
     routeURI: {
         type: String,
