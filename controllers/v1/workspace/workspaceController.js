@@ -4,7 +4,7 @@
  */
 
 const model = require('../../../model/mongoose');
-const { findOne, createOne, updateOne } = require('../../../utils/mongooseService');
+const { findOne, createOne, updateOne, findAll } = require('../../../utils/mongooseService');
 
 /**
  * Handles the retrieval of workspace data by its ID.
@@ -65,7 +65,7 @@ const createWorkspace = async (req, res) => {
          *
          * @param {string} workspaceName - The name of the workspace.
          */
-        const { workspaceName } = req.body;
+        const { workspaceName, organizationID } = req.body;
 
         /**
          * The workspace data created successfully response.
@@ -74,7 +74,7 @@ const createWorkspace = async (req, res) => {
          * @property {string} message - A success message.
          */
 
-        const workspaceData = await createOne(model.Workspace, { workspaceName });
+        const workspaceData = await createOne(model.Workspace, { workspaceName, organizationID, createdBy: req.user._id });
         return res.success({
             data: workspaceData,
             message: 'workspace created successfully.'
@@ -117,8 +117,54 @@ const updateWorkspace = async (req, res) => {
     }
 };
 
+/**
+ * Handles the retrieval of workspace list by orgnaization ID.
+ *
+ * @function
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ */
+const getAllWorkspace = async (req, res) => {
+    try {
+        /**
+         * Retrieves workspace list by its unique orgnaization ID.
+         *
+         * @param {string} organizationID - The unique identifier of the organization.
+         */
+        const { organizationID } = req.params;
+
+        /**
+         * The retrieved workspace data.
+         * @typedef {Object} workspaceListData
+         * @property {string} workspaceName - The name of the workspace.
+         */
+
+        /**
+         * The workspace data fetched successfully response.
+         * @typedef {Object} SuccessResponse
+         * @property {workspaceListData} data - The workspace data.
+         * @property {string} message - A success message.
+         */
+
+        const workspaceListData = await findAll(model.Workspace, { organizationID, isActive:true }, { workspaceName: true });
+        if (!workspaceListData) {
+            return res.failure({
+                message: `workspace list not found by organization id(${organizationID}).`
+            });
+        }
+
+        return res.success({
+            data: workspaceListData,
+            message: 'workspace list data fetched successfully.'
+        });
+    } catch (error) {
+        return res.internalServerError({ message: error.message });
+    }
+};
+
 module.exports = {
     getWorkspace,
     createWorkspace,
-    updateWorkspace
+    updateWorkspace,
+    getAllWorkspace
 };

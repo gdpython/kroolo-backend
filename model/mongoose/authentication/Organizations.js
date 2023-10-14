@@ -28,11 +28,11 @@ var OrganizationSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-        default: ''
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     updatedBy: {
         type: mongoose.Schema.Types.ObjectId,

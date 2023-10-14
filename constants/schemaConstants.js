@@ -61,7 +61,7 @@ const PROJECT_STATUS = [
  * @enum {string}
  */
 
-const GOAL_TYPE = ['Goal', 'SubGoal'];
+const GOAL_TYPE = ['GOAL', 'SUBGOAL'];
 
 /**
  * Constants for goal collaborator type.
@@ -69,7 +69,7 @@ const GOAL_TYPE = ['Goal', 'SubGoal'];
  * @enum {string}
  */
 
-const GOAL_COLLABORATOR_TYPE = ['Personal', 'Team']
+const GOAL_COLLABORATOR_TYPE = ['PERSONAL', 'TEAM']
 
 /**
  * Constants for goal status.
