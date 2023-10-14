@@ -8,7 +8,8 @@ const CUURENT_API_VERSION = process.env.CUURENT_API_VERSION;
  * @type {object}
  */
 const MODULE_ROUTES = {
-    USERS: "users"
+    USERS: "users",
+    ONBOARDING:"onboarding"
 };
 
 /**
@@ -28,6 +29,11 @@ const MODULE_NAME = {
      * @type {string}
      */
     AUTHENTICATION: "AUTHENTICATION",
+    /**
+        * The module name for onboarding APIs.
+        * @type {string}
+        */
+    ONBOARDING: "ONBOARDING",
     /**
         * The module name for workspace-related APIs.
         * @type {string}

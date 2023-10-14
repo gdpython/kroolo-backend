@@ -6,6 +6,26 @@ const { ENC_TYPE } = require("../constants/appConstants");
 const auth_key = "@hvGXdspUQZQ1jJPAfDopItHTLFfTqh(krollo)30sn^MKo39CByMdgUU3cwviR4a7P1fnZXcK";
 
 /**
+ * get all routes from route object and return an array.
+ *
+ * @param {object|null} route - The route object.
+ */
+const getAllRoutes = (app)=> {
+    const routes = [];
+    function collectRoutes(router, basePath = '') {
+        router.stack.forEach((layer) => {
+            if (layer.route) {
+                routes.push(basePath + layer.route.path);
+            } else if (layer.name === 'router' && layer.handle.stack) {
+                // Recursively process nested routers
+                collectRoutes(layer.handle, basePath + layer.regexp.source);
+            }
+        });
+    }
+    collectRoutes(app._router);
+    return routes;
+}
+/**
  * Logs a message with a decorative border.
  *
  * @param {string} message - The message to log.
@@ -293,6 +313,7 @@ function getRemoveDuplicateArrayFilter(array, keys) {
 }
 
 module.exports = {
+    getAllRoutes,
     beautifyLog,
     sendSms,
     randomString,

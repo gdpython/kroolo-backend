@@ -3,6 +3,7 @@ const User = require('../../model/mongoose/authentication/User');
 const CognitoExpress = require('cognito-express');
 const { OAuth2Client } = require('google-auth-library');
 const { findOne } = require('../../utils/mongooseService');
+const { PLATFORM } = require('../../constants/authConstant');
 
 /**
  * verify cognito token.
@@ -13,21 +14,21 @@ const { findOne } = require('../../utils/mongooseService');
 async function verify(token) {
     client = new OAuth2Client(process.env.CLIENT_ID);
     return new Promise((resolve, reject) => {
-      client
-        .verifyIdToken({
-          idToken: token,
-          audience: process.env.CLIENT_ID,
-        })
-        .then((ticket) => {
-          const payload = ticket.getPayload();
-          resolve(payload);
-        })
-        .catch((e) => {
-          console.log('verifyIdToken', e);
-          reject(e);
-        });
+        client
+            .verifyIdToken({
+                idToken: token,
+                audience: process.env.CLIENT_ID,
+            })
+            .then((ticket) => {
+                const payload = ticket.getPayload();
+                resolve(payload);
+            })
+            .catch((e) => {
+                console.log('verifyIdToken', e);
+                reject(e);
+            });
     });
-  }
+}
 
 /**
  * Decode a JWT token.
@@ -54,7 +55,7 @@ const decodeToken = (token) => {
 const handleGoogleSignIn = async (req, res, next, decoded) => {
     verify(token)
         .then(async (resp) => {
-            const userExist = await findOne(User,{ email: decoded.email });
+            const userExist = await findOne(User, { email: decoded.email });
             let user = null;
             if (!userExist) {
                 const userObj = {
@@ -87,7 +88,8 @@ const handleCognitoAuthentication = async (req, res, next, decoded) => {
         cognitoUserPoolId: process.env.COGNITO_USER_POOL_ID,
         tokenUse: 'access',
         tokenExpiration: process.env.TOKEN_EXPIRE_TIME,
-      });
+    });
+    const token = (req.headers.authorization).replace('Bearer ', '')
     cognitoExpress.validate(token, async (err, response) => {
         if (err) {
             return res.unAuthorized({ message: err.message });
@@ -106,19 +108,22 @@ const handleCognitoAuthentication = async (req, res, next, decoded) => {
  * @param {Response} res - The response object.
  * @param {NextFunction} next - The next middleware function.
  */
-exports.validateOnboardingUser = async (req, res, next) => {
-    const authorizationHeader = req.headers.authorization;
+const validateOnboardingUser = (platform) => async (req, res, next) => {
+    if (platform === PLATFORM.WEB) {
+        const authorizationHeader = req.headers.authorization;
 
-    if (authorizationHeader && authorizationHeader.split(' ')[0] === 'Bearer') {
-        const token = authorizationHeader.replace('Bearer ', '');
-        const decoded = decodeToken(token);
+        if (authorizationHeader && authorizationHeader.split(' ')[0] === 'Bearer') {
+            const token = authorizationHeader.replace('Bearer ', '');
+            const decoded = decodeToken(token);
 
-        if (decoded && decoded.iss && decoded.iss === 'accounts.google.com') {
-            handleGoogleSignIn(req, res, next, decoded);
+            if (decoded && decoded.iss && decoded.iss === 'accounts.google.com') {
+                handleGoogleSignIn(req, res, next, decoded);
+            } else {
+                handleCognitoAuthentication(req, res, next, decoded);
+            }
         } else {
-            handleCognitoAuthentication(req, res, next, decoded);
+            return res.unAuthorized({ message: 'Authorization token required!' });
         }
-    } else {
-        return res.unAuthorized({ message: 'Authorization token required!' });
     }
 };
+module.exports = validateOnboardingUser
