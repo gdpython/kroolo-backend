@@ -39,7 +39,6 @@ function sendSms(message, mobile) {
 
         res.on("end", function () {
             var body = Buffer.concat(chunks);
-            console.log(body.toString());
         });
     });
     req.end();
@@ -172,7 +171,6 @@ function checkRequestAuth(app_key) {
     var key = 'qwertyuiopasdfgh';
     var decipher = crypto.createDecipheriv("aes-128-ecb", key, null);
     var check_key = decipher.update(app_key, 'hex', 'utf8') + decipher.final('utf8');
-    console.log(check_key);
     if (check_key == auth_key) {
         return true;
     } else {

@@ -23,7 +23,6 @@ const channelController = require(`../../../controllers/${CUURENT_API_VERSION}/c
  * Middleware for user authentication and authorization.
  * @type {function}
  */
-const auth = require('../../../middleware/mongoose/authUser');
 const { PLATFORM_ACCESS } = require('../../../constants/authConstant');
 
 /**
@@ -34,6 +33,6 @@ const { PLATFORM_ACCESS } = require('../../../constants/authConstant');
  * @param {string} project - The project for channels.
  * @param {function} channelController.index - The controller method for owner login.
  */
-router.post('/index', auth(PLATFORM_ACCESS.OWNER),channelController.index);
+router.post('/index',channelController.index);
 
 module.exports = router;

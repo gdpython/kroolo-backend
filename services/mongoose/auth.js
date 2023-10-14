@@ -146,7 +146,6 @@ const login = async (username, password, modelName, ip) => {
       // }
     }
   } catch (error) {
-    console.log("error", error);
     throw new Error(error.message);
   }
 };
@@ -344,7 +343,6 @@ const completeSignUp = async (name, email, password, modelName, ip) => {
     };
     await updateOne(modelName, { _id: userData._id }, updateData);
     const loginUserData = await completeSignUpAndGetCognitoToken(email, password);
-    console.log(loginUserData, "loginUserData");
     return {
       flag: false,
       data: {

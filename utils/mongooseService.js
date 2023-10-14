@@ -82,8 +82,6 @@ const destroy = async (model, query) => {
 
 // find single record
 const findOne = async (model, query, options = {}) => {
-  console.log('query', query);
-  console.log('model', model);
   query = queryBuilderParser(query);
   return model.findOne(query, options);
 };

@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon app.js",
-    "format": "prettier --write \"**/*.js\"",
-    "install": "npm install && npm run format"
+    "format": "prettier --write \"**/*.js\""
   },  
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.428.0",
