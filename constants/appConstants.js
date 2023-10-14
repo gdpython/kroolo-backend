@@ -8,18 +8,23 @@ const CUURENT_API_VERSION = process.env.CUURENT_API_VERSION;
  * @type {object}
  */
 const MODULE_ROUTES = {
-    USERS:"users"
+    USERS: "users"
 };
- /**
- * @description A collection of module names for each API association.
- * @type {object}
- */
+/**
+* @description A collection of module names for each API association.
+* @type {object}
+*/
 const MODULE_NAME = {
     /**
      * The module name for authentication-related APIs.
      * @type {string}
      */
     AUTHENTICATION: "AUTHENTICATION",
+    /**
+        * The module name for workspace-related APIs.
+        * @type {string}
+        */
+    WORKSPACE: "WORKSPACE",
 
     /**
      * The module name for channels-related APIs.

@@ -4,7 +4,7 @@
  */
 
 const passport = require('passport');
-const { PLATFORM_ACCESS } = require('../../constants/authConstant');
+const { PLATFORM } = require('../../constants/authConstant');
 const { checkRolePermission } = require('./checkRolePermission');
 
 /**
@@ -22,7 +22,6 @@ const verifyCallback = (req, resolve, reject, platform) => async (err, user, inf
       return reject('Unauthorized User');
     }
     req.user = user;
-
     if (!user.isActive) {
       return reject('User is deactivated');
     }
@@ -36,22 +35,16 @@ const verifyCallback = (req, resolve, reject, platform) => async (err, user, inf
     if (userToken.isTokenExpired) {
       return reject('Token is Expired');
     }
-    if (user.userRole) {
-      let allowedRoles
-      if (platform == PLATFORM_ACCESS.OWNER) {
-        allowedRoles = user.roleName.split(",")
-      }else if (platform == PLATFORM_ACCESS.OWNER) {
-        allowedRoles = user.userRole
-      }
-      if (!allowedRoles.includes(platform)) {
-        return reject('Unauthorized user');
-      }
+    if (user.roleID && platform == PLATFORM.WEB) {
+    
+    }else{
+      return reject('Unauthorized user');
     }
     //here we can check role for particular permission
-    checkRolePermission()
+    checkRolePermission();
     resolve();
   } catch (error) {
-    console.log('error', error.message)
+    console.log('error', error.message);
     reject();
   }
 };
@@ -62,8 +55,8 @@ const verifyCallback = (req, resolve, reject, platform) => async (err, user, inf
  * @param {string} module - The module related to the route.
  * @returns {Function} Middleware function for authentication.
  */
-const auth = (platform, module) => async (req, res, next) => {
-  if (platform == PLATFORM_ACCESS.OWNER) {
+const validateOrganizationUser = (platform) => async (req, res, next) => {
+  if (platform == PLATFORM.WEB) {
     return new Promise((resolve, reject) => {
       passport.authenticate('client-rule', { session: false }, verifyCallback(req, resolve, reject, platform))(
         req,
@@ -80,4 +73,4 @@ const auth = (platform, module) => async (req, res, next) => {
   }
 };
 
-module.exports = auth;
+module.exports = validateOrganizationUser;

@@ -28,7 +28,7 @@ router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.USERS}` ,(req, res, next) =>
    * The module name for authentication.
    * @type {string}
    */
-  req.modulename = MODULE_NAME.AUTHENTICATION;
+  req.moduleName = MODULE_NAME.AUTHENTICATION;
 
   // Call the next middleware to authentication route
   next();
@@ -46,7 +46,7 @@ router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.CHANNELS}` ,(req, res, next)
    * The module name for authentication.
    * @type {string}
    */
-  req.modulename = MODULE_NAME.CHANNELS;
+  req.moduleName = MODULE_NAME.CHANNELS;
 
   // Call the next middleware to authentication route
   next();

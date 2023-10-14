@@ -8,8 +8,8 @@ const {
   Strategy, ExtractJwt
 } = require('passport-jwt');
 const { JWT } = require('../constants/authConstant');
-const model = require('../model/sequalize');
-const sqlService = require('../utils/sqlService');
+const model = require('../model/mongoose');
+const mongooseService = require('../utils/mongooseService');
 
 /**
  * Client passport strategy function.
@@ -22,12 +22,13 @@ const clientPassportStrategy = async (passport) => {
   options.secretOrKey = JWT.WEB_SECRET;
   passport.use('client-rule',
     new Strategy(options, async (payload, done) => {
+      //here we will get organizationID and cognito token
       try {
-        const user = await sqlService.findOne(model.staffManagement, { id: payload.id });
-        if (user) {
-          return done(null, { ...user.toJSON() });
+        const organizationData = await mongooseService.findOne(model.OrganizationMember, { _id: payload.organizationID });
+        if (organizationData) {
+          return done(null, { ...organizationData.toJSON() });
         }
-        return done('No User Found', {});
+        return done('No organization Found', {});
       } catch (error) {
         return done(error, {});
       }
