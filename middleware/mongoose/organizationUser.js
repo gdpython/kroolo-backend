@@ -55,7 +55,7 @@ const verifyCallback = (req, resolve, reject, platform) => async (err, user, inf
  * @param {string} module - The module related to the route.
  * @returns {Function} Middleware function for authentication.
  */
-const validateOrganizationUser = (platform) => async (req, res, next) => {
+exports.validateOrganizationUser = (platform) => async (req, res, next) => {
   if (platform == PLATFORM.WEB) {
     return new Promise((resolve, reject) => {
       passport.authenticate('client-rule', { session: false }, verifyCallback(req, resolve, reject, platform))(
@@ -72,5 +72,3 @@ const validateOrganizationUser = (platform) => async (req, res, next) => {
       });
   }
 };
-
-module.exports = validateOrganizationUser;

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon app.js",
     "format": "prettier --write \"**/*.js\""
-  },  
+  },
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.428.0",
     "@aws-sdk/client-s3": "^3.354.0",
@@ -15,6 +15,7 @@
     "axios": "~0.21.1",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
+    "cognito-express": "^3.0.3",
     "cors": "~2.8.5",
     "crypto": "^1.0.1",
     "date-and-time": "^2.4.3",
@@ -26,9 +27,11 @@
     "express-list-endpoints": "~5.0.0",
     "express-rate-limit": "~5.2.6",
     "formidable": "^2.1.1",
+    "google-auth-library": "^9.1.0",
     "handlebars": "^4.7.7",
     "joi": "~17.3.0",
     "jsonwebtoken": "~8.5.1",
+    "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
     "mongoose": "^7.6.1",
     "morgan": "~1.9.1",

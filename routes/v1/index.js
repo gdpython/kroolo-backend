@@ -8,7 +8,15 @@ const { MODULE_NAME, CUURENT_API_VERSION, MODULE_ROUTES } = require('../../const
 
 const authenticationRoutes = require('./authentication');
 const channelsRoutes = require('./channels');
+const onboardingRoutes = require('./onboarding');
+const { PLATFORM } = require('../../constants/authConstant');
 
+/**
+ * Middleware for onboarding user authentication and authorization.
+ * @type {function}
+ */
+const validateOnboardingUser = require("../../middleware/mongoose/onboardingUser")
+console.log(validateOnboardingUser);
 
 /**
  * Express router for the main index route.
@@ -17,13 +25,13 @@ const channelsRoutes = require('./channels');
 const router = express.Router();
 
 /**
- * Middleware to set the module name and include authentication routes.
+ * Middleware to set the module name and include routes.
  * @function
  * @param {object} req - Express request object.
  * @param {object} res - Express response object.
  * @param {function} next - The next middleware function.
  */
-router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.USERS}` ,(req, res, next) => {
+router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.USERS}`, (req, res, next) => {
   /**
    * The module name for authentication.
    * @type {string}
@@ -34,22 +42,26 @@ router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.USERS}` ,(req, res, next) =>
   next();
 }, authenticationRoutes);
 
-/**
- * Middleware to set the module name and include authentication routes.
- * @function
- * @param {object} req - Express request object.
- * @param {object} res - Express response object.
- * @param {function} next - The next middleware function.
- */
-router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.CHANNELS}` ,(req, res, next) => {
+router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.CHANNELS}`, (req, res, next) => {
   /**
-   * The module name for authentication.
+   * The module name for channels.
    * @type {string}
    */
   req.moduleName = MODULE_NAME.CHANNELS;
 
-  // Call the next middleware to authentication route
+  // Call the next middleware to channels route
   next();
 }, channelsRoutes);
+
+router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.ONBOARDING}`, validateOnboardingUser(PLATFORM.WEB), (req, res, next) => {
+  /**
+   * The module name for onboarding.
+   * @type {string}
+   */
+  req.moduleName = MODULE_NAME.ONBOARDING;
+
+  // Call the next middleware to authentication route
+  next();
+}, onboardingRoutes);
 
 module.exports = router;
