@@ -1,14 +1,16 @@
 /**
- * @module models/ProjectMember
+ * @module models/GoalMember
  */
 
 const mongoose = require('mongoose');
+const { INVITATION_STATUS } = require('../../../constants/schemaConstants');
 
 /**
- * Represents a ProjectMember.
+ * Represents a GoalMember.
  *
- * @typedef {Object} ProjectMember
- * @property {mongoose.Types.ObjectId} projectID - The ID of the Project (a reference to the 'Project' model).
+ * @typedef {Object} GoalMember
+ * @property {mongoose.Types.ObjectId} organizationMemberID - The ID of the OrganizationMember (a reference to the 'OrganizationMember' model).
+ * @property {mongoose.Types.ObjectId} workspaceID - The ID of the workspace (a reference to the 'Workspace' model).
  * @property {mongoose.Types.ObjectId} userID - The ID of the user (a reference to the 'User' model).
  * @property {mongoose.Types.ObjectId} roleID - The ID of the role (a reference to the 'Role' model).
  * @property {Boolean} isFavourite - Indicates whether the project is private/public (default is false).
@@ -22,10 +24,10 @@ const mongoose = require('mongoose');
  *
  * @class
  */
-const ProjectMemberSchema = new mongoose.Schema({
-    projectID: {
+const GoalMemberSchema = new mongoose.Schema({
+    goalID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Project',
+        ref: 'Goal',
         required: true,
     },
     userID: {
@@ -47,6 +49,11 @@ const ProjectMemberSchema = new mongoose.Schema({
             message: 'Invalid color hex code format.'
         }
     },
+    inviteStatus: {
+        type: String,
+        enum: INVITATION_STATUS,
+        default: INVITATION_STATUS[0]
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -64,15 +71,14 @@ const ProjectMemberSchema = new mongoose.Schema({
         default: false
     }
 }, {
-    timestamps: true,
-    versionKey: false
+    timestamps: true
 });
 
 /**
- * Mongoose model for the 'ProjectMember' collection.
+ * Mongoose model for the 'GoalMember' collection.
  *
- * @type {mongoose.Model<ProjectMember>}
+ * @type {mongoose.Model<GoalMember>}
  */
-const ProjectMember =  mongoose.model("ProjectMember", ProjectMemberSchema);
-ProjectMember.syncIndexes();
-module.exports =ProjectMember;
+const GoalMember =  mongoose.model("GoalMember", GoalMemberSchema);
+GoalMember.syncIndexes();
+module.exports =GoalMember;

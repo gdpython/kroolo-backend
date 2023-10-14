@@ -11,6 +11,7 @@ const mongoose = require('mongoose');
  * @property {mongoose.Types.ObjectId} workspaceID - The ID of the workspace (a reference to the 'Workspace' model).
  * @property {mongoose.Types.ObjectId} workspaceRoleID - The ID of the OrganizationMember (a reference to the 'OrganizationMember' model).
  * @property {mongoose.Types.ObjectId} userID - The ID of the user (a reference to the 'User' model).
+ * @property {mongoose.Types.ObjectId} roleID - The ID of the role (a reference to the 'Role' model).
  * @property {Boolean} isFavourite - Indicates whether the project is private/public (default is false).
  * @property {string} colorCode - The color code of the project.
  * @property {mongoose.Types.ObjectId} createdBy - The ID of the user who created the project (a reference to the 'User' model).
@@ -28,14 +29,13 @@ const WorkspaceMemberSchema = new mongoose.Schema({
         ref: 'Workspace',
         required: true,
     },
-    workspaceRoleID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'OrganizationMember',
-        required: true,
-    },
     userID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+    },
+    roleID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Role',
     },
     isFavourite: {
         type: Boolean,
@@ -65,8 +65,7 @@ const WorkspaceMemberSchema = new mongoose.Schema({
         default: false
     }
 }, {
-    timestamps: true,
-    versionKey: false
+    timestamps: true
 });
 
 /**

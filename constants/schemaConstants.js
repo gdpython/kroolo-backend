@@ -56,6 +56,55 @@ const PROJECT_STATUS = [
 ];
 
 /**
+ * Constants for goal type.
+ * @constant
+ * @enum {string}
+ */
+
+const GOAL_TYPE = ['Goal', 'SubGoal'];
+
+/**
+ * Constants for goal collaborator type.
+ * @constant
+ * @enum {string}
+ */
+
+const GOAL_COLLABORATOR_TYPE = ['Personal', 'Team']
+
+/**
+ * Constants for goal status.
+ * @constant
+ * @enum {string}
+ */
+
+const GOAL_STATUS = [
+    'Not Started',
+    'On Track',
+    'At Risk',
+    'Delayed',
+    'On Hold',
+    'Partial',
+    'Pending',
+    'Achieved',
+    'Closed',
+    'Archived',
+];
+
+/**
+ * Constants for goal key result measurement unit.
+ * @constant
+ * @enum {string}
+ */
+
+const GOAL_KEY_RESULT_MEASUREMENT_UNIT = [
+    'Number',
+    'Percentage',
+    'Currency',
+    'Boolean',
+    'Custom',
+];
+
+/**
  * Constants for project priority.
  * @constant
  * @enum {string}
@@ -71,4 +120,8 @@ module.exports = {
     WORKSPACE_TYPE,
     PROJECT_STATUS,
     PROJECT_PRIORITY,
+    GOAL_STATUS,
+    GOAL_TYPE,
+    GOAL_COLLABORATOR_TYPE,
+    GOAL_KEY_RESULT_MEASUREMENT_UNIT
 };
