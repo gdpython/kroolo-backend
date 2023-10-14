@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const http = require("https");
 const date = require('date-and-time');
 const { Op, literal } = require('sequelize');
+const { ENC_TYPE } = require("../constants/appConstants");
 const auth_key = "@hvGXdspUQZQ1jJPAfDopItHTLFfTqh(krollo)30sn^MKo39CByMdgUU3cwviR4a7P1fnZXcK";
 
 /**
@@ -146,11 +147,11 @@ function EncrptDecryptApiData(text, key, type) {
  */
 function cryptoFun(text, type) {
     var algorithm = 'aes-256-cbc';
-    var password = CRYPTO_PASSWORD;
+    var password = process.env.CRYPTO_PASSWORD;
     var key = crypto.scryptSync(password, 'salt', 32, { N: 1024 }); //create key
     var iv = crypto.scryptSync(password, 'salt', 16, { N: 1024 }); //create initVector
 
-    if (type.toString() === 'encrypt') {
+    if (type.toString() === ENC_TYPE[0]) {
         var cipher = crypto.createCipheriv(algorithm, key, iv);
         var encrypted = cipher.update(text.toString(), 'utf8', 'hex') + cipher.final('hex'); // encrypted text
         return encrypted.toString();

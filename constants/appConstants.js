@@ -10,10 +10,18 @@ const CUURENT_API_VERSION = process.env.CUURENT_API_VERSION;
 const MODULE_ROUTES = {
     USERS: "users"
 };
+
 /**
-* @description A collection of module names for each API association.
-* @type {object}
-*/
+ * @description The module encryption and descryption.
+ * @type {object}
+ */
+const ENC_TYPE = ['ENC', 'DEC'];
+
+
+ /**
+ * @description A collection of module names for each API association.
+ * @type {object}
+ */
 const MODULE_NAME = {
     /**
      * The module name for authentication-related APIs.
@@ -69,5 +77,6 @@ const MODULE_NAME = {
 module.exports = {
     CUURENT_API_VERSION,
     MODULE_ROUTES,
-    MODULE_NAME
+    MODULE_NAME,
+    ENC_TYPE
 };
