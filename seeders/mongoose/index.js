@@ -6,8 +6,8 @@
 const model = require('../../model/mongoose');
 const mongooseService = require('../../utils/mongooseService');
 const { country, roles } = require('../../data/index');
-const { replaceAll, catchAll } = require('../../utils/common');
-
+const { replaceAll } = require('../../utils/common');
+const { beautifyLog } = require("../../helpers/function")
 /**
  * Seed the 'Country' model with data if it doesn't exist.
  * @function
@@ -23,7 +23,7 @@ async function countrySeed() {
             console.info('Country is up to date 🍺');
         }
     } catch ({ message }) {
-        catchAll({ message: `Country seeder failed due to ${message}` });
+        beautifyLog({ message: `Country seeder failed due to ${message}` });
     }
 }
 
@@ -61,7 +61,7 @@ async function routeSeed(routes) {
             }
         }
     } catch ({ message }) {
-        catchAll({ message: `Route seeder failed due to ${message}` });
+        beautifyLog({ message: `Route seeder failed due to ${message}` });
     }
 }
 
@@ -80,7 +80,7 @@ async function roleSeed() {
             console.info('Role is up to date 🍺');
         }
     } catch ({ message }) {
-        catchAll({ message: `Roles seeder failed due to ${message}` });
+        beautifyLog({ message: `Roles seeder failed due to ${message}` });
     }
 }
 

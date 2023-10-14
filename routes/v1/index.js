@@ -16,7 +16,6 @@ const { PLATFORM } = require('../../constants/authConstant');
  * @type {function}
  */
 const validateOnboardingUser = require("../../middleware/mongoose/onboardingUser")
-console.log(validateOnboardingUser);
 
 /**
  * Express router for the main index route.
