@@ -1,15 +1,14 @@
 /**
- * @module models/WorkspaceMember
+ * @module models/ProjectMember
  */
 
 const mongoose = require('mongoose');
 
 /**
- * Represents a WorkspaceMember.
+ * Represents a ProjectMember.
  *
- * @typedef {Object} WorkspaceMember
- * @property {mongoose.Types.ObjectId} workspaceID - The ID of the workspace (a reference to the 'Workspace' model).
- * @property {mongoose.Types.ObjectId} workspaceRoleID - The ID of the OrganizationMember (a reference to the 'OrganizationMember' model).
+ * @typedef {Object} ProjectMember
+ * @property {mongoose.Types.ObjectId} projectID - The ID of the Project (a reference to the 'Project' model).
  * @property {mongoose.Types.ObjectId} userID - The ID of the user (a reference to the 'User' model).
  * @property {Boolean} isFavourite - Indicates whether the project is private/public (default is false).
  * @property {string} colorCode - The color code of the project.
@@ -22,15 +21,10 @@ const mongoose = require('mongoose');
  *
  * @class
  */
-const WorkspaceMemberSchema = new mongoose.Schema({
-    workspaceID: {
+const ProjectMemberSchema = new mongoose.Schema({
+    projectID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Workspace',
-        required: true,
-    },
-    workspaceRoleID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'OrganizationMember',
+        ref: 'Project',
         required: true,
     },
     userID: {
@@ -70,10 +64,10 @@ const WorkspaceMemberSchema = new mongoose.Schema({
 });
 
 /**
- * Mongoose model for the 'WorkspaceMember' collection.
+ * Mongoose model for the 'ProjectMember' collection.
  *
- * @type {mongoose.Model<WorkspaceMember>}
+ * @type {mongoose.Model<ProjectMember>}
  */
-const WorkspaceMember =  mongoose.model("WorkspaceMember", WorkspaceMemberSchema);
-WorkspaceMember.syncIndexes();
-module.exports =WorkspaceMember;
+const ProjectMember =  mongoose.model("ProjectMember", ProjectMemberSchema);
+ProjectMember.syncIndexes();
+module.exports =ProjectMember;
