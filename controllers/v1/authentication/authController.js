@@ -133,8 +133,6 @@ const completeSignUp = async (req, res) => {
   });
 };
 
-
-
 /**
  * Handles the resed email.
  * @function
@@ -225,6 +223,13 @@ const forgotPassword = async (req, res) => {
   });
 };
 
+/**
+ * Handles the reset password.
+ * @function
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ */
+
 const resetPassword = async (req, res) => {
   let { newPassword, email } = req.body;
   if (!newPassword || !email) {
@@ -246,10 +251,6 @@ const resetPassword = async (req, res) => {
     message: "Password reset successfully.",
   });
 };
-
-
-
-
 
 module.exports = {
   ownerLogin,

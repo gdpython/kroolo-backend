@@ -10,6 +10,7 @@ const {
   COGNITO_PASSWORD_AUTH,
   ADMIN_USER_PASSWORD_AUTH,
 } = require("../../constants/authConstant");
+const { ObjectId } =require('mongodb');
 const {
   EMAIL_VERIFY,
   EMAIL_FORGOT_PASSWORD,
@@ -21,6 +22,7 @@ const {
   AdminSetUserPasswordCommand,
   ChangePasswordCommand,
   ForgotPasswordCommand,
+  RespondToAuthChallengeCommand,
 } = require("@aws-sdk/client-cognito-identity-provider"); // CommonJS import
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -37,6 +39,7 @@ const { sendMail } = require("../email");
 const { crypto } = require("../../helpers/function");
 const { ENC_TYPE } = require("../../constants/appConstants");
 const { COGNITO_STATUS } = require("../../constants/schemaConstants");
+const { default: mongoose } = require("mongoose");
 
 /**
  * @description: service to generate JWT token for authentication.
@@ -73,7 +76,7 @@ const login = async (username, password, modelName, ip) => {
         data: "User not exists",
       };
     }
-    const userData = user.toObject();
+    const userData = user;
     if (!userData.isActive) {
       return {
         flag: true,
@@ -100,37 +103,50 @@ const login = async (username, password, modelName, ip) => {
         lastLoginDate: new Date(),
       };
       await updateOne(modelName, { _id: userData._id }, updateData);
-      const orgnaization = await findOne(model.Organizations, {
-        _id: userData._id,
-      });
-      let accessToken = await generateToken(
-        { organizationID: orgnaization._id, cognitoAccessToken: AccessToken },
-        JWT.CLIENT_SECRET
-      );
-      let refershToken = await generateToken(
-        { organizationID: orgnaization._id, cognitoRefreshToken: RefreshToken },
-        JWT.CLIENT_SECRET
-      );
-      let expireJWT = dayjs().add(JWT.EXPIRES_IN, "second").toISOString();
+      // const orgnaizationDetail = await findOne(model.OrganizationMember, {
+      //   userID: new mongoose.Types.ObjectId(userData._id),
+      // });
+      // console.log(orgnaizationDetail, "orgnaizationDetail")
+      // if(orgnaizationDetail){
+      //   let accessToken = await generateToken(
+      //     { organizationID: orgnaization._id, cognitoAccessToken: AccessToken },
+      //     JWT.CLIENT_SECRET
+      //   );
+      //   let refershToken = await generateToken(
+      //     { organizationID: orgnaization._id, cognitoRefreshToken: RefreshToken },
+      //     JWT.CLIENT_SECRET
+      //   );
+      //   let expireJWT = dayjs().add(JWT.EXPIRES_IN, "second").toISOString();
 
-      createUserToken(model.UserToken, {
-        userID: user._id,
-        token: `${TokenType} ${refershToken}`,
-        cognitoTokeExpiredTime: ExpiresIn,
-        jwtTokeExpiredTime: expireJWT,
-      });
-      let userToReturn = {
-        ...userData,
-        refershToken,
-        accessToken,
-      };
-
-      return {
-        flag: false,
-        data: userToReturn,
-      };
+      //   createUserToken(model.UserToken, {
+      //     userID: user._id,
+      //     token: `${TokenType} ${refershToken}`,
+      //     cognitoTokeExpiredTime: ExpiresIn,
+      //     jwtTokeExpiredTime: expireJWT,
+      //   });
+      //   let userToReturn = {
+      //     ...userData,
+      //     refershToken,
+      //     accessToken,
+      //   };
+      //   return {
+      //     flag: false,
+      //     data: userToReturn,
+      //   };
+      // }
+      // else{
+        return {
+          flag: false,
+          data: {
+            AccessToken: AccessToken,
+            RefreshToken: RefreshToken,
+            onBoardingStep: userData.onBoardingStep,
+          },
+        };
+      // }
     }
   } catch (error) {
+    console.log("error", error);
     throw new Error(error.message);
   }
 };
@@ -138,7 +154,7 @@ const login = async (username, password, modelName, ip) => {
 /**
  * @description: service for user SignUp.
  * @param {string} req - User's signup request for origin.
- * @param {string} email - User's email.
+ * @param {string} email - x`User's email.
  * @param {string} modelName - Model name for user data (Mongoose model).
  * @param {string} ip - User's IP address.
  * @returns {Object} - Authentication status: { flag, data }.
@@ -307,7 +323,7 @@ const completeSignUp = async (name, email, password, modelName, ip) => {
       ],
     };
     const command = new AdminUpdateUserAttributesCommand(input);
-    const cognitoNameChange = await COGNITO_CLIENT.send(command);
+    await COGNITO_CLIENT.send(command);
 
     const changePasswordInput = {
       UserPoolId: process.env.COGNITO_USER_POOL_ID,
@@ -318,7 +334,7 @@ const completeSignUp = async (name, email, password, modelName, ip) => {
     const commandPasswordChange = new AdminSetUserPasswordCommand(
       changePasswordInput
     );
-    const response = await COGNITO_CLIENT.send(commandPasswordChange);
+    await COGNITO_CLIENT.send(commandPasswordChange);
     const updateData = {
       fullName: name,
       password: crypto(password, ENC_TYPE[0]),
@@ -327,16 +343,44 @@ const completeSignUp = async (name, email, password, modelName, ip) => {
       emailVerfiyStatus: false,
     };
     await updateOne(modelName, { _id: userData._id }, updateData);
-    // const loginUserData = await login(email, password, modelName, ip);
-    // console.log(loginUserData, "loginUserData");
-    // return {
-    //   flag: false,
-    //   data: loginUserData,
-    // };
+    const loginUserData = await completeSignUpAndGetCognitoToken(email, password);
+    console.log(loginUserData, "loginUserData");
+    return {
+      flag: false,
+      data: {
+        AccessToken: loginUserData.AuthenticationResult.AccessToken,
+        RefreshToken: loginUserData.AuthenticationResult.RefreshToken
+      },
+    };
   } catch (error) {
     throw new Error(error.message);
   }
 };
+
+/**
+ * @description: service for user get authentication token.
+ * @param {string} username - User's name.
+ * @param {string} password - User's new password.
+ * @returns {Object} - Authentication status: { flag, data }.
+ */
+
+const completeSignUpAndGetCognitoToken = async (username, password) => {
+  try{
+    const input = {
+      AuthFlow: COGNITO_PASSWORD_AUTH,
+      ClientId: process.env.COGNITO_APP_CLIENT_ID,
+      AuthParameters: {
+        USERNAME: username,
+        PASSWORD: password,
+      },
+    };
+    const command = new InitiateAuthCommand(input);
+    const response = await COGNITO_CLIENT.send(command);
+    return response; // CommandOutput
+  }catch(error){
+    throw new Error(error.message);
+  }
+}
 
 /**
  * @description: service for resend email.
