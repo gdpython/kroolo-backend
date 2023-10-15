@@ -34,9 +34,10 @@ const WorkspaceSchema = new mongoose.Schema({
         trim: true,
         required: true,
     },
-    companyID: {
+    organizationID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Company',
+        ref: 'Organization',
+        required: true,
     },
     description: {
         type: String,
@@ -50,7 +51,8 @@ const WorkspaceSchema = new mongoose.Schema({
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true,
     },
     updatedBy: {
         type: mongoose.Schema.Types.ObjectId,

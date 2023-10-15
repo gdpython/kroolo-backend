@@ -5,7 +5,11 @@
 
 const formidable = require('formidable');
 const model = require('../../../model/mongoose');
-const { findOne, createOne, updateOne } = require('../../../utils/mongooseService');
+const {
+    findOne,
+    createOne,
+    updateOne,
+} = require('../../../utils/mongooseService');
 
 /**
  * Handles the retrieval of organization data by its ID.
@@ -36,16 +40,20 @@ const getOrganization = async (req, res) => {
          * @property {string} message - A success message.
          */
 
-        const organizationData = await findOne(model.Organizations, { _id: organizationID }, { organizationName: true });
+        const organizationData = await findOne(
+            model.Organizations,
+            { _id: organizationID },
+            { organizationName: true },
+        );
         if (!organizationData) {
             return res.failure({
-                message: `Organization not found by id(${organizationID}).`
+                message: `Organization not found by id(${organizationID}).`,
             });
         }
 
         return res.success({
             data: organizationData,
-            message: 'Organization data fetched successfully.'
+            message: 'Organization data fetched successfully.',
         });
     } catch (error) {
         return res.internalServerError({ message: error.message });
@@ -71,14 +79,29 @@ const createOrganization = async (req, res) => {
         /**
          * The organization data created successfully response.
          * @typedef {Object} SuccessResponse
-         * @property {OrganizationData} data - The created organization data.
+         * @property {organizationData} data - The created organization data.
          * @property {string} message - A success message.
          */
-
-        const organizationData = await createOne(model.Organizations, { organizationName });
+        const organizationData = await createOne(model.Organizations, {
+            organizationName,
+            createdBy: req.user._id,
+        });
+        if (organizationData) {
+            const organizationRoleData = await findOne(model.Role, {
+                moduleName: 'ORGANIZATION',
+                roleName: 'OWNER',
+            });//check this query
+            const organizationMemberData = await createOne(model.OrganizationMember, {
+                organizationID: organizationData._id,
+                userID: req.user._id,
+                roleID: organizationRoleData._id,
+                createdBy: req.user._id,
+            });
+            console.log(organizationMemberData,'organizationMemberData')
+        }
         return res.success({
             data: organizationData,
-            message: 'Organization created successfully.'
+            message: 'Organization created successfully.',
         });
     } catch (error) {
         return res.internalServerError({ message: error.message });
@@ -108,10 +131,14 @@ const updateOrganization = async (req, res) => {
          * @property {string} message - A success message.
          */
 
-        const organizationData = await updateOne(model.Organizations, { organizationName }, { organizationID });
+        const organizationData = await updateOne(
+            model.Organizations,
+            { organizationName },
+            { organizationID },
+        );
         return res.success({
             data: organizationData,
-            message: 'Organization updated successfully.'
+            message: 'Organization updated successfully.',
         });
     } catch (error) {
         return res.internalServerError({ message: error.message });
@@ -121,5 +148,5 @@ const updateOrganization = async (req, res) => {
 module.exports = {
     getOrganization,
     createOrganization,
-    updateOrganization
+    updateOrganization,
 };

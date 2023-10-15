@@ -21,6 +21,7 @@ const workspaceController = require(`../../../controllers/${CUURENT_API_VERSION}
 const projectController = require(`../../../controllers/${CUURENT_API_VERSION}/project/projectController`);
 const groupsController = require(`../../../controllers/${CUURENT_API_VERSION}/groups/groupsController`);
 const taskController = require(`../../../controllers/${CUURENT_API_VERSION}/task/taskController`);
+const roleController = require(`../../../controllers/${CUURENT_API_VERSION}/role/roleController`);
 
 /**
  * Route for onboarding create/update/read organization.
@@ -34,7 +35,10 @@ router.get('/organization/:organizationID', organizationController.getOrganizati
 router.post('/organization', organizationController.createOrganization);
 router.patch('/organization', organizationController.updateOrganization);
 
-router.get('/workspace', workspaceController.getWorkspace);
+router.get('/role', roleController.getAllRole);
+
+router.get('/workspace/list/:organizationID', workspaceController.getAllWorkspace);
+router.get('/workspace/:workspaceID', workspaceController.getWorkspace);
 router.post('/workspace', workspaceController.createWorkspace);
 router.patch('/workspace', workspaceController.updateWorkspace);
 
