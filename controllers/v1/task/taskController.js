@@ -20,7 +20,13 @@ const getTask = async (req, res) => {
          * @param {string} taskID - The unique identifier of the task.
          */
         const { taskID } = req.params;
-
+        const { organizationID, projectID, groupID} = req.body;
+        if (!projectID || !organizationID  || !groupID ||!taskID) {
+            return res.badRequest({
+                message:
+                    "Insufficient request parameters! organizationID, projectID, groupID are required.",
+            });
+        }
         /**
          * The retrieved task data.
          * @typedef {Object} taskData
@@ -64,8 +70,13 @@ const createTask = async (req, res) => {
          *
          * @param {string} taskName - The name of the task.
          */
-        const { taskName } = req.body;
-
+        const { organizationID, projectID, groupID, taskName} = req.body;
+        if (!projectID || !organizationID  || !groupID) {
+            return res.badRequest({
+                message:
+                    "Insufficient request parameters! organizationID, projectID, groupID, taskName are required.",
+            });
+        }
         /**
          * The task data created successfully response.
          * @typedef {Object} SuccessResponse
@@ -76,7 +87,7 @@ const createTask = async (req, res) => {
         const taskData = await createOne(model.Task, { taskName });
         return res.success({
             data: taskData,
-            message: 'task created successfully.'
+            message: 'Task created successfully.'
         });
     } catch (error) {
         return res.internalServerError({ message: error.message });
@@ -97,8 +108,15 @@ const updateTask = async (req, res) => {
          *
          * @param {string} taskName - The updated name of the task.
          */
-        const { taskName, taskID } = req.body;
 
+        const { taskID } = req.params;
+        const { organizationID, projectID, groupID, taskName} = req.body;
+        if (!projectID || !organizationID  || !groupID) {
+            return res.badRequest({
+                message:
+                    "Insufficient request parameters! organizationID, projectID, groupID, taskName are required.",
+            });
+        }
         /**
          * The task data updated successfully response.
          * @typedef {Object} SuccessResponse

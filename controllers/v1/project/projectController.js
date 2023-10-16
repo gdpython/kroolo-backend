@@ -20,7 +20,14 @@ const getProject = async (req, res) => {
          * @param {string} projectID - The unique identifier of the project.
          */
         const { projectID } = req.params;
+        const { organizationID } = req.body;
 
+        if (!projectID || !organizationID) {
+            return res.badRequest({
+                message:
+                    "Insufficient request parameters! projectID, organizationID are required.",
+            });
+        }
         /**
          * The retrieved project data.
          * @typedef {Object} projectData
@@ -64,8 +71,15 @@ const createProject = async (req, res) => {
          *
          * @param {string} projectName - The name of the project.
          */
-        const { projectName } = req.body;
+        const { projectName, organizationID } = req.body;
+        const { projectID } = req.params;
 
+        if (!projectID || !organizationID  || !projectName) {
+            return res.badRequest({
+                message:
+                    "Insufficient request parameters! projectName, projectID, organizationID are required.",
+            });
+        }
         /**
          * The project data created successfully response.
          * @typedef {Object} SuccessResponse
@@ -97,8 +111,14 @@ const updateProject = async (req, res) => {
          *
          * @param {string} projectName - The updated name of the project.
          */
-        const { projectName, projectID } = req.body;
-
+        const { projectID } = req.params;
+        const { projectName, organizationID } = req.body;
+        if (!projectID || !organizationID  || !projectName) {
+            return res.badRequest({
+                message:
+                    "Insufficient request parameters! projectName, projectID, organizationID are required.",
+            });
+        }
         /**
          * The project data updated successfully response.
          * @typedef {Object} SuccessResponse

@@ -26,7 +26,12 @@ const getOrganization = async (req, res) => {
          * @param {string} organizationID - The unique identifier of the organization.
          */
         const { organizationID } = req.params;
-
+        if (!organizationID) {
+            return res.badRequest({
+                message:
+                    "Insufficient request parameters! organizationID are required.",
+            });
+        }
         /**
          * The retrieved organization data.
          * @typedef {Object} OrganizationData
@@ -75,7 +80,12 @@ const createOrganization = async (req, res) => {
          * @param {string} organizationName - The name of the organization.
          */
         const { organizationName } = req.body;
-
+        if (!organizationName) {
+            return res.badRequest({
+                message:
+                    "Insufficient request parameters! organizationName are required.",
+            });
+        }
         /**
          * The organization data created successfully response.
          * @typedef {Object} SuccessResponse
@@ -97,7 +107,7 @@ const createOrganization = async (req, res) => {
                 roleID: organizationRoleData._id,
                 createdBy: req.user._id,
             });
-            console.log(organizationMemberData,'organizationMemberData')
+            console.log(organizationMemberData, 'organizationMemberData')
         }
         return res.success({
             data: organizationData,
@@ -122,8 +132,14 @@ const updateOrganization = async (req, res) => {
          *
          * @param {string} organizationName - The updated name of the organization.
          */
-        const { organizationName, organizationID } = req.body;
-
+        const { organizationID } = req.params;
+        const { organizationName } = req.body;
+        if (!organizationName || !organizationID) {
+            return res.badRequest({
+                message:
+                    "Insufficient request parameters! organizationName, organizationID are required.",
+            });
+        }
         /**
          * The organization data updated successfully response.
          * @typedef {Object} SuccessResponse

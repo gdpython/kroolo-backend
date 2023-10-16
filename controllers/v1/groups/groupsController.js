@@ -20,7 +20,13 @@ const getGroups = async (req, res) => {
          * @param {string} groupID - The unique identifier of the group.
          */
         const { groupID } = req.params;
-
+        const { groupName, organizationID, projectID} = req.body;
+        if (!projectID || !organizationID  || !groupName) {
+            return res.badRequest({
+                message:
+                    "Insufficient request parameters! groupID, groupName, organizationID, projectID are required.",
+            });
+        }
         /**
          * The retrieved group data.
          * @typedef {Object} groupData
@@ -64,8 +70,13 @@ const createGroups = async (req, res) => {
          *
          * @param {string} groupName - The name of the group.
          */
-        const { groupName } = req.body;
-
+        const { groupName, organizationID, projectID} = req.body;
+        if (!projectID || !organizationID  || !groupName) {
+            return res.badRequest({
+                message:
+                    "Insufficient request parameters! groupName, organizationID, projectID are required.",
+            });
+        }
         /**
          * The group data created successfully response.
          * @typedef {Object} SuccessResponse
@@ -76,7 +87,7 @@ const createGroups = async (req, res) => {
         const groupData = await createOne(model.Group, { groupName });
         return res.success({
             data: groupData,
-            message: 'group created successfully.'
+            message: 'Group created successfully.'
         });
     } catch (error) {
         return res.internalServerError({ message: error.message });
@@ -97,8 +108,14 @@ const updateGroups = async (req, res) => {
          *
          * @param {string} groupName - The updated name of the group.
          */
-        const { groupName, groupID } = req.body;
-
+        const { groupID } = req.params;
+        const { groupName, organizationID, projectID} = req.body;
+        if (!projectID || !organizationID  || !groupName) {
+            return res.badRequest({
+                message:
+                    "Insufficient request parameters! groupID, groupName, organizationID, projectID are required.",
+            });
+        }
         /**
          * The group data updated successfully response.
          * @typedef {Object} SuccessResponse
