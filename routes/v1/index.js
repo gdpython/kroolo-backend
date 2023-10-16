@@ -9,6 +9,8 @@ const { MODULE_NAME, CUURENT_API_VERSION, MODULE_ROUTES } = require('../../const
 const authenticationRoutes = require('./authentication');
 const channelsRoutes = require('./channels');
 const onboardingRoutes = require('./onboarding');
+const universalRoutes = require('./universal');
+
 const { PLATFORM } = require('../../constants/authConstant');
 
 /**
@@ -62,5 +64,13 @@ router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.ONBOARDING}`, validateOnboar
   // Call the next middleware to authentication route
   next();
 }, onboardingRoutes);
+
+router.use(`/${CUURENT_API_VERSION}`,  (req, res, next) => {
+  /**
+   * The module name for universal routes.
+   * @type {string}
+   */
+  next();
+}, universalRoutes);
 
 module.exports = router;

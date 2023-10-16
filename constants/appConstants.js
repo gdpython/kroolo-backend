@@ -9,7 +9,8 @@ const CUURENT_API_VERSION = process.env.CUURENT_API_VERSION;
  */
 const MODULE_ROUTES = {
     USERS: "users",
-    ONBOARDING:"onboarding"
+    ONBOARDING:"onboarding",
+    CHANNELS:"channels"
 };
 
 /**

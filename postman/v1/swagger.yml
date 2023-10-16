@@ -1,109 +1,1246 @@
 openapi: 3.0.0
 info:
-  title: New Kroolo Api's
+  title: V1
   version: 1.0.0
 servers:
-  - url: http://localhost:3000
-components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
+  - url: http://{{base_url}}
 tags:
-  - name: workspace api
-  - name: task api
+  - name: Authenitcation
+  - name: Onboarding
 paths:
-  /api/v1/workspace/updateWorkeSpaceColor:
+  /{api_version}/users/login:
     post:
       tags:
-        - workspace api
-      summary: http://localhost:3000/api/v1/workspace/updateWorkeSpaceColor
+        - Authenitcation
+      summary: login
       requestBody:
         content:
           application/json:
             schema:
               type: object
               example:
-                colorCode: '#343432'
-                createdBy: 641544bfbaf299860d76b935
-                workSpaceId: 640080fcc6b6373338972d9f
-      security:
-        - bearerAuth: []
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /api/v1/workspace/duplicate-workspaceName-find:
-    post:
-      tags:
-        - workspace api
-      summary: http://localhost:3000/api/v1/workspace/duplicate-workspaceName-find
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                wsId: 640080fcc6b6373338972d9f
-                workSpaceName: Hell Space
-      security:
-        - bearerAuth: []
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /api/v1/workspace/getColorCode:
-    get:
-      tags:
-        - workspace api
-      summary: Color Code
-      security:
-        - bearerAuth: []
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /api/v1/goal/list/6408cd874a5435f82ffc582b:
-    get:
-      tags:
-        - task api
-      summary: Task List Public
-      security:
-        - bearerAuth: []
+                email: gdpython101@gmail.com
+                password: Artengo@7540
       parameters:
-        - name: search
-          in: query
+        - name: api_version
+          in: path
           schema:
             type: string
-          example: yash goal223
+          required: true
       responses:
         '200':
-          description: Successful response
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '2929'
+            ETag:
+              schema:
+                type: string
+                example: W/"b71-BKjf9GwpVVRKFcjYaNl7Tn+tdqU"
+            Date:
+              schema:
+                type: string
+                example: Sat, 14 Oct 2023 11:12:59 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
           content:
-            application/json: {}
-  /api/v1/activity/task/all-list:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: SUCCESS
+                message: Login successful.
+                data:
+                  AccessToken: >-
+                    eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6Ijc1ZTZlMjM5LTQ4MDMtNDk2YS05YWYwLTU2MGUwY2ZkNmU4ZSIsImV2ZW50X2lkIjoiMmFkMzIyMjUtNzUwNi00YzE2LWIwNjItNGUzZTRmNmI1NTc4IiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI4MTk3OSwiZXhwIjoxNjk3MzY4Mzc5LCJpYXQiOjE2OTcyODE5NzksImp0aSI6IjNlNTIxNzc3LTQyY2QtNDY1NC1hZjY2LWQyYjY0Zjk5YzUwZiIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.VTmhhUwmUV0H10WPzue7269h8ijONpZuluyUDXJP8pFru22VJHkvy-HjQsaJiOqvgZYh6jLk25NalHEvw9ZfGLp8JMQj8jQkcsw-_QoUWJcjiP1EEhGaum_begrrm__jvp6VC-a3TMhDLQZdRRqNLqz1fPBYFktv19TCK9IRfVgUfy-Pkfc9oIZWHfrOeGZN-iWBThGkFAGVv_58pSSyOOgDjSAOpbMoZL0eXHpONJyRhRivQrCLinkNt-aT-fRLdn-ulgUaMxY46heKD1v_TjUGl5A6c8Zuc8Kdl2OWoU_OLt4uXAX2tksAS4pO-qIKWSzP8GZJz67bXxObayOG0w
+                  RefreshToken: >-
+                    eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.G0vHk-gmOwFSCgjerhVYvoe-WFO9CCeLWEDMOmc8eVtMhDLss2LfeY4-9rKNRNjCu_Vha0Rt-2zqd-0PZ9hCqfzDY1n9_l4NZZ_Qu5mEHiChx7EfAQkE3oE7owgyGvWvDUqwvo-JMmBFXrbcHRrVt9UuLSvD2dTj_AMYydYFB0g2Y6UfoN9TRJgEFb4MzCDLM83QZkmvHS1SIMCBEYXKt0So5aN1MjD3OXVHjO4kKKAcGsyE_QxAFsvsIRb9Hsf7nY7C9E9Y8S-AtRwWwKWYlAmTl-9cY6Oy8BhMGKnbZDBLo3OC2HYK0Ov36jDTWhRbC_thjzrRB4fy6MVsGC5bWg.9Mf6HUuvIH4fzPs3.IFTdEF2hbaFe9yYdrxKHIje6m8IfZsUYhE7eTQlD3GXbK0AXDM-XjIK8V2Yb9r1R8o_fAKi4j8bwqdRoc258pMldq0Kru-XraJGbJayVcIx55VDWj-BH6wsW0yQEIFPw9LTwIPut7IWN3Kg6ucNU6SC6UlgKBe7XqAHAtl1CrTiqpIZQByOb6o_qY7PVseXt4VWrur3zeOEdRW0ssx63OZ-J3kfs0_Wwi_V1iWmSVQQ-8-IjTUrmjbZdBXSRQMygaK_9ibj71G5_4CuovlSJPso6roUxiEzdtRwT4L3wlUGE3FJtwPwb5yg5wLKWb74eNThGxo41XtvfrcuVdFu_7c70WjxANFEfVfmO-dGfBZ_NZvG8mOpDh-uae_WN9-h3eLT0HJVhYukt_qC9G7svhIUCD2dnC3orEAhE86XiWsQvHGHd-M4ifELmi-TiDmKxvddsLJL5J_2woKW0VXxaBWnpXCAB0CAN3d1useKL813d5e7tHdgznNL45mDCb1Zl4OmhQ7PIMlqdo4auy7Cv4KTOihatnE4Bb0-oNFAi3P_lCxG6sGHnQ6oHs02-lSa9rtQxZ9UtkfE9V0CeLRpI5FVyjCIuAByzD0tVnnR1TmUJ9bXT-lu2ZXj1IDV5DTX7_brNOZaW6S4vT17hFlek60dJhklbFtsMLZvwnTz9OqsDz7PGe-zUZNtikiLPX3dzrsQbnldacRRqBxrQZniIKeaLlri0MtbsmrjxNEg0PvQJ_zOPZS2_1EvLiKlkVJzMwAMJFc9dPsSps99AKn0mJb2pi0EZ-n2d9EUnbBL8eWddF0bxQdwNOTXQ_XKzJmKv3FuOnqYUsh2-OAlOmMpx0UW-WrJEl_RAGPf-NWEp8S4Nd1fArhB66JaIPn5n1mmBKZ2y7ORMmP76jst1TR5DQETF2pQzgvfC3flxkI64c4YyyxyHECbTyfNo0Lr-xDked1gDDNS4ysbJuEqBc01pZgw0ZuvuZtksRLzlVQ18FDhG8qmzkwu04yvgUSEJZZote8ki5juVxuhUolOOS7bJkgQZiYX50IsMGDD6LVYwrRQmI_Mw5nSIF4zTtywQzg2_Ri0rmY9mNHspL4_hr00bhu1wyvd4pAqCxk_koNigsi7VfR0mjGPDvNpdo1Kye9CTEvfL6Cg_wLguNPxQkwyiGVplHV8fQREWgP9pb6S5q1B345e9vGO3xY5B5eC1uagKhtkS6yia9yODZ1uJ1gkKOhL7czB7x4vHCUYANRKpSOYWZTSqNBzKjx1cIwTjrJBLaE6yo69zEnzbI7apQw1DV81PQKawm52tksl7.LqXcpMa6M7QhPEceSIPdoA
+                  onBoardingStep: 1
+  /{api_version}/users/signup:
+    post:
+      tags:
+        - Authenitcation
+      summary: signup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: gdpython101@gmail.com
+      parameters:
+        - name: api_version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '63'
+            ETag:
+              schema:
+                type: string
+                example: W/"3f-sSqfyEr+85kH36c+hfz/XdwAlBo"
+            Date:
+              schema:
+                type: string
+                example: Sat, 14 Oct 2023 10:07:12 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: SUCCESS
+                message: Signup successful.
+                data: null
+  /{api_version}/users/email-verify/703ac072-2bad-4912-9e1e-c6d954423bd7:
     get:
       tags:
-        - task api
-      summary: All Task Publick
-      security:
-        - bearerAuth: []
+        - Authenitcation
+      summary: email verfity
       parameters:
-        - name: page
-          in: query
+        - name: api_version
+          in: path
           schema:
-            type: integer
-          example: '1'
-        - name: limit
-          in: query
-          schema:
-            type: integer
-          example: '5'
+            type: string
+          required: true
       responses:
         '200':
-          description: Successful response
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '78'
+            ETag:
+              schema:
+                type: string
+                example: W/"4e-0CAAku/Omvx/EfK81KUWxXFW3Yw"
+            Date:
+              schema:
+                type: string
+                example: Fri, 13 Oct 2023 14:01:56 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: object
+              example:
+                status: SUCCESS
+                message: Email verified.
+                data: gdpython09@gmail.com
+  /{api_version}/users/complete-signup:
+    post:
+      tags:
+        - Authenitcation
+      summary: complete signup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: gdpython101@gmail.com
+                password: Artengo@7540
+                name: gd python
+      parameters:
+        - name: api_version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '2920'
+            ETag:
+              schema:
+                type: string
+                example: W/"b68-hZ+5qjUMJF/S+hBF4TwpcnEU8DI"
+            Date:
+              schema:
+                type: string
+                example: Sat, 14 Oct 2023 10:39:12 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: SUCCESS
+                message: Signup complete successful.
+                data:
+                  AccessToken: >-
+                    eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImNhNzI5YWZlLWI5OGYtNGY2NS04NTNmLTRkYjVmODMxNWE0ZCIsImV2ZW50X2lkIjoiMDgwMTMzYjUtYzBmMy00NWZmLTg1NmQtYWIyNTk0YTA2YjI5IiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI3OTk1MiwiZXhwIjoxNjk3MzY2MzUyLCJpYXQiOjE2OTcyNzk5NTIsImp0aSI6ImUzZmRhYjdhLTg4Y2YtNDRiOS1iYzY0LTM2MmYzOWQwOTZiOSIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.JzetT5XCpx1Llen-t5QLP38y-6ZST2-dEDdINJd0uThUg3sfQtv7WTEuDbSexVBiOBxON3xCE7mjlIanh9lNbO1a9TUL-Kp7lwJK39eV8Z_ot8I_pfs9zbevCJtFftgGmPdH189qUPqGWIlvin7KUPmmeHgTu1zKDmEdicp8LC_pwMJ2OEbJZmKes7R69lNpi-UFVrkZuCXvWNLWrOEQir6cTLfcNw7Wle6Qb5lZZFxcawVPWf1H2KBqFYqkhYwuGourySoq0KTgv13Tn01mHdG1aCsJTCYza-QCoYXZzd1rF-RZA4M6s3j6LNLym7pGbZcqxGviZnjZCLxcjag-Xw
+                  RefreshToken: >-
+                    eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.fVJDeC7w5sSy1E2cgEvUiHamZxJpcdBive6hgNQomnAq-4RGFXiarvQ1Z-aywAOltoXeiG3fMV5bkrmcZHjJwtoSg5dEINPuer2rb9kbXOnW41NjDdm6hsIALvzvyXNCs8c3nmwQ3NdAVSVBbuecZSiiYn101KeHs-Men8sHG1OltlhnPBph-Q5pB9l8jwu9ofmsD7Ax5p29Q5bgKab5_4-h11h--F9JEnzhrcSEsU0GPAaVHYfNnb1oZUo432XLAEq0n7HrssR4OF28ggyzck6t_DIgA3dUGIr7FofQcz8-xeT_Kkfb39omOWhLhY6-H4zd3kAkZL_n5e52NWSa4Q.Cf1jKocgeZyHUKHE.ZURVkUIFqwONKTO8nOaLFwD_9yI09S0eEm74klErzbAPSYC3qpNxe6P9ISLzDvtlRwPhL8PbFtlM7rZkKrtHUNW3hK-qxPT4-R1xaKGRZmB3gu7YBvpVj6nP1ykLieo4dVzM4SQy8Nkt7zM6AcA18B3JnDqh8q6h-5Th-V3OMq6rrZZDNuIUfzM_q6aHdKRwilxtRxCOIQKVENO9O2UKI1yha6Pu8MO0w36787U6yQsmRaGGlVYgGCkhqryRKSwdk26bLhRFs1xxjeH0vbfRp8nlLL3q3bv-7uCfOOnchai7nUhSaJy20jgdYI93tvk1lKCW61JPqL3McDa5om4_NHCQCbC83U09JZDeDKyvTgkOoOw14XgsuG5-PAAjP2ZAPkQlIeWbQBRFq1-w-0g-pcSwz2s5WYBqebONrabZ8KbqrX4Qp-6ckXBZgjdweSSTD6GMIK0BGa6is3XSsS_VJ3vmCSXYIMEozGtmm_HYckCwiFyyRVKccs1SXJ5gsygOUtMkHKUzIDwOVEhuCKhPlrRH_7BtdZysvmb_v57osSofm2I2XhojqxvJomW9FsWvuEdv8Kv3oWqNArEShpITYh8ewyUN3ae9bRfWp_vGZ7Dufz-xuxpTADUJjtMtPXw7UqYrZGL_8xHMUq-bSaeC3W5FRDwy8jG464FLAclGDCIwStuOjlu3ECouBK29SLpbN_bDWMbs_8l3U3mBtIs5R9dYgl29hrbh0-lhpwNk8h8zXk_HqXTeI6LNPJDRUDAXQfC7_gp5hoqVKldVXRnJoEHNPYOKYDi6HC8UUUqu-Ccguv2xveo-AIgZqWD8uFfF3lIHbrERqwX-tnUqLLDtzQ8HaRPbGy6PMSbLpqZpBBCMJ8FX_DysosCCwDyznWf1PJSF2Kw1Tot04JJQrrF8me2sceOPwKdJUQFqC3XOrVvzeit5wl_ulA23QedW-GWyR1KXzHk5yTkRCi4w4am3iUm53Oso1g5jvuUHSYkb0wPHncgbQwLaw8lHmprzpsL4G_K3UcsPmXObUCB03Ax0dsUDQ5a6kxOz7rj5Nyvs5Z9KeQX2O6kDnKjSKyW9-syVNrhg75l-wCBDE8a4wlmCn3yODApOkzFxvgqw-zUjmHtNHBXip2BjbdhxqWbya6iCmMUc1Tx2fQ6e7Lyws20MatyLhBF43-bqsVE0DewQCgKGofXeu0aB3yApLoxgSL1R8203hctj0LzRBpMloirk_tWsyZB_4BNufzLt0LfktGqhqYmdPw87hFO2jWHDYoptDvh6hdqshw9B47FM2QCeIeS3uLpGODqD_NXO.kJw8wsNbpK1zgful7icaEQ
+  /{api_version}/users/email-resend:
+    post:
+      tags:
+        - Authenitcation
+      summary: email resend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: gdpython09@gmail.com
+      parameters:
+        - name: api_version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '71'
+            ETag:
+              schema:
+                type: string
+                example: W/"47-14vO9iZHm6jdCJceP2gMCu66BHc"
+            Date:
+              schema:
+                type: string
+                example: Sat, 14 Oct 2023 05:39:45 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: SUCCESS
+                message: Email resent successfully.
+                data: null
+  /{api_version}/users/change-password/6526b62d42cc13804dd1b611:
+    post:
+      tags:
+        - Authenitcation
+      summary: change password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                currentPassword: Artengo@7540
+                newPassword: laserJet_1300
+                token: >-
+                  eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJjN2Y4MTQ5My0xMjNmLTRiNzktYTVjNC1lN2M0MTBkOTdiOTMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImM5ODM5MzNjLThiMGQtNDUyNS1hNWJlLWFhOTJhOWEzODFkNiIsImV2ZW50X2lkIjoiYzQyMTc1NjMtNzU4My00YjMzLThiMzItM2FkNzBhZWU1YTg0IiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI2NTQwNSwiZXhwIjoxNjk3MzUxODA1LCJpYXQiOjE2OTcyNjU0MDUsImp0aSI6IjlhOWVkNDI1LTdhMGQtNGI3Ny04MzUzLTY1MGVjMTVmMTJhZiIsInVzZXJuYW1lIjoidmlyYXRAeW9wbWFpbC5jb20ifQ.Mb-MoqxeaCyPZQ00ASiYQRi4lygJ1lZiBsg7_Czgwgp3NtH_PTsW9C-eMYwD8Zyq21f8_qfAT-70-HalMWIN7y4IoG2kR8NKGODhj4Gzu0mOb4JnT_9lgrSTvx_qvSA1TRr6cPakOW_HYueJtVy03nac9n5sijSOVJq6v3CrtHUAI7TO3PpI77UinGwsOliHKjI57SyuATytJ61d2IsBRbc9g0BeprmhgXO-8fVvUGw6P0Y32AdM8_vveQccPrtaXFtpsO4Hh8ZK1QNFTzPKwZISpp5SVR73B0MiOyufVpDORxxLxskMR80UIz3szO8YzqaUMRF1LcQm0QWEnVIyzg
+      parameters:
+        - name: api_version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '400':
+          description: Bad Request
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '64'
+            ETag:
+              schema:
+                type: string
+                example: W/"40-pMCQNi4o+ZX4iFudBV0nlugWdLg"
+            Date:
+              schema:
+                type: string
+                example: Sat, 14 Oct 2023 06:45:57 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: BAD_REQUEST
+                message: User not exists
+                data: null
+  /{api_version}/users/forgot-password:
+    post:
+      tags:
+        - Authenitcation
+      summary: forgot password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: gdpython01@gmail.com
+      parameters:
+        - name: api_version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '85'
+            ETag:
+              schema:
+                type: string
+                example: W/"55-h8kHrsIjpLg6hx+NbZUlwYZZbxQ"
+            Date:
+              schema:
+                type: string
+                example: Sat, 14 Oct 2023 07:25:33 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: SUCCESS
+                message: Forgot password email sent successfully.
+                data: null
+  /{api_version}/users/reset-password:
+    post:
+      tags:
+        - Authenitcation
+      summary: reset password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: gdpython01@gmail.com
+                newPassword: Artengo@7540
+      parameters:
+        - name: api_version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '73'
+            ETag:
+              schema:
+                type: string
+                example: W/"49-MpIQXdwkVdYoB8TjxX93WcY+D/s"
+            Date:
+              schema:
+                type: string
+                example: Sat, 14 Oct 2023 08:34:10 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: SUCCESS
+                message: Password reset successfully.
+                data: null
+  /{api_version}/onboarding/role:
+    get:
+      tags:
+        - Onboarding
+      summary: role list
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImMwYTgyODRiLWIxZGEtNDA2NC1iNzI3LWYzNjU2YjdiNmIxNCIsImV2ZW50X2lkIjoiYzk4OThiYTMtMWRkMS00YTU3LWEwNTMtZjVmYWY1NjQzZjcyIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzMwMzc4NCwiZXhwIjoxNjk3MzkwMTg0LCJpYXQiOjE2OTczMDM3ODQsImp0aSI6IjYxZTM1NGJjLWFiMmEtNDg0MC1hNWMxLTJjNDM5Y2VkMmRjMSIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.iSHXV_bvpeyCWsiWoqLNMAdqL2sWPZre8gTUGbuLx2MqxzEm2_BYiksndHet1Ir04B7qmILQzwL0BYpRFgtiYvTO-PBCHmZCGoVJ3MGNB21gyvNSO29ft5LiYkC0wICxji88H2WmQo-Vzerun6E-z7bqQCPZsKEsRqcdcKUsbma2JPdXF3olWCqLC9WegHTvg0vJAQG4OUzT4MmDII3MYEegI7HUUS4Cdtq0pfxMg5GK8VeaIr5S3nRzzuJgWQLW6Psw6RIoAYI2IH1sjKwQpPTloP9K0mNVcHut4HGnTj8Bi3q-FPPzehmiRipTiMBN5eeZGMqpBDfWBO8FNZvhMA
+        - name: api_version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '5189'
+            ETag:
+              schema:
+                type: string
+                example: W/"1445-w86iP6p8BQPita4Fl05W7JEnCrw"
+            Date:
+              schema:
+                type: string
+                example: Sat, 14 Oct 2023 17:16:41 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: SUCCESS
+                message: role list data fetched successfully.
+                data:
+                  - _id: 6527ebe1670ffe680728ae87
+                    moduleName: CHANNEL
+                    roleName: OWNER
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.587Z'
+                    updatedAt: '2023-10-12T12:51:45.587Z'
+                  - _id: 6527ebe1670ffe680728ae77
+                    moduleName: ORGANIZATION
+                    roleName: MEMBER
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.580Z'
+                    updatedAt: '2023-10-12T12:51:45.580Z'
+                  - _id: 6527ebe1670ffe680728ae80
+                    moduleName: GOAL
+                    roleName: OWNER
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.584Z'
+                    updatedAt: '2023-10-12T12:51:45.584Z'
+                  - _id: 6527ebe1670ffe680728ae81
+                    moduleName: GOAL
+                    roleName: EDIT
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.585Z'
+                    updatedAt: '2023-10-12T12:51:45.585Z'
+                  - _id: 6527ebe1670ffe680728ae84
+                    moduleName: GOAL
+                    roleName: GUEST
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.586Z'
+                    updatedAt: '2023-10-12T12:51:45.586Z'
+                  - _id: 6527ebe1670ffe680728ae8e
+                    moduleName: DOC
+                    roleName: OWNER
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.588Z'
+                    updatedAt: '2023-10-12T12:51:45.588Z'
+                  - _id: 6527ebe1670ffe680728ae7e
+                    moduleName: PROJECT
+                    roleName: COMMENT
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.583Z'
+                    updatedAt: '2023-10-12T12:51:45.583Z'
+                  - _id: 6527ebe1670ffe680728ae7f
+                    moduleName: PROJECT
+                    roleName: GUEST
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.584Z'
+                    updatedAt: '2023-10-12T12:51:45.584Z'
+                  - _id: 6527ebe1670ffe680728ae83
+                    moduleName: GOAL
+                    roleName: COMMENT
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.586Z'
+                    updatedAt: '2023-10-12T12:51:45.586Z'
+                  - _id: 6527ebe1670ffe680728ae86
+                    moduleName: TEAM
+                    roleName: MEMBER
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.587Z'
+                    updatedAt: '2023-10-12T12:51:45.587Z'
+                  - _id: 6527ebe1670ffe680728ae88
+                    moduleName: CHANNEL
+                    roleName: COLLABORATOR
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.587Z'
+                    updatedAt: '2023-10-12T12:51:45.587Z'
+                  - _id: 6527ebe1670ffe680728ae76
+                    moduleName: ORGANIZATION
+                    roleName: ADMIN
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.580Z'
+                    updatedAt: '2023-10-12T12:51:45.580Z'
+                  - _id: 6527ebe1670ffe680728ae82
+                    moduleName: GOAL
+                    roleName: VIEW
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.585Z'
+                    updatedAt: '2023-10-12T12:51:45.585Z'
+                  - _id: 6527ebe1670ffe680728ae79
+                    moduleName: WORKSPACE
+                    roleName: EDIT
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.581Z'
+                    updatedAt: '2023-10-12T12:51:45.581Z'
+                  - _id: 6527ebe1670ffe680728ae8a
+                    moduleName: DOC
+                    roleName: EDIT
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.587Z'
+                    updatedAt: '2023-10-12T12:51:45.587Z'
+                  - _id: 6527ebe1670ffe680728ae78
+                    moduleName: WORKSPACE
+                    roleName: OWNER
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.581Z'
+                    updatedAt: '2023-10-12T12:51:45.581Z'
+                  - _id: 6527ebe1670ffe680728ae75
+                    moduleName: ORGANIZATION
+                    roleName: OWNER
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.579Z'
+                    updatedAt: '2023-10-12T12:51:45.579Z'
+                  - _id: 6527ebe1670ffe680728ae7b
+                    moduleName: PROJECT
+                    roleName: OWNER
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.582Z'
+                    updatedAt: '2023-10-12T12:51:45.582Z'
+                  - _id: 6527ebe1670ffe680728ae7c
+                    moduleName: PROJECT
+                    roleName: EDIT
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.582Z'
+                    updatedAt: '2023-10-12T12:51:45.582Z'
+                  - _id: 6527ebe1670ffe680728ae89
+                    moduleName: DOC
+                    roleName: FULL_ACCESS
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.587Z'
+                    updatedAt: '2023-10-12T12:51:45.587Z'
+                  - _id: 6527ebe1670ffe680728ae8c
+                    moduleName: DOC
+                    roleName: COMMENT
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.588Z'
+                    updatedAt: '2023-10-12T12:51:45.588Z'
+                  - _id: 6527ebe1670ffe680728ae7d
+                    moduleName: PROJECT
+                    roleName: VIEW
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.583Z'
+                    updatedAt: '2023-10-12T12:51:45.583Z'
+                  - _id: 6527ebe1670ffe680728ae7a
+                    moduleName: WORKSPACE
+                    roleName: VIEW
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.582Z'
+                    updatedAt: '2023-10-12T12:51:45.582Z'
+                  - _id: 6527ebe1670ffe680728ae85
+                    moduleName: TEAM
+                    roleName: OWNER
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.586Z'
+                    updatedAt: '2023-10-12T12:51:45.586Z'
+                  - _id: 6527ebe1670ffe680728ae8d
+                    moduleName: DOC
+                    roleName: GUEST
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.588Z'
+                    updatedAt: '2023-10-12T12:51:45.588Z'
+                  - _id: 6527ebe1670ffe680728ae8b
+                    moduleName: DOC
+                    roleName: VIEW
+                    isActive: true
+                    isDeleted: false
+                    __v: 0
+                    createdAt: '2023-10-12T12:51:45.588Z'
+                    updatedAt: '2023-10-12T12:51:45.588Z'
+  /{api_version}/onboarding/workspace/list/652abb39d2de2daa839dbc75:
+    get:
+      tags:
+        - Onboarding
+      summary: workspace list by orgnaization id
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImE2M2IzMWM4LWU5ZGQtNDQ1ZS05YzU4LWJlZWQzZGU2YmY3YiIsImV2ZW50X2lkIjoiMTQxN2I5NTEtZTcyNi00NTU1LTgxMDUtOWE4NTIyYmI0MzFjIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzMwMDAyNiwiZXhwIjoxNjk3Mzg2NDI2LCJpYXQiOjE2OTczMDAwMjYsImp0aSI6ImVhZTQ3NjRkLTBiNGQtNDVlMi1iYjY4LTJkY2VkMmU1NDIwNyIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.ntCUzZH7xajgwHKWpaEYKj7sB1GUspgj71qJ9Gsn59MlImi-vYldZ1FvgMA_zW57Gh_nf8Da15fkJ6QShF2dl3Y-UpYsCP9hSXjHs_f3Vv50qga7BQ_REmEBNk9hfh2PA4ZE1IVTYOfKM5wG5hxWwktwwfYuu1Sb4ibhSSaXMQMKyTPvrHm_gRlndmSK6KCJDumTbnD_YOWyBN852EqNwBZEgzPxU5uXSMjXYocKDrBq3qfkPm-El9Oer7FmJblThXuBOvR5b6tTNOqyV5-Uk0v4picdVLd6-wWPLF88Y2xhYwloLDTlQI9X4jX__xVWhPhbK6h6mnWPzRiSDhBYmA
+        - name: api_version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '5347'
+            ETag:
+              schema:
+                type: string
+                example: W/"14e3-aKFpy2mqDue2rCDhK2VSnH8dvfA"
+            Date:
+              schema:
+                type: string
+                example: Sat, 14 Oct 2023 16:15:06 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: SUCCESS
+                message: workspace list data fetched successfully.
+                data:
+                  - _id: 652abcbfc0831c9f5542a05a
+                    workspaceName: mongessshh
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:07:27.201Z'
+                    updatedAt: '2023-10-14T16:07:27.201Z'
+                    __v: 0
+                    id: 652abcbfc0831c9f5542a05a
+                  - _id: 652abccdc0831c9f5542a05d
+                    workspaceName: happy kroolo
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:07:41.635Z'
+                    updatedAt: '2023-10-14T16:07:41.635Z'
+                    __v: 0
+                    id: 652abccdc0831c9f5542a05d
+                  - _id: 652abcd6c0831c9f5542a060
+                    workspaceName: happy saturday
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:07:50.940Z'
+                    updatedAt: '2023-10-14T16:07:50.940Z'
+                    __v: 0
+                    id: 652abcd6c0831c9f5542a060
+                  - _id: 652abcdfc0831c9f5542a063
+                    workspaceName: kroolo demo
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:07:59.516Z'
+                    updatedAt: '2023-10-14T16:07:59.516Z'
+                    __v: 0
+                    id: 652abcdfc0831c9f5542a063
+                  - _id: 652abce5c0831c9f5542a066
+                    workspaceName: kroolo testing 1
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:08:05.904Z'
+                    updatedAt: '2023-10-14T16:08:05.904Z'
+                    __v: 0
+                    id: 652abce5c0831c9f5542a066
+                  - _id: 652abce9c0831c9f5542a069
+                    workspaceName: kroolo testing 2
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:08:09.867Z'
+                    updatedAt: '2023-10-14T16:08:09.867Z'
+                    __v: 0
+                    id: 652abce9c0831c9f5542a069
+                  - _id: 652abceec0831c9f5542a06c
+                    workspaceName: kroolo testing 4
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:08:14.290Z'
+                    updatedAt: '2023-10-14T16:08:14.290Z'
+                    __v: 0
+                    id: 652abceec0831c9f5542a06c
+                  - _id: 652abcf3c0831c9f5542a06f
+                    workspaceName: kroolo testing 5
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:08:19.217Z'
+                    updatedAt: '2023-10-14T16:08:19.217Z'
+                    __v: 0
+                    id: 652abcf3c0831c9f5542a06f
+                  - _id: 652abcf7c0831c9f5542a072
+                    workspaceName: kroolo testing 6
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:08:23.005Z'
+                    updatedAt: '2023-10-14T16:08:23.005Z'
+                    __v: 0
+                    id: 652abcf7c0831c9f5542a072
+                  - _id: 652abcfac0831c9f5542a075
+                    workspaceName: kroolo testing 7
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:08:26.710Z'
+                    updatedAt: '2023-10-14T16:08:26.710Z'
+                    __v: 0
+                    id: 652abcfac0831c9f5542a075
+                  - _id: 652abcffc0831c9f5542a078
+                    workspaceName: kroolo testing 8
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:08:31.121Z'
+                    updatedAt: '2023-10-14T16:08:31.121Z'
+                    __v: 0
+                    id: 652abcffc0831c9f5542a078
+                  - _id: 652abd23c0831c9f5542a07d
+                    workspaceName: kroolo testing 9
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:09:07.128Z'
+                    updatedAt: '2023-10-14T16:09:07.128Z'
+                    __v: 0
+                    id: 652abd23c0831c9f5542a07d
+                  - _id: 652abd2bc0831c9f5542a080
+                    workspaceName: kroolo testing 10
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:09:15.129Z'
+                    updatedAt: '2023-10-14T16:09:15.129Z'
+                    __v: 0
+                    id: 652abd2bc0831c9f5542a080
+                  - _id: 652abd30c0831c9f5542a083
+                    workspaceName: kroolo testing 11
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:09:20.287Z'
+                    updatedAt: '2023-10-14T16:09:20.287Z'
+                    __v: 0
+                    id: 652abd30c0831c9f5542a083
+                  - _id: 652abd34c0831c9f5542a086
+                    workspaceName: kroolo testing 12
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:09:24.447Z'
+                    updatedAt: '2023-10-14T16:09:24.447Z'
+                    __v: 0
+                    id: 652abd34c0831c9f5542a086
+                  - _id: 652abd3ac0831c9f5542a089
+                    workspaceName: kroolo dmeo 12
+                    organizationID: 652abb39d2de2daa839dbc75
+                    workspaceType: PUBLIC
+                    createdBy: 652a684f2c6b2f42cb426cab
+                    isActive: true
+                    isDeleted: false
+                    createdAt: '2023-10-14T16:09:30.077Z'
+                    updatedAt: '2023-10-14T16:09:30.077Z'
+                    __v: 0
+                    id: 652abd3ac0831c9f5542a089
+  /{api_version}/onboarding/workspace/652abd3ac0831c9f5542a089:
+    get:
+      tags:
+        - Onboarding
+      summary: get workspace
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjE0ZDBkOTgzLTdiNDEtNGYxNy1hM2VhLTg1ZmQxNmFkNzIwZiIsImV2ZW50X2lkIjoiZTVmOGZhNDAtZmMxZi00MWYyLTlmNjMtN2FjNGM2YTFlYmQxIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI5OTc5OSwiZXhwIjoxNjk3Mzg2MTk5LCJpYXQiOjE2OTcyOTk3OTksImp0aSI6ImYzMGQ1YzE4LWRiZmItNDNhMy05MjY1LTkxNjQzZmVlZTg4ZSIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.MsCglcCL53rSARqfIMU14RupSbu5LCHFOu_nlemIo6KD06_jxH_TRWN00CxADUXgfv-qZMlFyQl_NtBXSLYy_KoUM7-kglVxulny8GV7WYcCB_wQuSruQP0qluoS2xJ8i1JVfWJaxICLzM3650xPus8NnNE5pEURC9HsnXz52AfNqFSl7CtO7k0mK4lGglzGdyqiOWvAeMMlyOB_xIiWwVGt8rA5YzegtHq4_hDqliNBurUVgdgfw0FOopLOZsb-sGwDP0sAOK9JhjmxBLriRWHcxgWZFfmHHsVqzQqqrxG_kCxGNEpbaISymrXFKyE5VhswV5JC2G5WytnXS8NboQ
+        - name: api_version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '176'
+            ETag:
+              schema:
+                type: string
+                example: W/"b0-v1Ya+J1DwhS628cMtU1bhOJ4doM"
+            Date:
+              schema:
+                type: string
+                example: Sat, 14 Oct 2023 16:10:13 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: SUCCESS
+                message: workspace data fetched successfully.
+                data:
+                  _id: 652abd3ac0831c9f5542a089
+                  workspaceName: kroolo dmeo 12
+                  id: 652abd3ac0831c9f5542a089
+  /{api_version}/onboarding/organization:
+    post:
+      tags:
+        - Onboarding
+      summary: organization create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                organizationName: kroolo testing
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImEzNzdkNGU4LTBkZTEtNDFmNy1iNWZmLTg1MWQ4ODY4MTQ0OCIsImV2ZW50X2lkIjoiZWQyNjU0OGQtYWU4OS00OGMzLThmOTktZDM2N2U4MzZhNThlIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI5OTIyNCwiZXhwIjoxNjk3Mzg1NjI0LCJpYXQiOjE2OTcyOTkyMjQsImp0aSI6ImU4OTAzZGI2LTFlNTktNDA2YS05NjAxLTQ5OTgyZTRjODhkOCIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.eT5iQngsBHen5AetR9R6VSKGSgU-Aq_IBZjP421Wb6hFRL6RyoxKb2Sv9L1qLtEPYMtYULe83kx-TVi1bWm-aOEFI5anuroJRl_IE2no3NHyIRvN-wK-nKp69RUEHiwfpRBeqxcJoRu9nOK0dpJrTp8xQjcmfYlmqVk_feuRenG-FC1ZfP1tNC12djG2ui7TYUcUY0gRGZR-Gr54THw7rd_HM41A6IZ7YjFNloMFDl1jS5rJHC3fadsmOvpD2qNXOW08F4v_nPfvdcgcTN-R0DZwbetAHd8oHOtNl6R7rV5cZTJaKaIN68XMYyj_XZc4UvHXOx4HK20n3IYXW1qZqw
+        - name: api_version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '304'
+            ETag:
+              schema:
+                type: string
+                example: W/"130-8iqqCjEnO+RFwBBYaytXIfd53QI"
+            Date:
+              schema:
+                type: string
+                example: Sat, 14 Oct 2023 16:00:57 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: SUCCESS
+                message: Organization created successfully.
+                data:
+                  organizationName: kroolo testing
+                  createdBy: 652a684f2c6b2f42cb426cab
+                  isActive: true
+                  isDeleted: false
+                  _id: 652abb39d2de2daa839dbc75
+                  createdAt: '2023-10-14T16:00:57.016Z'
+                  updatedAt: '2023-10-14T16:00:57.016Z'
+                  __v: 0
+  /{api_version}/onboarding/workspace:
+    post:
+      tags:
+        - Onboarding
+      summary: workspace create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                workspaceName: kroolo dmeo 12
+                organizationID: 652abb39d2de2daa839dbc75
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6Ijk5ZDI2MjgxLWFlMTAtNDQ1Mi04NjI4LTBmY2QzNTllMGQ0ZSIsImV2ZW50X2lkIjoiZWY4MmVkMzAtZTJhMy00ODUzLWE4M2UtZDg5YjQ4MDI2NjI0IiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI5OTczMiwiZXhwIjoxNjk3Mzg2MTMyLCJpYXQiOjE2OTcyOTk3MzIsImp0aSI6ImMxYjcyZDhlLTgyNjktNDRiZC04YjJhLTIwZjQ5NTU3ZDRiZiIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.ljv-wEaU59tUJhhdU3uladxZEpt9tHxKF-EIlPCUwJmnkUhN9ErBVoacGh646aihNKGx1Hjz1wR1YKDcDPFcNytB9_CtdNBzESirfBFtd7wGhxyiQfFj-tXgntPuqZhoZl7kVIv4nkhOUD4Vj6ha0FVtrV5CIo46sNcFlasyZY9bjSUv8GjIHC_K_Mdrmsth1CuOedotcnS3MeFc2fBxts1Ej-VG77c_IDqKbvOUJEK-CwUMHZyKSeel4Wwc2rTV_eDTg4CQ9jBSDpcdOK3m3J_k39z6LxUJ64D3vsLBNNvJzKMgSRlL8GN3QnBhOz6CmMCCbmv81UdPYGTYfW0uhQ
+        - name: api_version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '399'
+            ETag:
+              schema:
+                type: string
+                example: W/"18f-ADRfSPk0EvkrSWJB3BH+IJ93O0c"
+            Date:
+              schema:
+                type: string
+                example: Sat, 14 Oct 2023 16:09:30 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: SUCCESS
+                message: workspace created successfully.
+                data:
+                  workspaceName: kroolo dmeo 12
+                  organizationID: 652abb39d2de2daa839dbc75
+                  workspaceType: PUBLIC
+                  createdBy: 652a684f2c6b2f42cb426cab
+                  isActive: true
+                  isDeleted: false
+                  _id: 652abd3ac0831c9f5542a089
+                  createdAt: '2023-10-14T16:09:30.077Z'
+                  updatedAt: '2023-10-14T16:09:30.077Z'
+                  __v: 0
+                  id: 652abd3ac0831c9f5542a089

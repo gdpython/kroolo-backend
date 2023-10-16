@@ -1,222 +1,1016 @@
 {
 	"info": {
-		"_postman_id": "efb8ff00-d0cc-4f7c-b36e-57949388d6a8",
-		"name": "New Kroolo Api's",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "2792494",
-		"_collection_link": "https://interstellar-shuttle-415905.postman.co/workspace/My-Workspace~4ced5717-87f6-4365-80a9-529c7d0d86b8/collection/2792494-efb8ff00-d0cc-4f7c-b36e-57949388d6a8?action=share&source=collection_link&creator=2792494"
+		"_postman_id": "646bef3d-3f6c-45b4-a722-294b746e8517",
+		"name": "V1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30468262",
+		"_collection_link": "https://orange-satellite-4689.postman.co/workspace/kroolo_updated~373edee7-3d5a-4370-ac74-5f7770997458/collection/10301628-646bef3d-3f6c-45b4-a722-294b746e8517?action=share&source=collection_link&creator=30468262"
 	},
 	"item": [
 		{
-			"name": "workspace api",
+			"name": "Authenitcation",
 			"item": [
 				{
-					"name": "http://localhost:3000/api/v1/workspace/updateWorkeSpaceColor",
+					"name": "login",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhMTE5NmIyYi02NzExLTQzZTMtOTNjNC02NjA2MjM2NzJjNDMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjgyYjkxNDgxLTJkMmUtNDUyZi1iZTE4LThjNzM3YWIxMDU1OSIsImV2ZW50X2lkIjoiYzAzYzEwNjYtN2YyZi00ZWFmLWJhMWEtNDc1OTc2Njc1YTYxIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY4OTY2NTYxOCwiZXhwIjoxNjg5NzUyMDE4LCJpYXQiOjE2ODk2NjU2MTgsImp0aSI6IjU0Y2E3NDE2LTBlNmItNDM0Ni1hZWZmLTVmMzhhNzM3NmZiYiIsInVzZXJuYW1lIjoiYnVkZHkxMTYwQHlvcG1haWwuY29tIn0.uMLKOYbHqdeMbmZbeH9hDPMjG2aXN6LXqmtWVSm95wA61i5fiHELC7Wy9VpENJC5bG2ck09GnDEJ1GlMbWL1KKpQGfA5kQT__dpBbExlQcjHRRl4zj6F4N7xSoT3jBJLM5HwyXTOB8c5VhE33G8mPSAf0UaTa65dtq1SLoXut0inve0VtHo5miIcivf9scgoNkMRiqpLIvs-Yqev23w6gksZJb8dBZUo7hlz1q3xlm78PuMVhOBW_cO1zKc2V_bLxf9yXYTgAUpP4fdl__Kj006sfDgu5PCRPm-gyz49veBxGIbOmFgMbems8CSvTnQ21iKS6cKbyonymH84w-M8SA",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"colorCode\":\"#343432\",\r\n    \"createdBy\":\"641544bfbaf299860d76b935\",\r\n    \"workSpaceId\":\"640080fcc6b6373338972d9f\"\r\n}",
+							"raw": "{\n    \"email\":\"gdpython101@gmail.com\",\n    \"password\":\"Artengo@7540\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/workspace/updateWorkeSpaceColor",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"workspace",
-								"updateWorkeSpaceColor"
-							]
-						}
+						"url": "{{base_url}}/{{api_version}}/users/login"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\":\"gdpython101@gmail.com\",\n    \"password\":\"Artengo@7540\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/{{api_version}}/users/login"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2929"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b71-BKjf9GwpVVRKFcjYaNl7Tn+tdqU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 11:12:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"SUCCESS\",\n    \"message\": \"Login successful.\",\n    \"data\": {\n        \"AccessToken\": \"eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6Ijc1ZTZlMjM5LTQ4MDMtNDk2YS05YWYwLTU2MGUwY2ZkNmU4ZSIsImV2ZW50X2lkIjoiMmFkMzIyMjUtNzUwNi00YzE2LWIwNjItNGUzZTRmNmI1NTc4IiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI4MTk3OSwiZXhwIjoxNjk3MzY4Mzc5LCJpYXQiOjE2OTcyODE5NzksImp0aSI6IjNlNTIxNzc3LTQyY2QtNDY1NC1hZjY2LWQyYjY0Zjk5YzUwZiIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.VTmhhUwmUV0H10WPzue7269h8ijONpZuluyUDXJP8pFru22VJHkvy-HjQsaJiOqvgZYh6jLk25NalHEvw9ZfGLp8JMQj8jQkcsw-_QoUWJcjiP1EEhGaum_begrrm__jvp6VC-a3TMhDLQZdRRqNLqz1fPBYFktv19TCK9IRfVgUfy-Pkfc9oIZWHfrOeGZN-iWBThGkFAGVv_58pSSyOOgDjSAOpbMoZL0eXHpONJyRhRivQrCLinkNt-aT-fRLdn-ulgUaMxY46heKD1v_TjUGl5A6c8Zuc8Kdl2OWoU_OLt4uXAX2tksAS4pO-qIKWSzP8GZJz67bXxObayOG0w\",\n        \"RefreshToken\": \"eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.G0vHk-gmOwFSCgjerhVYvoe-WFO9CCeLWEDMOmc8eVtMhDLss2LfeY4-9rKNRNjCu_Vha0Rt-2zqd-0PZ9hCqfzDY1n9_l4NZZ_Qu5mEHiChx7EfAQkE3oE7owgyGvWvDUqwvo-JMmBFXrbcHRrVt9UuLSvD2dTj_AMYydYFB0g2Y6UfoN9TRJgEFb4MzCDLM83QZkmvHS1SIMCBEYXKt0So5aN1MjD3OXVHjO4kKKAcGsyE_QxAFsvsIRb9Hsf7nY7C9E9Y8S-AtRwWwKWYlAmTl-9cY6Oy8BhMGKnbZDBLo3OC2HYK0Ov36jDTWhRbC_thjzrRB4fy6MVsGC5bWg.9Mf6HUuvIH4fzPs3.IFTdEF2hbaFe9yYdrxKHIje6m8IfZsUYhE7eTQlD3GXbK0AXDM-XjIK8V2Yb9r1R8o_fAKi4j8bwqdRoc258pMldq0Kru-XraJGbJayVcIx55VDWj-BH6wsW0yQEIFPw9LTwIPut7IWN3Kg6ucNU6SC6UlgKBe7XqAHAtl1CrTiqpIZQByOb6o_qY7PVseXt4VWrur3zeOEdRW0ssx63OZ-J3kfs0_Wwi_V1iWmSVQQ-8-IjTUrmjbZdBXSRQMygaK_9ibj71G5_4CuovlSJPso6roUxiEzdtRwT4L3wlUGE3FJtwPwb5yg5wLKWb74eNThGxo41XtvfrcuVdFu_7c70WjxANFEfVfmO-dGfBZ_NZvG8mOpDh-uae_WN9-h3eLT0HJVhYukt_qC9G7svhIUCD2dnC3orEAhE86XiWsQvHGHd-M4ifELmi-TiDmKxvddsLJL5J_2woKW0VXxaBWnpXCAB0CAN3d1useKL813d5e7tHdgznNL45mDCb1Zl4OmhQ7PIMlqdo4auy7Cv4KTOihatnE4Bb0-oNFAi3P_lCxG6sGHnQ6oHs02-lSa9rtQxZ9UtkfE9V0CeLRpI5FVyjCIuAByzD0tVnnR1TmUJ9bXT-lu2ZXj1IDV5DTX7_brNOZaW6S4vT17hFlek60dJhklbFtsMLZvwnTz9OqsDz7PGe-zUZNtikiLPX3dzrsQbnldacRRqBxrQZniIKeaLlri0MtbsmrjxNEg0PvQJ_zOPZS2_1EvLiKlkVJzMwAMJFc9dPsSps99AKn0mJb2pi0EZ-n2d9EUnbBL8eWddF0bxQdwNOTXQ_XKzJmKv3FuOnqYUsh2-OAlOmMpx0UW-WrJEl_RAGPf-NWEp8S4Nd1fArhB66JaIPn5n1mmBKZ2y7ORMmP76jst1TR5DQETF2pQzgvfC3flxkI64c4YyyxyHECbTyfNo0Lr-xDked1gDDNS4ysbJuEqBc01pZgw0ZuvuZtksRLzlVQ18FDhG8qmzkwu04yvgUSEJZZote8ki5juVxuhUolOOS7bJkgQZiYX50IsMGDD6LVYwrRQmI_Mw5nSIF4zTtywQzg2_Ri0rmY9mNHspL4_hr00bhu1wyvd4pAqCxk_koNigsi7VfR0mjGPDvNpdo1Kye9CTEvfL6Cg_wLguNPxQkwyiGVplHV8fQREWgP9pb6S5q1B345e9vGO3xY5B5eC1uagKhtkS6yia9yODZ1uJ1gkKOhL7czB7x4vHCUYANRKpSOYWZTSqNBzKjx1cIwTjrJBLaE6yo69zEnzbI7apQw1DV81PQKawm52tksl7.LqXcpMa6M7QhPEceSIPdoA\",\n        \"onBoardingStep\": 1\n    }\n}"
+						}
+					]
 				},
 				{
-					"name": "http://localhost:3000/api/v1/workspace/duplicate-workspaceName-find",
+					"name": "signup",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhMTE5NmIyYi02NzExLTQzZTMtOTNjNC02NjA2MjM2NzJjNDMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjgyYjkxNDgxLTJkMmUtNDUyZi1iZTE4LThjNzM3YWIxMDU1OSIsImV2ZW50X2lkIjoiYzAzYzEwNjYtN2YyZi00ZWFmLWJhMWEtNDc1OTc2Njc1YTYxIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY4OTY2NTYxOCwiZXhwIjoxNjg5NzUyMDE4LCJpYXQiOjE2ODk2NjU2MTgsImp0aSI6IjU0Y2E3NDE2LTBlNmItNDM0Ni1hZWZmLTVmMzhhNzM3NmZiYiIsInVzZXJuYW1lIjoiYnVkZHkxMTYwQHlvcG1haWwuY29tIn0.uMLKOYbHqdeMbmZbeH9hDPMjG2aXN6LXqmtWVSm95wA61i5fiHELC7Wy9VpENJC5bG2ck09GnDEJ1GlMbWL1KKpQGfA5kQT__dpBbExlQcjHRRl4zj6F4N7xSoT3jBJLM5HwyXTOB8c5VhE33G8mPSAf0UaTa65dtq1SLoXut0inve0VtHo5miIcivf9scgoNkMRiqpLIvs-Yqev23w6gksZJb8dBZUo7hlz1q3xlm78PuMVhOBW_cO1zKc2V_bLxf9yXYTgAUpP4fdl__Kj006sfDgu5PCRPm-gyz49veBxGIbOmFgMbems8CSvTnQ21iKS6cKbyonymH84w-M8SA",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"wsId\":\"640080fcc6b6373338972d9f\",\r\n    \"workSpaceName\":\"Hell Space\"\r\n}",
+							"raw": "{\n    \"email\":\"gdpython101@gmail.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/workspace/duplicate-workspaceName-find",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"workspace",
-								"duplicate-workspaceName-find"
-							]
-						}
+						"url": "{{base_url}}/{{api_version}}/users/signup"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "signup",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\":\"gdpython101@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/{{api_version}}/users/signup"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "63"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3f-sSqfyEr+85kH36c+hfz/XdwAlBo\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 10:07:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"SUCCESS\",\n    \"message\": \"Signup successful.\",\n    \"data\": null\n}"
+						}
+					]
 				},
 				{
-					"name": "Color Code",
+					"name": "email verfity",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhMTE5NmIyYi02NzExLTQzZTMtOTNjNC02NjA2MjM2NzJjNDMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjgyYjkxNDgxLTJkMmUtNDUyZi1iZTE4LThjNzM3YWIxMDU1OSIsImV2ZW50X2lkIjoiYzAzYzEwNjYtN2YyZi00ZWFmLWJhMWEtNDc1OTc2Njc1YTYxIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY4OTY2NTYxOCwiZXhwIjoxNjg5NzUyMDE4LCJpYXQiOjE2ODk2NjU2MTgsImp0aSI6IjU0Y2E3NDE2LTBlNmItNDM0Ni1hZWZmLTVmMzhhNzM3NmZiYiIsInVzZXJuYW1lIjoiYnVkZHkxMTYwQHlvcG1haWwuY29tIn0.uMLKOYbHqdeMbmZbeH9hDPMjG2aXN6LXqmtWVSm95wA61i5fiHELC7Wy9VpENJC5bG2ck09GnDEJ1GlMbWL1KKpQGfA5kQT__dpBbExlQcjHRRl4zj6F4N7xSoT3jBJLM5HwyXTOB8c5VhE33G8mPSAf0UaTa65dtq1SLoXut0inve0VtHo5miIcivf9scgoNkMRiqpLIvs-Yqev23w6gksZJb8dBZUo7hlz1q3xlm78PuMVhOBW_cO1zKc2V_bLxf9yXYTgAUpP4fdl__Kj006sfDgu5PCRPm-gyz49veBxGIbOmFgMbems8CSvTnQ21iKS6cKbyonymH84w-M8SA",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v1/workspace/getColorCode",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"workspace",
-								"getColorCode"
-							]
-						}
+						"url": "{{base_url}}/{{api_version}}/users/email-verify/703ac072-2bad-4912-9e1e-c6d954423bd7"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "{{base_url}}/{{api_version}}/users/email-verify/4ff502b2-5acb-44a3-9147-aacd2ee84469",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/{{api_version}}/users/email-verify/f659cb97-2921-430f-96ad-66cf10810294"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4e-0CAAku/Omvx/EfK81KUWxXFW3Yw\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 13 Oct 2023 14:01:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"SUCCESS\",\n    \"message\": \"Email verified.\",\n    \"data\": \"gdpython09@gmail.com\"\n}"
+						}
+					]
+				},
+				{
+					"name": "complete signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"gdpython101@gmail.com\",\n    \"password\":\"Artengo@7540\",\n    \"name\":\"gd python\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/{{api_version}}/users/complete-signup"
+					},
+					"response": [
+						{
+							"name": "complete signup",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\":\"gdpython101@gmail.com\",\n    \"password\":\"Artengo@7540\",\n    \"name\":\"gd python\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/{{api_version}}/users/complete-signup"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2920"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b68-hZ+5qjUMJF/S+hBF4TwpcnEU8DI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 10:39:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"SUCCESS\",\n    \"message\": \"Signup complete successful.\",\n    \"data\": {\n        \"AccessToken\": \"eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImNhNzI5YWZlLWI5OGYtNGY2NS04NTNmLTRkYjVmODMxNWE0ZCIsImV2ZW50X2lkIjoiMDgwMTMzYjUtYzBmMy00NWZmLTg1NmQtYWIyNTk0YTA2YjI5IiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI3OTk1MiwiZXhwIjoxNjk3MzY2MzUyLCJpYXQiOjE2OTcyNzk5NTIsImp0aSI6ImUzZmRhYjdhLTg4Y2YtNDRiOS1iYzY0LTM2MmYzOWQwOTZiOSIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.JzetT5XCpx1Llen-t5QLP38y-6ZST2-dEDdINJd0uThUg3sfQtv7WTEuDbSexVBiOBxON3xCE7mjlIanh9lNbO1a9TUL-Kp7lwJK39eV8Z_ot8I_pfs9zbevCJtFftgGmPdH189qUPqGWIlvin7KUPmmeHgTu1zKDmEdicp8LC_pwMJ2OEbJZmKes7R69lNpi-UFVrkZuCXvWNLWrOEQir6cTLfcNw7Wle6Qb5lZZFxcawVPWf1H2KBqFYqkhYwuGourySoq0KTgv13Tn01mHdG1aCsJTCYza-QCoYXZzd1rF-RZA4M6s3j6LNLym7pGbZcqxGviZnjZCLxcjag-Xw\",\n        \"RefreshToken\": \"eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.fVJDeC7w5sSy1E2cgEvUiHamZxJpcdBive6hgNQomnAq-4RGFXiarvQ1Z-aywAOltoXeiG3fMV5bkrmcZHjJwtoSg5dEINPuer2rb9kbXOnW41NjDdm6hsIALvzvyXNCs8c3nmwQ3NdAVSVBbuecZSiiYn101KeHs-Men8sHG1OltlhnPBph-Q5pB9l8jwu9ofmsD7Ax5p29Q5bgKab5_4-h11h--F9JEnzhrcSEsU0GPAaVHYfNnb1oZUo432XLAEq0n7HrssR4OF28ggyzck6t_DIgA3dUGIr7FofQcz8-xeT_Kkfb39omOWhLhY6-H4zd3kAkZL_n5e52NWSa4Q.Cf1jKocgeZyHUKHE.ZURVkUIFqwONKTO8nOaLFwD_9yI09S0eEm74klErzbAPSYC3qpNxe6P9ISLzDvtlRwPhL8PbFtlM7rZkKrtHUNW3hK-qxPT4-R1xaKGRZmB3gu7YBvpVj6nP1ykLieo4dVzM4SQy8Nkt7zM6AcA18B3JnDqh8q6h-5Th-V3OMq6rrZZDNuIUfzM_q6aHdKRwilxtRxCOIQKVENO9O2UKI1yha6Pu8MO0w36787U6yQsmRaGGlVYgGCkhqryRKSwdk26bLhRFs1xxjeH0vbfRp8nlLL3q3bv-7uCfOOnchai7nUhSaJy20jgdYI93tvk1lKCW61JPqL3McDa5om4_NHCQCbC83U09JZDeDKyvTgkOoOw14XgsuG5-PAAjP2ZAPkQlIeWbQBRFq1-w-0g-pcSwz2s5WYBqebONrabZ8KbqrX4Qp-6ckXBZgjdweSSTD6GMIK0BGa6is3XSsS_VJ3vmCSXYIMEozGtmm_HYckCwiFyyRVKccs1SXJ5gsygOUtMkHKUzIDwOVEhuCKhPlrRH_7BtdZysvmb_v57osSofm2I2XhojqxvJomW9FsWvuEdv8Kv3oWqNArEShpITYh8ewyUN3ae9bRfWp_vGZ7Dufz-xuxpTADUJjtMtPXw7UqYrZGL_8xHMUq-bSaeC3W5FRDwy8jG464FLAclGDCIwStuOjlu3ECouBK29SLpbN_bDWMbs_8l3U3mBtIs5R9dYgl29hrbh0-lhpwNk8h8zXk_HqXTeI6LNPJDRUDAXQfC7_gp5hoqVKldVXRnJoEHNPYOKYDi6HC8UUUqu-Ccguv2xveo-AIgZqWD8uFfF3lIHbrERqwX-tnUqLLDtzQ8HaRPbGy6PMSbLpqZpBBCMJ8FX_DysosCCwDyznWf1PJSF2Kw1Tot04JJQrrF8me2sceOPwKdJUQFqC3XOrVvzeit5wl_ulA23QedW-GWyR1KXzHk5yTkRCi4w4am3iUm53Oso1g5jvuUHSYkb0wPHncgbQwLaw8lHmprzpsL4G_K3UcsPmXObUCB03Ax0dsUDQ5a6kxOz7rj5Nyvs5Z9KeQX2O6kDnKjSKyW9-syVNrhg75l-wCBDE8a4wlmCn3yODApOkzFxvgqw-zUjmHtNHBXip2BjbdhxqWbya6iCmMUc1Tx2fQ6e7Lyws20MatyLhBF43-bqsVE0DewQCgKGofXeu0aB3yApLoxgSL1R8203hctj0LzRBpMloirk_tWsyZB_4BNufzLt0LfktGqhqYmdPw87hFO2jWHDYoptDvh6hdqshw9B47FM2QCeIeS3uLpGODqD_NXO.kJw8wsNbpK1zgful7icaEQ\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "email resend",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"gdpython09@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/{{api_version}}/users/email-resend"
+					},
+					"response": [
+						{
+							"name": "{{base_url}}/{{api_version}}/users/email-resend",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\":\"gdpython09@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/{{api_version}}/users/email-resend"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "71"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"47-14vO9iZHm6jdCJceP2gMCu66BHc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 05:39:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"SUCCESS\",\n    \"message\": \"Email resent successfully.\",\n    \"data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "change password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentPassword\":\"Artengo@7540\",\n    \"newPassword\":\"laserJet_1300\",\n    \"token\":\"eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJjN2Y4MTQ5My0xMjNmLTRiNzktYTVjNC1lN2M0MTBkOTdiOTMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImM5ODM5MzNjLThiMGQtNDUyNS1hNWJlLWFhOTJhOWEzODFkNiIsImV2ZW50X2lkIjoiYzQyMTc1NjMtNzU4My00YjMzLThiMzItM2FkNzBhZWU1YTg0IiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI2NTQwNSwiZXhwIjoxNjk3MzUxODA1LCJpYXQiOjE2OTcyNjU0MDUsImp0aSI6IjlhOWVkNDI1LTdhMGQtNGI3Ny04MzUzLTY1MGVjMTVmMTJhZiIsInVzZXJuYW1lIjoidmlyYXRAeW9wbWFpbC5jb20ifQ.Mb-MoqxeaCyPZQ00ASiYQRi4lygJ1lZiBsg7_Czgwgp3NtH_PTsW9C-eMYwD8Zyq21f8_qfAT-70-HalMWIN7y4IoG2kR8NKGODhj4Gzu0mOb4JnT_9lgrSTvx_qvSA1TRr6cPakOW_HYueJtVy03nac9n5sijSOVJq6v3CrtHUAI7TO3PpI77UinGwsOliHKjI57SyuATytJ61d2IsBRbc9g0BeprmhgXO-8fVvUGw6P0Y32AdM8_vveQccPrtaXFtpsO4Hh8ZK1QNFTzPKwZISpp5SVR73B0MiOyufVpDORxxLxskMR80UIz3szO8YzqaUMRF1LcQm0QWEnVIyzg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/{{api_version}}/users/change-password/6526b62d42cc13804dd1b611"
+					},
+					"response": [
+						{
+							"name": "{{base_url}}/{{api_version}}/users/change-password/",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"currentPassword\":\"Artengo@7540\",\n    \"newPassword\":\"laserJet_1300\",\n    \"token\":\"eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJjN2Y4MTQ5My0xMjNmLTRiNzktYTVjNC1lN2M0MTBkOTdiOTMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImM5ODM5MzNjLThiMGQtNDUyNS1hNWJlLWFhOTJhOWEzODFkNiIsImV2ZW50X2lkIjoiYzQyMTc1NjMtNzU4My00YjMzLThiMzItM2FkNzBhZWU1YTg0IiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI2NTQwNSwiZXhwIjoxNjk3MzUxODA1LCJpYXQiOjE2OTcyNjU0MDUsImp0aSI6IjlhOWVkNDI1LTdhMGQtNGI3Ny04MzUzLTY1MGVjMTVmMTJhZiIsInVzZXJuYW1lIjoidmlyYXRAeW9wbWFpbC5jb20ifQ.Mb-MoqxeaCyPZQ00ASiYQRi4lygJ1lZiBsg7_Czgwgp3NtH_PTsW9C-eMYwD8Zyq21f8_qfAT-70-HalMWIN7y4IoG2kR8NKGODhj4Gzu0mOb4JnT_9lgrSTvx_qvSA1TRr6cPakOW_HYueJtVy03nac9n5sijSOVJq6v3CrtHUAI7TO3PpI77UinGwsOliHKjI57SyuATytJ61d2IsBRbc9g0BeprmhgXO-8fVvUGw6P0Y32AdM8_vveQccPrtaXFtpsO4Hh8ZK1QNFTzPKwZISpp5SVR73B0MiOyufVpDORxxLxskMR80UIz3szO8YzqaUMRF1LcQm0QWEnVIyzg\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/{{api_version}}/users/change-password/6526b62d42cc13804dd1b611"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "64"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"40-pMCQNi4o+ZX4iFudBV0nlugWdLg\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 06:45:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"BAD_REQUEST\",\n    \"message\": \"User not exists\",\n    \"data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "forgot password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"gdpython01@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/{{api_version}}/users/forgot-password"
+					},
+					"response": [
+						{
+							"name": "{{base_url}}/{{api_version}}/users/forgot-password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\":\"gdpython01@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/{{api_version}}/users/forgot-password"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "85"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"55-h8kHrsIjpLg6hx+NbZUlwYZZbxQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 07:25:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"SUCCESS\",\n    \"message\": \"Forgot password email sent successfully.\",\n    \"data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"gdpython01@gmail.com\",\n    \"newPassword\":\"Artengo@7540\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/{{api_version}}/users/reset-password"
+					},
+					"response": [
+						{
+							"name": "{{base_url}}/{{api_version}}/users/reset-password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\":\"gdpython01@gmail.com\",\n    \"newPassword\":\"Artengo@7540\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/{{api_version}}/users/reset-password"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"49-MpIQXdwkVdYoB8TjxX93WcY+D/s\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 08:34:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"SUCCESS\",\n    \"message\": \"Password reset successfully.\",\n    \"data\": null\n}"
+						}
+					]
 				}
 			]
 		},
 		{
-			"name": "task api",
+			"name": "Onboarding",
 			"item": [
 				{
-					"name": "Task List Public",
+					"name": "role list",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhMTE5NmIyYi02NzExLTQzZTMtOTNjNC02NjA2MjM2NzJjNDMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjZmZjc0ZTU1LWRhNWYtNGNhMy1hYjVlLTlhNzlhYTViMGZlMSIsImV2ZW50X2lkIjoiN2U2Mjc3YzQtOTU3OC00ZDBlLTg0NGEtNGYzYjc4NWEyMjdiIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5MDc4MTQwNSwiZXhwIjoxNjkwODY3ODA1LCJpYXQiOjE2OTA3ODE0MDUsImp0aSI6ImVhMjFjYjU0LWI5NDMtNDQzMi1hY2Q4LTY3Y2Y1YjM0MTUzZCIsInVzZXJuYW1lIjoiYnVkZHkxMTYwQHlvcG1haWwuY29tIn0.HBFs8iPocblHTUO0SZUcpD-Y_FyVGDpbnUmiNtgNrXj29J-Ke8883zHHvM-iC-JGbYTHOfvhJdMY97rTVKNj4mp5XJNqzbtM3vhzLRAXJsmpECJJ1ZehWaG_obsZ9M7SXzszJ-Nh4k8bl5KeVlXNp0YuQnvxesh9aQ1MZHMelgZVn5DThafsi3yrYVDuXSEXfzQZ11o3m8yr-GmbySGjUFCtG7OvHAlBBuGQsygwUP0qNAku6aQisrHgaZku0Ugfm5cJv8i8m1fmHlTK-xT7AFNP4diMeV4ppk1TROKOqv_Fm1umIl1v3mnVJdlz575uaPeyZDp0rKQ9xjosnCGYXA",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v1/goal/list/6408cd874a5435f82ffc582b?search=yash goal223",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"goal",
-								"list",
-								"6408cd874a5435f82ffc582b"
-							],
-							"query": [
-								{
-									"key": "search",
-									"value": "yash goal223"
-								}
-							]
-						}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImMwYTgyODRiLWIxZGEtNDA2NC1iNzI3LWYzNjU2YjdiNmIxNCIsImV2ZW50X2lkIjoiYzk4OThiYTMtMWRkMS00YTU3LWEwNTMtZjVmYWY1NjQzZjcyIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzMwMzc4NCwiZXhwIjoxNjk3MzkwMTg0LCJpYXQiOjE2OTczMDM3ODQsImp0aSI6IjYxZTM1NGJjLWFiMmEtNDg0MC1hNWMxLTJjNDM5Y2VkMmRjMSIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.iSHXV_bvpeyCWsiWoqLNMAdqL2sWPZre8gTUGbuLx2MqxzEm2_BYiksndHet1Ir04B7qmILQzwL0BYpRFgtiYvTO-PBCHmZCGoVJ3MGNB21gyvNSO29ft5LiYkC0wICxji88H2WmQo-Vzerun6E-z7bqQCPZsKEsRqcdcKUsbma2JPdXF3olWCqLC9WegHTvg0vJAQG4OUzT4MmDII3MYEegI7HUUS4Cdtq0pfxMg5GK8VeaIr5S3nRzzuJgWQLW6Psw6RIoAYI2IH1sjKwQpPTloP9K0mNVcHut4HGnTj8Bi3q-FPPzehmiRipTiMBN5eeZGMqpBDfWBO8FNZvhMA",
+								"type": "text"
+							}
+						],
+						"url": "{{base_url}}/{{api_version}}/onboarding/role"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "role list",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImMwYTgyODRiLWIxZGEtNDA2NC1iNzI3LWYzNjU2YjdiNmIxNCIsImV2ZW50X2lkIjoiYzk4OThiYTMtMWRkMS00YTU3LWEwNTMtZjVmYWY1NjQzZjcyIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzMwMzc4NCwiZXhwIjoxNjk3MzkwMTg0LCJpYXQiOjE2OTczMDM3ODQsImp0aSI6IjYxZTM1NGJjLWFiMmEtNDg0MC1hNWMxLTJjNDM5Y2VkMmRjMSIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.iSHXV_bvpeyCWsiWoqLNMAdqL2sWPZre8gTUGbuLx2MqxzEm2_BYiksndHet1Ir04B7qmILQzwL0BYpRFgtiYvTO-PBCHmZCGoVJ3MGNB21gyvNSO29ft5LiYkC0wICxji88H2WmQo-Vzerun6E-z7bqQCPZsKEsRqcdcKUsbma2JPdXF3olWCqLC9WegHTvg0vJAQG4OUzT4MmDII3MYEegI7HUUS4Cdtq0pfxMg5GK8VeaIr5S3nRzzuJgWQLW6Psw6RIoAYI2IH1sjKwQpPTloP9K0mNVcHut4HGnTj8Bi3q-FPPzehmiRipTiMBN5eeZGMqpBDfWBO8FNZvhMA",
+										"type": "text"
+									}
+								],
+								"url": "{{base_url}}/{{api_version}}/onboarding/role"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "5189"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1445-w86iP6p8BQPita4Fl05W7JEnCrw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 17:16:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"SUCCESS\",\n    \"message\": \"role list data fetched successfully.\",\n    \"data\": [\n        {\n            \"_id\": \"6527ebe1670ffe680728ae87\",\n            \"moduleName\": \"CHANNEL\",\n            \"roleName\": \"OWNER\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.587Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.587Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae77\",\n            \"moduleName\": \"ORGANIZATION\",\n            \"roleName\": \"MEMBER\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.580Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.580Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae80\",\n            \"moduleName\": \"GOAL\",\n            \"roleName\": \"OWNER\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.584Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.584Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae81\",\n            \"moduleName\": \"GOAL\",\n            \"roleName\": \"EDIT\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.585Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.585Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae84\",\n            \"moduleName\": \"GOAL\",\n            \"roleName\": \"GUEST\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.586Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.586Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae8e\",\n            \"moduleName\": \"DOC\",\n            \"roleName\": \"OWNER\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.588Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.588Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae7e\",\n            \"moduleName\": \"PROJECT\",\n            \"roleName\": \"COMMENT\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.583Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.583Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae7f\",\n            \"moduleName\": \"PROJECT\",\n            \"roleName\": \"GUEST\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.584Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.584Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae83\",\n            \"moduleName\": \"GOAL\",\n            \"roleName\": \"COMMENT\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.586Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.586Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae86\",\n            \"moduleName\": \"TEAM\",\n            \"roleName\": \"MEMBER\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.587Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.587Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae88\",\n            \"moduleName\": \"CHANNEL\",\n            \"roleName\": \"COLLABORATOR\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.587Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.587Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae76\",\n            \"moduleName\": \"ORGANIZATION\",\n            \"roleName\": \"ADMIN\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.580Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.580Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae82\",\n            \"moduleName\": \"GOAL\",\n            \"roleName\": \"VIEW\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.585Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.585Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae79\",\n            \"moduleName\": \"WORKSPACE\",\n            \"roleName\": \"EDIT\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.581Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.581Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae8a\",\n            \"moduleName\": \"DOC\",\n            \"roleName\": \"EDIT\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.587Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.587Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae78\",\n            \"moduleName\": \"WORKSPACE\",\n            \"roleName\": \"OWNER\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.581Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.581Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae75\",\n            \"moduleName\": \"ORGANIZATION\",\n            \"roleName\": \"OWNER\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.579Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.579Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae7b\",\n            \"moduleName\": \"PROJECT\",\n            \"roleName\": \"OWNER\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.582Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.582Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae7c\",\n            \"moduleName\": \"PROJECT\",\n            \"roleName\": \"EDIT\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.582Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.582Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae89\",\n            \"moduleName\": \"DOC\",\n            \"roleName\": \"FULL_ACCESS\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.587Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.587Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae8c\",\n            \"moduleName\": \"DOC\",\n            \"roleName\": \"COMMENT\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.588Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.588Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae7d\",\n            \"moduleName\": \"PROJECT\",\n            \"roleName\": \"VIEW\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.583Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.583Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae7a\",\n            \"moduleName\": \"WORKSPACE\",\n            \"roleName\": \"VIEW\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.582Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.582Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae85\",\n            \"moduleName\": \"TEAM\",\n            \"roleName\": \"OWNER\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.586Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.586Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae8d\",\n            \"moduleName\": \"DOC\",\n            \"roleName\": \"GUEST\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.588Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.588Z\"\n        },\n        {\n            \"_id\": \"6527ebe1670ffe680728ae8b\",\n            \"moduleName\": \"DOC\",\n            \"roleName\": \"VIEW\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"__v\": 0,\n            \"createdAt\": \"2023-10-12T12:51:45.588Z\",\n            \"updatedAt\": \"2023-10-12T12:51:45.588Z\"\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
-					"name": "All Task Publick",
+					"name": "workspace list by orgnaization id",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhMTE5NmIyYi02NzExLTQzZTMtOTNjNC02NjA2MjM2NzJjNDMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjZmZjc0ZTU1LWRhNWYtNGNhMy1hYjVlLTlhNzlhYTViMGZlMSIsImV2ZW50X2lkIjoiN2U2Mjc3YzQtOTU3OC00ZDBlLTg0NGEtNGYzYjc4NWEyMjdiIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5MDc4MTQwNSwiZXhwIjoxNjkwODY3ODA1LCJpYXQiOjE2OTA3ODE0MDUsImp0aSI6ImVhMjFjYjU0LWI5NDMtNDQzMi1hY2Q4LTY3Y2Y1YjM0MTUzZCIsInVzZXJuYW1lIjoiYnVkZHkxMTYwQHlvcG1haWwuY29tIn0.HBFs8iPocblHTUO0SZUcpD-Y_FyVGDpbnUmiNtgNrXj29J-Ke8883zHHvM-iC-JGbYTHOfvhJdMY97rTVKNj4mp5XJNqzbtM3vhzLRAXJsmpECJJ1ZehWaG_obsZ9M7SXzszJ-Nh4k8bl5KeVlXNp0YuQnvxesh9aQ1MZHMelgZVn5DThafsi3yrYVDuXSEXfzQZ11o3m8yr-GmbySGjUFCtG7OvHAlBBuGQsygwUP0qNAku6aQisrHgaZku0Ugfm5cJv8i8m1fmHlTK-xT7AFNP4diMeV4ppk1TROKOqv_Fm1umIl1v3mnVJdlz575uaPeyZDp0rKQ9xjosnCGYXA",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v1/activity/task/all-list?page=1&limit=5",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"activity",
-								"task",
-								"all-list"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "taskName",
-									"value": "eee",
-									"disabled": true
-								},
-								{
-									"key": "limit",
-									"value": "5"
-								}
-							]
-						}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImE2M2IzMWM4LWU5ZGQtNDQ1ZS05YzU4LWJlZWQzZGU2YmY3YiIsImV2ZW50X2lkIjoiMTQxN2I5NTEtZTcyNi00NTU1LTgxMDUtOWE4NTIyYmI0MzFjIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzMwMDAyNiwiZXhwIjoxNjk3Mzg2NDI2LCJpYXQiOjE2OTczMDAwMjYsImp0aSI6ImVhZTQ3NjRkLTBiNGQtNDVlMi1iYjY4LTJkY2VkMmU1NDIwNyIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.ntCUzZH7xajgwHKWpaEYKj7sB1GUspgj71qJ9Gsn59MlImi-vYldZ1FvgMA_zW57Gh_nf8Da15fkJ6QShF2dl3Y-UpYsCP9hSXjHs_f3Vv50qga7BQ_REmEBNk9hfh2PA4ZE1IVTYOfKM5wG5hxWwktwwfYuu1Sb4ibhSSaXMQMKyTPvrHm_gRlndmSK6KCJDumTbnD_YOWyBN852EqNwBZEgzPxU5uXSMjXYocKDrBq3qfkPm-El9Oer7FmJblThXuBOvR5b6tTNOqyV5-Uk0v4picdVLd6-wWPLF88Y2xhYwloLDTlQI9X4jX__xVWhPhbK6h6mnWPzRiSDhBYmA",
+								"type": "text"
+							}
+						],
+						"url": "{{base_url}}/{{api_version}}/onboarding/workspace/list/652abb39d2de2daa839dbc75"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "workspace list by orgnaization id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImE2M2IzMWM4LWU5ZGQtNDQ1ZS05YzU4LWJlZWQzZGU2YmY3YiIsImV2ZW50X2lkIjoiMTQxN2I5NTEtZTcyNi00NTU1LTgxMDUtOWE4NTIyYmI0MzFjIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzMwMDAyNiwiZXhwIjoxNjk3Mzg2NDI2LCJpYXQiOjE2OTczMDAwMjYsImp0aSI6ImVhZTQ3NjRkLTBiNGQtNDVlMi1iYjY4LTJkY2VkMmU1NDIwNyIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.ntCUzZH7xajgwHKWpaEYKj7sB1GUspgj71qJ9Gsn59MlImi-vYldZ1FvgMA_zW57Gh_nf8Da15fkJ6QShF2dl3Y-UpYsCP9hSXjHs_f3Vv50qga7BQ_REmEBNk9hfh2PA4ZE1IVTYOfKM5wG5hxWwktwwfYuu1Sb4ibhSSaXMQMKyTPvrHm_gRlndmSK6KCJDumTbnD_YOWyBN852EqNwBZEgzPxU5uXSMjXYocKDrBq3qfkPm-El9Oer7FmJblThXuBOvR5b6tTNOqyV5-Uk0v4picdVLd6-wWPLF88Y2xhYwloLDTlQI9X4jX__xVWhPhbK6h6mnWPzRiSDhBYmA",
+										"type": "text"
+									}
+								],
+								"url": "{{base_url}}/{{api_version}}/onboarding/workspace/list/652abb39d2de2daa839dbc75"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "5347"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"14e3-aKFpy2mqDue2rCDhK2VSnH8dvfA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 16:15:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"SUCCESS\",\n    \"message\": \"workspace list data fetched successfully.\",\n    \"data\": [\n        {\n            \"_id\": \"652abcbfc0831c9f5542a05a\",\n            \"workspaceName\": \"mongessshh\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:07:27.201Z\",\n            \"updatedAt\": \"2023-10-14T16:07:27.201Z\",\n            \"__v\": 0,\n            \"id\": \"652abcbfc0831c9f5542a05a\"\n        },\n        {\n            \"_id\": \"652abccdc0831c9f5542a05d\",\n            \"workspaceName\": \"happy kroolo\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:07:41.635Z\",\n            \"updatedAt\": \"2023-10-14T16:07:41.635Z\",\n            \"__v\": 0,\n            \"id\": \"652abccdc0831c9f5542a05d\"\n        },\n        {\n            \"_id\": \"652abcd6c0831c9f5542a060\",\n            \"workspaceName\": \"happy saturday\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:07:50.940Z\",\n            \"updatedAt\": \"2023-10-14T16:07:50.940Z\",\n            \"__v\": 0,\n            \"id\": \"652abcd6c0831c9f5542a060\"\n        },\n        {\n            \"_id\": \"652abcdfc0831c9f5542a063\",\n            \"workspaceName\": \"kroolo demo\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:07:59.516Z\",\n            \"updatedAt\": \"2023-10-14T16:07:59.516Z\",\n            \"__v\": 0,\n            \"id\": \"652abcdfc0831c9f5542a063\"\n        },\n        {\n            \"_id\": \"652abce5c0831c9f5542a066\",\n            \"workspaceName\": \"kroolo testing 1\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:08:05.904Z\",\n            \"updatedAt\": \"2023-10-14T16:08:05.904Z\",\n            \"__v\": 0,\n            \"id\": \"652abce5c0831c9f5542a066\"\n        },\n        {\n            \"_id\": \"652abce9c0831c9f5542a069\",\n            \"workspaceName\": \"kroolo testing 2\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:08:09.867Z\",\n            \"updatedAt\": \"2023-10-14T16:08:09.867Z\",\n            \"__v\": 0,\n            \"id\": \"652abce9c0831c9f5542a069\"\n        },\n        {\n            \"_id\": \"652abceec0831c9f5542a06c\",\n            \"workspaceName\": \"kroolo testing 4\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:08:14.290Z\",\n            \"updatedAt\": \"2023-10-14T16:08:14.290Z\",\n            \"__v\": 0,\n            \"id\": \"652abceec0831c9f5542a06c\"\n        },\n        {\n            \"_id\": \"652abcf3c0831c9f5542a06f\",\n            \"workspaceName\": \"kroolo testing 5\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:08:19.217Z\",\n            \"updatedAt\": \"2023-10-14T16:08:19.217Z\",\n            \"__v\": 0,\n            \"id\": \"652abcf3c0831c9f5542a06f\"\n        },\n        {\n            \"_id\": \"652abcf7c0831c9f5542a072\",\n            \"workspaceName\": \"kroolo testing 6\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:08:23.005Z\",\n            \"updatedAt\": \"2023-10-14T16:08:23.005Z\",\n            \"__v\": 0,\n            \"id\": \"652abcf7c0831c9f5542a072\"\n        },\n        {\n            \"_id\": \"652abcfac0831c9f5542a075\",\n            \"workspaceName\": \"kroolo testing 7\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:08:26.710Z\",\n            \"updatedAt\": \"2023-10-14T16:08:26.710Z\",\n            \"__v\": 0,\n            \"id\": \"652abcfac0831c9f5542a075\"\n        },\n        {\n            \"_id\": \"652abcffc0831c9f5542a078\",\n            \"workspaceName\": \"kroolo testing 8\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:08:31.121Z\",\n            \"updatedAt\": \"2023-10-14T16:08:31.121Z\",\n            \"__v\": 0,\n            \"id\": \"652abcffc0831c9f5542a078\"\n        },\n        {\n            \"_id\": \"652abd23c0831c9f5542a07d\",\n            \"workspaceName\": \"kroolo testing 9\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:09:07.128Z\",\n            \"updatedAt\": \"2023-10-14T16:09:07.128Z\",\n            \"__v\": 0,\n            \"id\": \"652abd23c0831c9f5542a07d\"\n        },\n        {\n            \"_id\": \"652abd2bc0831c9f5542a080\",\n            \"workspaceName\": \"kroolo testing 10\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:09:15.129Z\",\n            \"updatedAt\": \"2023-10-14T16:09:15.129Z\",\n            \"__v\": 0,\n            \"id\": \"652abd2bc0831c9f5542a080\"\n        },\n        {\n            \"_id\": \"652abd30c0831c9f5542a083\",\n            \"workspaceName\": \"kroolo testing 11\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:09:20.287Z\",\n            \"updatedAt\": \"2023-10-14T16:09:20.287Z\",\n            \"__v\": 0,\n            \"id\": \"652abd30c0831c9f5542a083\"\n        },\n        {\n            \"_id\": \"652abd34c0831c9f5542a086\",\n            \"workspaceName\": \"kroolo testing 12\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:09:24.447Z\",\n            \"updatedAt\": \"2023-10-14T16:09:24.447Z\",\n            \"__v\": 0,\n            \"id\": \"652abd34c0831c9f5542a086\"\n        },\n        {\n            \"_id\": \"652abd3ac0831c9f5542a089\",\n            \"workspaceName\": \"kroolo dmeo 12\",\n            \"organizationID\": \"652abb39d2de2daa839dbc75\",\n            \"workspaceType\": \"PUBLIC\",\n            \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"createdAt\": \"2023-10-14T16:09:30.077Z\",\n            \"updatedAt\": \"2023-10-14T16:09:30.077Z\",\n            \"__v\": 0,\n            \"id\": \"652abd3ac0831c9f5542a089\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "get workspace",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjE0ZDBkOTgzLTdiNDEtNGYxNy1hM2VhLTg1ZmQxNmFkNzIwZiIsImV2ZW50X2lkIjoiZTVmOGZhNDAtZmMxZi00MWYyLTlmNjMtN2FjNGM2YTFlYmQxIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI5OTc5OSwiZXhwIjoxNjk3Mzg2MTk5LCJpYXQiOjE2OTcyOTk3OTksImp0aSI6ImYzMGQ1YzE4LWRiZmItNDNhMy05MjY1LTkxNjQzZmVlZTg4ZSIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.MsCglcCL53rSARqfIMU14RupSbu5LCHFOu_nlemIo6KD06_jxH_TRWN00CxADUXgfv-qZMlFyQl_NtBXSLYy_KoUM7-kglVxulny8GV7WYcCB_wQuSruQP0qluoS2xJ8i1JVfWJaxICLzM3650xPus8NnNE5pEURC9HsnXz52AfNqFSl7CtO7k0mK4lGglzGdyqiOWvAeMMlyOB_xIiWwVGt8rA5YzegtHq4_hDqliNBurUVgdgfw0FOopLOZsb-sGwDP0sAOK9JhjmxBLriRWHcxgWZFfmHHsVqzQqqrxG_kCxGNEpbaISymrXFKyE5VhswV5JC2G5WytnXS8NboQ",
+								"type": "text"
+							}
+						],
+						"url": "{{base_url}}/{{api_version}}/onboarding/workspace/652abd3ac0831c9f5542a089"
+					},
+					"response": [
+						{
+							"name": "get workspace",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6IjE0ZDBkOTgzLTdiNDEtNGYxNy1hM2VhLTg1ZmQxNmFkNzIwZiIsImV2ZW50X2lkIjoiZTVmOGZhNDAtZmMxZi00MWYyLTlmNjMtN2FjNGM2YTFlYmQxIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI5OTc5OSwiZXhwIjoxNjk3Mzg2MTk5LCJpYXQiOjE2OTcyOTk3OTksImp0aSI6ImYzMGQ1YzE4LWRiZmItNDNhMy05MjY1LTkxNjQzZmVlZTg4ZSIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.MsCglcCL53rSARqfIMU14RupSbu5LCHFOu_nlemIo6KD06_jxH_TRWN00CxADUXgfv-qZMlFyQl_NtBXSLYy_KoUM7-kglVxulny8GV7WYcCB_wQuSruQP0qluoS2xJ8i1JVfWJaxICLzM3650xPus8NnNE5pEURC9HsnXz52AfNqFSl7CtO7k0mK4lGglzGdyqiOWvAeMMlyOB_xIiWwVGt8rA5YzegtHq4_hDqliNBurUVgdgfw0FOopLOZsb-sGwDP0sAOK9JhjmxBLriRWHcxgWZFfmHHsVqzQqqrxG_kCxGNEpbaISymrXFKyE5VhswV5JC2G5WytnXS8NboQ",
+										"type": "text"
+									}
+								],
+								"url": "{{base_url}}/{{api_version}}/onboarding/workspace/652abd3ac0831c9f5542a089"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "176"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b0-v1Ya+J1DwhS628cMtU1bhOJ4doM\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 16:10:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"SUCCESS\",\n    \"message\": \"workspace data fetched successfully.\",\n    \"data\": {\n        \"_id\": \"652abd3ac0831c9f5542a089\",\n        \"workspaceName\": \"kroolo dmeo 12\",\n        \"id\": \"652abd3ac0831c9f5542a089\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "organization create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImEzNzdkNGU4LTBkZTEtNDFmNy1iNWZmLTg1MWQ4ODY4MTQ0OCIsImV2ZW50X2lkIjoiZWQyNjU0OGQtYWU4OS00OGMzLThmOTktZDM2N2U4MzZhNThlIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI5OTIyNCwiZXhwIjoxNjk3Mzg1NjI0LCJpYXQiOjE2OTcyOTkyMjQsImp0aSI6ImU4OTAzZGI2LTFlNTktNDA2YS05NjAxLTQ5OTgyZTRjODhkOCIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.eT5iQngsBHen5AetR9R6VSKGSgU-Aq_IBZjP421Wb6hFRL6RyoxKb2Sv9L1qLtEPYMtYULe83kx-TVi1bWm-aOEFI5anuroJRl_IE2no3NHyIRvN-wK-nKp69RUEHiwfpRBeqxcJoRu9nOK0dpJrTp8xQjcmfYlmqVk_feuRenG-FC1ZfP1tNC12djG2ui7TYUcUY0gRGZR-Gr54THw7rd_HM41A6IZ7YjFNloMFDl1jS5rJHC3fadsmOvpD2qNXOW08F4v_nPfvdcgcTN-R0DZwbetAHd8oHOtNl6R7rV5cZTJaKaIN68XMYyj_XZc4UvHXOx4HK20n3IYXW1qZqw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"organizationName\":\"kroolo testing\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/{{api_version}}/onboarding/organization"
+					},
+					"response": [
+						{
+							"name": "organization create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6ImEzNzdkNGU4LTBkZTEtNDFmNy1iNWZmLTg1MWQ4ODY4MTQ0OCIsImV2ZW50X2lkIjoiZWQyNjU0OGQtYWU4OS00OGMzLThmOTktZDM2N2U4MzZhNThlIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI5OTIyNCwiZXhwIjoxNjk3Mzg1NjI0LCJpYXQiOjE2OTcyOTkyMjQsImp0aSI6ImU4OTAzZGI2LTFlNTktNDA2YS05NjAxLTQ5OTgyZTRjODhkOCIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.eT5iQngsBHen5AetR9R6VSKGSgU-Aq_IBZjP421Wb6hFRL6RyoxKb2Sv9L1qLtEPYMtYULe83kx-TVi1bWm-aOEFI5anuroJRl_IE2no3NHyIRvN-wK-nKp69RUEHiwfpRBeqxcJoRu9nOK0dpJrTp8xQjcmfYlmqVk_feuRenG-FC1ZfP1tNC12djG2ui7TYUcUY0gRGZR-Gr54THw7rd_HM41A6IZ7YjFNloMFDl1jS5rJHC3fadsmOvpD2qNXOW08F4v_nPfvdcgcTN-R0DZwbetAHd8oHOtNl6R7rV5cZTJaKaIN68XMYyj_XZc4UvHXOx4HK20n3IYXW1qZqw",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"organizationName\":\"kroolo testing\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/{{api_version}}/onboarding/organization"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "304"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"130-8iqqCjEnO+RFwBBYaytXIfd53QI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 16:00:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"SUCCESS\",\n    \"message\": \"Organization created successfully.\",\n    \"data\": {\n        \"organizationName\": \"kroolo testing\",\n        \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n        \"isActive\": true,\n        \"isDeleted\": false,\n        \"_id\": \"652abb39d2de2daa839dbc75\",\n        \"createdAt\": \"2023-10-14T16:00:57.016Z\",\n        \"updatedAt\": \"2023-10-14T16:00:57.016Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "workspace create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6Ijk5ZDI2MjgxLWFlMTAtNDQ1Mi04NjI4LTBmY2QzNTllMGQ0ZSIsImV2ZW50X2lkIjoiZWY4MmVkMzAtZTJhMy00ODUzLWE4M2UtZDg5YjQ4MDI2NjI0IiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI5OTczMiwiZXhwIjoxNjk3Mzg2MTMyLCJpYXQiOjE2OTcyOTk3MzIsImp0aSI6ImMxYjcyZDhlLTgyNjktNDRiZC04YjJhLTIwZjQ5NTU3ZDRiZiIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.ljv-wEaU59tUJhhdU3uladxZEpt9tHxKF-EIlPCUwJmnkUhN9ErBVoacGh646aihNKGx1Hjz1wR1YKDcDPFcNytB9_CtdNBzESirfBFtd7wGhxyiQfFj-tXgntPuqZhoZl7kVIv4nkhOUD4Vj6ha0FVtrV5CIo46sNcFlasyZY9bjSUv8GjIHC_K_Mdrmsth1CuOedotcnS3MeFc2fBxts1Ej-VG77c_IDqKbvOUJEK-CwUMHZyKSeel4Wwc2rTV_eDTg4CQ9jBSDpcdOK3m3J_k39z6LxUJ64D3vsLBNNvJzKMgSRlL8GN3QnBhOz6CmMCCbmv81UdPYGTYfW0uhQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"workspaceName\":\"kroolo dmeo 12\",\n    \"organizationID\":\"652abb39d2de2daa839dbc75\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/{{api_version}}/onboarding/workspace"
+					},
+					"response": [
+						{
+							"name": "workspace create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJraWQiOiIrN2RGSk5SN3NrWFZPUjd2c3FsR2hMMmN2emIxakZoMVdGR1Z6WmlUYnJ3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzZDcxOTdlOS1iYTYwLTQ5NWQtYjQ1Ni0wZWQwZmM1NDlhMDgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGgtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aC0xX2ZYUTlnVnB4ZiIsImNsaWVudF9pZCI6IjJnY2Q2bW9lMGVhaGpzZ2plZjRvNTMwZTJsIiwib3JpZ2luX2p0aSI6Ijk5ZDI2MjgxLWFlMTAtNDQ1Mi04NjI4LTBmY2QzNTllMGQ0ZSIsImV2ZW50X2lkIjoiZWY4MmVkMzAtZTJhMy00ODUzLWE4M2UtZDg5YjQ4MDI2NjI0IiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTY5NzI5OTczMiwiZXhwIjoxNjk3Mzg2MTMyLCJpYXQiOjE2OTcyOTk3MzIsImp0aSI6ImMxYjcyZDhlLTgyNjktNDRiZC04YjJhLTIwZjQ5NTU3ZDRiZiIsInVzZXJuYW1lIjoiZ2RweXRob24xMDFAZ21haWwuY29tIn0.ljv-wEaU59tUJhhdU3uladxZEpt9tHxKF-EIlPCUwJmnkUhN9ErBVoacGh646aihNKGx1Hjz1wR1YKDcDPFcNytB9_CtdNBzESirfBFtd7wGhxyiQfFj-tXgntPuqZhoZl7kVIv4nkhOUD4Vj6ha0FVtrV5CIo46sNcFlasyZY9bjSUv8GjIHC_K_Mdrmsth1CuOedotcnS3MeFc2fBxts1Ej-VG77c_IDqKbvOUJEK-CwUMHZyKSeel4Wwc2rTV_eDTg4CQ9jBSDpcdOK3m3J_k39z6LxUJ64D3vsLBNNvJzKMgSRlL8GN3QnBhOz6CmMCCbmv81UdPYGTYfW0uhQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"workspaceName\":\"kroolo dmeo 12\",\n    \"organizationID\":\"652abb39d2de2daa839dbc75\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/{{api_version}}/onboarding/workspace"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "399"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18f-ADRfSPk0EvkrSWJB3BH+IJ93O0c\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 16:09:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"SUCCESS\",\n    \"message\": \"workspace created successfully.\",\n    \"data\": {\n        \"workspaceName\": \"kroolo dmeo 12\",\n        \"organizationID\": \"652abb39d2de2daa839dbc75\",\n        \"workspaceType\": \"PUBLIC\",\n        \"createdBy\": \"652a684f2c6b2f42cb426cab\",\n        \"isActive\": true,\n        \"isDeleted\": false,\n        \"_id\": \"652abd3ac0831c9f5542a089\",\n        \"createdAt\": \"2023-10-14T16:09:30.077Z\",\n        \"updatedAt\": \"2023-10-14T16:09:30.077Z\",\n        \"__v\": 0,\n        \"id\": \"652abd3ac0831c9f5542a089\"\n    }\n}"
+						}
+					]
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "api_version",
+			"value": "v1",
+			"type": "string"
 		}
 	]
 }
