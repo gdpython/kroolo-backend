@@ -32,7 +32,7 @@ const { TEST, DEV, PROD } = require("./constants/authConstant")
 let logger = require('morgan');
 const { clientPassportStrategy } = require('./config/clientPassportStrategy');
 const { connectSQL, connectMongoDB } = require('./config/dbInitialization');
-
+// const { connectLogger } = require('./config/logsInitialization');
 const app = express();
 
 // Middleware for response handling.
@@ -62,6 +62,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 if (process.env.NODE_ENV === TEST || process.env.NODE_ENV === DEV) {
   connectSQL(app);
   connectMongoDB(app);
+  // connectLogger(app)
   app.listen(process.env.PORT, () => {
     console.log(`Your application is running on port ${process.env.PORT}`);
   });
