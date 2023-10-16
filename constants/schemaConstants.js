@@ -112,6 +112,59 @@ const GOAL_KEY_RESULT_MEASUREMENT_UNIT = [
 
 const PROJECT_PRIORITY = ['Urgent', 'High', 'Medium', 'Low'];
 
+/**
+ * Constants for task type.
+ * @constant
+ * @enum {string}
+ */
+
+const TASK_TYPES= ["Task", "Subtask", "InnerSubtask"]
+
+/**
+ * Constants for task status.
+ * @constant
+ * @enum {string}
+ */
+
+const TASK_STATUS = [
+    "Open",
+    "In Review",
+    "In Progress",
+    "Resolved",
+    "Delayed",
+    "Blocked",
+    "Rejected",
+    "Pending",
+    "Reopened",
+    "Cancelled",
+    "QA",
+    "Done",
+    "Ready to Deploy",
+    "Closed",
+  ]
+
+/**
+ * Constants for task priorty.
+ * @constant
+ * @enum {string}
+ */
+const TASK_PRIORITY = ["Urgent", "High", "Medium", "Low"]
+
+/**
+ * Constants for task repetation.
+ * @constant
+ * @enum {string}
+ */
+const TASK_REPETITION = [
+    "No Repeat",
+    "Daily",
+    "Monthly",
+    "Weekly",
+    "Yearly",
+    "Periodically",
+    "Custom",
+  ]
+  
 module.exports = {
     TASK_VIEW,
     COGNITO_STATUS,
@@ -123,5 +176,9 @@ module.exports = {
     GOAL_STATUS,
     GOAL_TYPE,
     GOAL_COLLABORATOR_TYPE,
-    GOAL_KEY_RESULT_MEASUREMENT_UNIT
+    GOAL_KEY_RESULT_MEASUREMENT_UNIT,
+    TASK_TYPES,
+    TASK_STATUS,
+    TASK_PRIORITY,
+    TASK_REPETITION
 };
