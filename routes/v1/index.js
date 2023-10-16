@@ -10,6 +10,8 @@ const authenticationRoutes = require('./authentication');
 const channelsRoutes = require('./channels');
 const onboardingRoutes = require('./onboarding');
 const universalRoutes = require('./universal');
+const userRoutes = require('./user');
+
 
 const { PLATFORM } = require('../../constants/authConstant');
 
@@ -18,6 +20,9 @@ const { PLATFORM } = require('../../constants/authConstant');
  * @type {function}
  */
 const validateOnboardingUser = require("../../middleware/mongoose/onboardingUser")
+const validateOrganizationUser = require("../../middleware/mongoose/organizationUser");
+const authenticateJWT = require('../../middleware/mongoose/loginUser');
+
 
 /**
  * Express router for the main index route.
@@ -73,4 +78,14 @@ router.use(`/${CUURENT_API_VERSION}`,  (req, res, next) => {
   next();
 }, universalRoutes);
 
+router.use(`/${CUURENT_API_VERSION}/${MODULE_ROUTES.USERS}`, authenticateJWT(PLATFORM.WEB), (req, res, next) => {
+  /**
+   * The module name for onboarding.
+   * @type {string}
+   */
+  req.moduleName = MODULE_NAME.AUTHENTICATION;
+
+  // Call the next middleware to authentication route
+  next();
+}, userRoutes);
 module.exports = router;

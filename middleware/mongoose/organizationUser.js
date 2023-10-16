@@ -18,6 +18,7 @@ const { checkRolePermission } = require('./checkRolePermission');
  */
 const verifyCallback = (req, resolve, reject, platform) => async (err, user, info) => {
   try {
+    console.log("user",user);
     if (err || info || !user) {
       return reject('Unauthorized User');
     }
@@ -55,7 +56,7 @@ const verifyCallback = (req, resolve, reject, platform) => async (err, user, inf
  * @param {string} module - The module related to the route.
  * @returns {Function} Middleware function for authentication.
  */
-exports.validateOrganizationUser = (platform) => async (req, res, next) => {
+const validateOrganizationUser = (platform) => async (req, res, next) => {
   if (platform == PLATFORM.WEB) {
     return new Promise((resolve, reject) => {
       passport.authenticate('client-rule', { session: false }, verifyCallback(req, resolve, reject, platform))(
@@ -68,7 +69,9 @@ exports.validateOrganizationUser = (platform) => async (req, res, next) => {
         checkRolePermission(module)(req, res, next);
       })
       .catch((err) => {
+    console.log("client rule",err);
         return res.unAuthorized();
       });
   }
 };
+module.exports = validateOrganizationUser

@@ -8,9 +8,9 @@ const CUURENT_API_VERSION = process.env.CUURENT_API_VERSION;
  * @type {object}
  */
 const MODULE_ROUTES = {
-    USERS: "users",
-    ONBOARDING:"onboarding",
-    CHANNELS:"channels"
+    USERS: 'users',
+    ONBOARDING: 'onboarding',
+    CHANNELS: 'channels',
 };
 
 /**
@@ -19,8 +19,7 @@ const MODULE_ROUTES = {
  */
 const ENC_TYPE = ['ENC', 'DEC'];
 
-
- /**
+/**
  * @description A collection of module names for each API association.
  * @type {object}
  */
@@ -29,53 +28,63 @@ const MODULE_NAME = {
      * The module name for authentication-related APIs.
      * @type {string}
      */
-    AUTHENTICATION: "AUTHENTICATION",
+    AUTHENTICATION: 'AUTHENTICATION',
     /**
-        * The module name for onboarding APIs.
-        * @type {string}
-        */
-    ONBOARDING: "ONBOARDING",
+     * The module name for onboarding APIs.
+     * @type {string}
+     */
+    ONBOARDING: 'ONBOARDING',
     /**
-        * The module name for workspace-related APIs.
-        * @type {string}
-        */
-    WORKSPACE: "WORKSPACE",
+     * The module name for workspace-related APIs.
+     * @type {string}
+     */
+    WORKSPACE: 'WORKSPACE',
 
     /**
      * The module name for channels-related APIs.
      * @type {string}
      */
-    CHANNELS: "CHANNELS",
+    CHANNELS: 'CHANNELS',
 
     /**
      * The module name for documentation-related APIs.
      * @type {string}
      */
-    DOCS: "DOCS",
+    DOCS: 'DOCS',
 
     /**
      * The module name for goals-related APIs.
      * @type {string}
      */
-    GOALS: "GOALS",
+    GOALS: 'GOALS',
 
     /**
      * The module name for projects-related APIs.
      * @type {string}
      */
-    PROJECTS: "PROJECTS",
+    PROJECTS: 'PROJECTS',
 
     /**
      * The module name for settings-related APIs.
      * @type {string}
      */
-    SETTING: "SETTING",
+    SETTING: 'SETTING',
 
     /**
      * The module name for teams-related APIs.
      * @type {string}
      */
-    TEAMS: "TEAMS",
+    TEAMS: 'TEAMS',
+};
+/**
+ * @description default permission for user member
+ * @type {object}
+ */
+const DEFAULT_PERMISSION = {
+    ORGANIZATION: {
+        moduleName: 'ORGANIZATION',
+        roleName: 'OWNER',
+    },
 };
 /**
  * Export the current API version.
@@ -85,5 +94,6 @@ module.exports = {
     CUURENT_API_VERSION,
     MODULE_ROUTES,
     MODULE_NAME,
-    ENC_TYPE
+    ENC_TYPE,
+    DEFAULT_PERMISSION,
 };
