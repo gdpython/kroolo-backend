@@ -25,6 +25,11 @@ const { INVITATION_STATUS } = require('../../../constants/schemaConstants');
  * @class
  */
 const GoalMemberSchema = new mongoose.Schema({
+    organizationID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Organization',
+        required: true,
+    },
     goalID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Goal',

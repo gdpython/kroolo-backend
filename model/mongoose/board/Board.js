@@ -25,6 +25,11 @@ const mongoose = require("mongoose");
 
 const BoardSchema = new mongoose.Schema(
   {
+    organizationID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Organization',
+      required: true,
+    },
     projectID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
@@ -47,16 +52,16 @@ const BoardSchema = new mongoose.Schema(
       type: Number,
     },
     updatedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
     isActive: {
-        type: Boolean,
-        default: true,
+      type: Boolean,
+      default: true,
     },
     isDeleted: {
-        type: Boolean,
-        default: false,
+      type: Boolean,
+      default: false,
     },
   },
   {

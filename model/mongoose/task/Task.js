@@ -5,6 +5,11 @@ const date = new Date()
 
 const TaskSchema = new mongoose.Schema(
   {
+    organizationID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Organization',
+      required: true,
+    },
     projectID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
@@ -74,26 +79,26 @@ const TaskSchema = new mongoose.Schema(
       enum: TASK_STATUS,
       default: TASK_STATUS[0],
     },
-    taskPosition:{
+    taskPosition: {
       type: Number,
       default: 1,
     },
-    taskPriority:{
+    taskPriority: {
       enum: TASK_PRIORITY,
-      default:TASK_PRIORITY[0]
+      default: TASK_PRIORITY[0]
     },
-    isPublic:{
-      type:Boolean,
-      default:true
+    isPublic: {
+      type: Boolean,
+      default: true
     },
     integrationPlatformID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "IntegrationPlatform",
     },
-    taskRepetition:{
-      type:String,
-      enum:TASK_REPETITION,
-      default:TASK_REPETITION[0]
+    taskRepetition: {
+      type: String,
+      enum: TASK_REPETITION,
+      default: TASK_REPETITION[0]
 
     }
   },

@@ -34,6 +34,11 @@ const { GOAL_KEY_RESULT_MEASUREMENT_UNIT } = require('../../../constants/schemaC
 
 const GoalKeyResultSchema = new mongoose.Schema(
     {
+        organizationID: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Organization',
+            required: true,
+        },
         goalID: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Goal',
