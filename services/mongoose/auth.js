@@ -4,42 +4,42 @@
  */
 
 const {
-  JWT,
-  ENVIRONMENT,
-  COGNITO_CLIENT,
-  COGNITO_PASSWORD_AUTH,
-  ADMIN_USER_PASSWORD_AUTH,
-} = require("../../constants/authConstant");
-const { ObjectId } =require('mongodb');
+    JWT,
+    ENVIRONMENT,
+    COGNITO_CLIENT,
+    COGNITO_PASSWORD_AUTH,
+    ADMIN_USER_PASSWORD_AUTH,
+} = require('../../constants/authConstant');
+const { ObjectId } = require('mongodb');
 const {
-  EMAIL_VERIFY,
-  EMAIL_FORGOT_PASSWORD,
-} = require("../../constants/emailConstants");
+    EMAIL_VERIFY,
+    EMAIL_FORGOT_PASSWORD,
+} = require('../../constants/emailConstants');
 const {
-  InitiateAuthCommand,
-  AdminCreateUserCommand,
-  AdminUpdateUserAttributesCommand,
-  AdminSetUserPasswordCommand,
-  ChangePasswordCommand,
-  ForgotPasswordCommand,
-  RespondToAuthChallengeCommand,
-} = require("@aws-sdk/client-cognito-identity-provider"); // CommonJS import
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const dayjs = require("dayjs");
-const uuid = require("uuid").v4;
-const model = require("../../model/mongoose");
+    InitiateAuthCommand,
+    AdminCreateUserCommand,
+    AdminUpdateUserAttributesCommand,
+    AdminSetUserPasswordCommand,
+    ChangePasswordCommand,
+    ForgotPasswordCommand,
+    RespondToAuthChallengeCommand,
+} = require('@aws-sdk/client-cognito-identity-provider'); // CommonJS import
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const dayjs = require('dayjs');
+const uuid = require('uuid').v4;
+const model = require('../../model/mongoose');
 const {
-  createOne,
-  findOne,
-  updateOne,
-} = require("../../utils/mongooseService");
-const { generatePassword } = require("../../utils/common");
-const { sendMail } = require("../email");
-const { crypto } = require("../../helpers/function");
-const { ENC_TYPE } = require("../../constants/appConstants");
-const { COGNITO_STATUS } = require("../../constants/schemaConstants");
-const { default: mongoose } = require("mongoose");
+    createOne,
+    findOne,
+    updateOne,
+} = require('../../utils/mongooseService');
+const { generatePassword } = require('../../utils/common');
+const { sendMail } = require('../email');
+const { crypto } = require('../../helpers/function');
+const { ENC_TYPE } = require('../../constants/appConstants');
+const { COGNITO_STATUS } = require('../../constants/schemaConstants');
+const { default: mongoose } = require('mongoose');
 
 /**
  * @description: service to generate JWT token for authentication.
@@ -48,14 +48,14 @@ const { default: mongoose } = require("mongoose");
  * @returns {string} - JWT token.
  */
 const generateToken = async (user, secret) => {
-  return jwt.sign(
-    {
-      id: user._id,
-      username: user.username,
-    },
-    secret,
-    { expiresIn: JWT.EXPIRES_IN * 60 }
-  );
+    return jwt.sign(
+        {
+            id: user._id,
+            username: user.username,
+        },
+        secret,
+        { expiresIn: JWT.EXPIRES_IN * 60 },
+    );
 };
 
 /**
@@ -67,87 +67,87 @@ const generateToken = async (user, secret) => {
  * @returns {Object} - Authentication status: { flag, data }.
  */
 const login = async (username, password, modelName, ip) => {
-  try {
-    const query = { username: username };
-    const user = await findOne(modelName, query);
-    if (!user) {
-      return {
-        flag: true,
-        data: "User not exists",
-      };
-    }
-    const userData = user;
-    if (!userData.isActive) {
-      return {
-        flag: true,
-        data: "You are blocked by Admin, please contact Admin.",
-      };
-    }
-    const input = {
-      AuthFlow: COGNITO_PASSWORD_AUTH,
-      ClientId: process.env.COGNITO_APP_CLIENT_ID,
-      AuthParameters: {
-        USERNAME: username,
-        PASSWORD: password,
-      },
-    };
-    const command = new InitiateAuthCommand(input);
-    const response = await COGNITO_CLIENT.send(command);
-    if (response.AuthenticationResult) {
-      const { AccessToken, ExpiresIn, IdToken, RefreshToken, TokenType } =
-        response.AuthenticationResult;
-
-      const updateData = {
-        currentLoginIP: ip.split("::ffff:")[1],
-        lastLoginIP: userData.currentLoginIP || ip.split("::ffff:")[1],
-        lastLoginDate: new Date(),
-      };
-      await updateOne(modelName, { _id: userData._id }, updateData);
-      // const orgnaizationDetail = await findOne(model.OrganizationMember, {
-      //   userID: new mongoose.Types.ObjectId(userData._id),
-      // });
-      // console.log(orgnaizationDetail, "orgnaizationDetail")
-      // if(orgnaizationDetail){
-      //   let accessToken = await generateToken(
-      //     { organizationID: orgnaization._id, cognitoAccessToken: AccessToken },
-      //     JWT.CLIENT_SECRET
-      //   );
-      //   let refershToken = await generateToken(
-      //     { organizationID: orgnaization._id, cognitoRefreshToken: RefreshToken },
-      //     JWT.CLIENT_SECRET
-      //   );
-      //   let expireJWT = dayjs().add(JWT.EXPIRES_IN, "second").toISOString();
-
-      //   createUserToken(model.UserToken, {
-      //     userID: user._id,
-      //     token: `${TokenType} ${refershToken}`,
-      //     cognitoTokeExpiredTime: ExpiresIn,
-      //     jwtTokeExpiredTime: expireJWT,
-      //   });
-      //   let userToReturn = {
-      //     ...userData,
-      //     refershToken,
-      //     accessToken,
-      //   };
-      //   return {
-      //     flag: false,
-      //     data: userToReturn,
-      //   };
-      // }
-      // else{
-        return {
-          flag: false,
-          data: {
-            AccessToken: AccessToken,
-            RefreshToken: RefreshToken,
-            onBoardingStep: userData.onBoardingStep,
-          },
+    try {
+        const query = { username: username };
+        const user = await findOne(modelName, query);
+        if (!user) {
+            return {
+                flag: true,
+                data: 'User not exists',
+            };
+        }
+        const userData = user;
+        if (!userData.isActive) {
+            return {
+                flag: true,
+                data: 'You are blocked by Admin, please contact Admin.',
+            };
+        }
+        const input = {
+            AuthFlow: COGNITO_PASSWORD_AUTH,
+            ClientId: process.env.COGNITO_APP_CLIENT_ID,
+            AuthParameters: {
+                USERNAME: username,
+                PASSWORD: password,
+            },
         };
-      // }
+        const command = new InitiateAuthCommand(input);
+        const response = await COGNITO_CLIENT.send(command);
+        if (response.AuthenticationResult) {
+            const { AccessToken, ExpiresIn, IdToken, RefreshToken, TokenType } =
+                response.AuthenticationResult;
+
+            const updateData = {
+                currentLoginIP: ip.split('::ffff:')[1],
+                lastLoginIP: userData.currentLoginIP || ip.split('::ffff:')[1],
+                lastLoginDate: new Date(),
+            };
+            await updateOne(modelName, { _id: userData._id }, updateData);
+            // const orgnaizationDetail = await findOne(model.OrganizationMember, {
+            //   userID: new mongoose.Types.ObjectId(userData._id),
+            // });
+            // console.log(orgnaizationDetail, "orgnaizationDetail")
+            // if(orgnaizationDetail){
+            //   let accessToken = await generateToken(
+            //     { organizationID: orgnaization._id, cognitoAccessToken: AccessToken },
+            //     JWT.CLIENT_SECRET
+            //   );
+            //   let refershToken = await generateToken(
+            //     { organizationID: orgnaization._id, cognitoRefreshToken: RefreshToken },
+            //     JWT.CLIENT_SECRET
+            //   );
+            //   let expireJWT = dayjs().add(JWT.EXPIRES_IN, "second").toISOString();
+
+            //   createUserToken(model.UserToken, {
+            //     userID: user._id,
+            //     token: `${TokenType} ${refershToken}`,
+            //     cognitoTokeExpiredTime: ExpiresIn,
+            //     jwtTokeExpiredTime: expireJWT,
+            //   });
+            //   let userToReturn = {
+            //     ...userData,
+            //     refershToken,
+            //     accessToken,
+            //   };
+            //   return {
+            //     flag: false,
+            //     data: userToReturn,
+            //   };
+            // }
+            // else{
+            return {
+                flag: false,
+                data: {
+                    AccessToken: AccessToken,
+                    RefreshToken: RefreshToken,
+                    onBoardingStep: userData.onBoardingStep,
+                },
+            };
+            // }
+        }
+    } catch (error) {
+        throw new Error(error.message);
     }
-  } catch (error) {
-    throw new Error(error.message);
-  }
 };
 
 /**
@@ -159,71 +159,74 @@ const login = async (username, password, modelName, ip) => {
  * @returns {Object} - Authentication status: { flag, data }.
  */
 
-const signUp = async (req, email, modelName, ip) => {
-  try {
-    const query = { username: email };
-    const user = await findOne(modelName, query);
-    if (user) {
-      return {
-        flag: true,
-        data: "User already exists",
-      };
-    }
-    let token = uuid();
-    let expires = dayjs().add(EMAIL_VERIFY.EXPIRE_TIME, "minute").toISOString();
+const signUp = async (origin, email, modelName, ip) => {
+    try {
+        const query = { username: email };
+        const user = await findOne(modelName, query);
+        if (user) {
+            return {
+                flag: true,
+                data: 'User already exists',
+            };
+        }
+        let token = uuid();
+        let expires = dayjs()
+            .add(EMAIL_VERIFY.EXPIRE_TIME, 'minute')
+            .toISOString();
 
-    const password = generatePassword(20);
-    const input = {
-      UserPoolId: process.env.COGNITO_USER_POOL_ID,
-      Username: email,
-      DesiredDeliveryMediums: ["EMAIL"],
-      TemporaryPassword: password,
-      MessageAction: "SUPPRESS",
-      UserAttributes: [
-        {
-          Name: "email",
-          Value: email,
-        },
-      ],
-    };
-    const command = new AdminCreateUserCommand(input);
-    const response = await COGNITO_CLIENT.send(command);
-    if (response.User) {
-      const createdUser = await createOne(modelName, {
-        ...query,
-        email,
-        password,
-        cogintoStatus: response.User.UserStatus,
-      });
-      let updateData = {
-        emailVerifyCode: token,
-        emailVerifyExpiryTime: expires,
-      };
-      await updateOne(modelName, { _id: createdUser._id }, updateData);
-      let mailObj = {
-        subject: EMAIL_VERIFY.SUBJECT,
-        to: email,
-        template: "/views/email/EmailVerification.ejs",
-        data: {
-          link: `${req}/verifyLink/` + token,
-        },
-      };
-      const isEmailSend = await sendMail(mailObj);
-      if (isEmailSend) {
-        return {
-          flag: false,
-          data: createdUser,
+        const password = generatePassword(20);
+        const input = {
+            UserPoolId: process.env.COGNITO_USER_POOL_ID,
+            Username: email,
+            DesiredDeliveryMediums: ['EMAIL'],
+            TemporaryPassword: password,
+            MessageAction: 'SUPPRESS',
+            UserAttributes: [
+                {
+                    Name: 'email',
+                    Value: email,
+                },
+            ],
         };
-      } else {
-        return {
-          flag: true,
-          data: createdUser,
-        };
-      }
+        const command = new AdminCreateUserCommand(input);
+        const response = await COGNITO_CLIENT.send(command);
+        if (response.User) {
+            const createdUser = await createOne(modelName, {
+                ...query,
+                email,
+                password,
+                cogintoStatus: response.User.UserStatus,
+            });
+            let updateData = {
+                emailVerifyCode: token,
+                emailVerifyExpiryTime: expires,
+                emailVerfiyStatus: false,
+            };
+            await updateOne(modelName, { _id: createdUser._id }, updateData);
+            let mailObj = {
+                subject: EMAIL_VERIFY.SUBJECT,
+                to: email,
+                template: '/views/email/EmailVerification.ejs',
+                data: {
+                    link: `${origin}/email-verify/` + token,
+                },
+            };
+            const isEmailSend = await sendMail(mailObj);
+            if (isEmailSend) {
+                return {
+                    flag: false,
+                    data: createdUser,
+                };
+            } else {
+                return {
+                    flag: true,
+                    data: createdUser,
+                };
+            }
+        }
+    } catch (error) {
+        throw new Error(error.message);
     }
-  } catch (error) {
-    throw new Error(error.message);
-  }
 };
 
 /**
@@ -234,53 +237,55 @@ const signUp = async (req, email, modelName, ip) => {
  */
 
 const emailVerify = async (token, modelName) => {
-  try {
-    const query = { emailVerifyCode: token };
-    const user = await findOne(modelName, query);
-    if (!user) {
-      return {
-        flag: true,
-        data: "Invalid Link",
-      };
-    }
-    const userData = user.toObject();
-    if (userData.emailVerifyExpiryTime) {
-      if (
-        dayjs(new Date()).isAfter(dayjs(userData.emailVerifyExpiryTime)) &&
-        userData.emailVerfiyStatus === false
-      ) {
-        return {
-          flag: true,
-          data: "Your email verification link is expired or invalid",
+    try {
+        const query = { emailVerifyCode: token };
+        const user = await findOne(modelName, query);
+        if (!user) {
+            return {
+                flag: true,
+                data: 'Invalid Link',
+            };
+        }
+        const userData = user.toObject();
+        if (userData.emailVerifyExpiryTime) {
+            if (
+                dayjs(new Date()).isAfter(
+                    dayjs(userData.emailVerifyExpiryTime),
+                ) &&
+                userData.emailVerfiyStatus === false
+            ) {
+                return {
+                    flag: true,
+                    data: 'Your email verification link is expired or invalid',
+                };
+            }
+        }
+        const input = {
+            UserPoolId: process.env.COGNITO_USER_POOL_ID,
+            Username: user.email,
+            UserAttributes: [
+                {
+                    Name: 'email_verified',
+                    Value: 'true',
+                },
+            ],
         };
-      }
+        const command = new AdminUpdateUserAttributesCommand(input);
+        const response = await COGNITO_CLIENT.send(command);
+        if (response) {
+            const updateData = {
+                emailVerfiyStatus: true,
+                cogintoStatus: COGNITO_STATUS[1],
+            };
+            await updateOne(modelName, { _id: userData._id }, updateData);
+            return {
+                flag: false,
+                data: user.email,
+            };
+        }
+    } catch (error) {
+        throw new Error(error.message);
     }
-    const input = {
-      UserPoolId: process.env.COGNITO_USER_POOL_ID,
-      Username: user.email,
-      UserAttributes: [
-        {
-          Name: "email_verified",
-          Value: "true",
-        },
-      ],
-    };
-    const command = new AdminUpdateUserAttributesCommand(input);
-    const response = await COGNITO_CLIENT.send(command);
-    if (response) {
-      const updateData = {
-        emailVerfiyStatus: true,
-        cogintoStatus: COGNITO_STATUS[1],
-      };
-      await updateOne(modelName, { _id: userData._id }, updateData);
-      return {
-        flag: false,
-        data: user.email,
-      };
-    }
-  } catch (error) {
-    throw new Error(error.message);
-  }
 };
 
 /**
@@ -294,65 +299,68 @@ const emailVerify = async (token, modelName) => {
  */
 
 const completeSignUp = async (name, email, password, modelName, ip) => {
-  try {
-    const query = { email: email };
-    const user = await findOne(modelName, query);
-    if (!user) {
-      return {
-        flag: true,
-        data: "User not exists",
-      };
-    }
-    const userData = user.toObject();
-    if (userData.emailVerfiyStatus === false && userData.cogintoStatus !== COGNITO_STATUS[1]) {
-      return {
-        flag: true,
-        data: "Please verify your email first",
-      };
-    }
+    try {
+        const query = { email: email };
+        const user = await findOne(modelName, query);
+        if (!user) {
+            return {
+                flag: true,
+                data: 'User not exists',
+            };
+        }
+        const userData = user.toObject();
+        if (
+            userData.emailVerfiyStatus === false &&
+            userData.cogintoStatus !== COGNITO_STATUS[1]
+        ) {
+            return {
+                flag: true,
+                data: 'Please verify your email first',
+            };
+        }
 
-    const input = {
-      UserPoolId: process.env.COGNITO_USER_POOL_ID,
-      Username: user.email,
-      UserAttributes: [
-        {
-          Name: "name",
-          Value: name,
-        },
-      ],
-    };
-    const command = new AdminUpdateUserAttributesCommand(input);
-    await COGNITO_CLIENT.send(command);
+        const input = {
+            UserPoolId: process.env.COGNITO_USER_POOL_ID,
+            Username: user.email,
+            UserAttributes: [
+                {
+                    Name: 'name',
+                    Value: name,
+                },
+            ],
+        };
+        const command = new AdminUpdateUserAttributesCommand(input);
+        await COGNITO_CLIENT.send(command);
 
-    const changePasswordInput = {
-      UserPoolId: process.env.COGNITO_USER_POOL_ID,
-      Username: email,
-      Password: password,
-      Permanent: true,
-    };
-    const commandPasswordChange = new AdminSetUserPasswordCommand(
-      changePasswordInput
-    );
-    await COGNITO_CLIENT.send(commandPasswordChange);
-    const updateData = {
-      fullName: name,
-      password: crypto(password, ENC_TYPE[0]),
-      emailVerifyCode: "",
-      emailVerifyExpiryTime: "",
-      emailVerfiyStatus: false,
-    };
-    await updateOne(modelName, { _id: userData._id }, updateData);
-    const loginUserData = await completeSignUpAndGetCognitoToken(email, password);
-    return {
-      flag: false,
-      data: {
-        AccessToken: loginUserData.AuthenticationResult.AccessToken,
-        RefreshToken: loginUserData.AuthenticationResult.RefreshToken
-      },
-    };
-  } catch (error) {
-    throw new Error(error.message);
-  }
+        const changePasswordInput = {
+            UserPoolId: process.env.COGNITO_USER_POOL_ID,
+            Username: email,
+            Password: password,
+            Permanent: true,
+        };
+        const commandPasswordChange = new AdminSetUserPasswordCommand(
+            changePasswordInput,
+        );
+        await COGNITO_CLIENT.send(commandPasswordChange);
+        const updateData = {
+            fullName: name,
+            password: crypto(password, ENC_TYPE[0]),
+        };
+        await updateOne(modelName, { _id: userData._id }, updateData);
+        const loginUserData = await completeSignUpAndGetCognitoToken(
+            email,
+            password,
+        );
+        return {
+            flag: false,
+            data: {
+                AccessToken: loginUserData.AuthenticationResult.AccessToken,
+                RefreshToken: loginUserData.AuthenticationResult.RefreshToken,
+            },
+        };
+    } catch (error) {
+        throw new Error(error.message);
+    }
 };
 
 /**
@@ -363,22 +371,22 @@ const completeSignUp = async (name, email, password, modelName, ip) => {
  */
 
 const completeSignUpAndGetCognitoToken = async (username, password) => {
-  try{
-    const input = {
-      AuthFlow: COGNITO_PASSWORD_AUTH,
-      ClientId: process.env.COGNITO_APP_CLIENT_ID,
-      AuthParameters: {
-        USERNAME: username,
-        PASSWORD: password,
-      },
-    };
-    const command = new InitiateAuthCommand(input);
-    const response = await COGNITO_CLIENT.send(command);
-    return response; // CommandOutput
-  }catch(error){
-    throw new Error(error.message);
-  }
-}
+    try {
+        const input = {
+            AuthFlow: COGNITO_PASSWORD_AUTH,
+            ClientId: process.env.COGNITO_APP_CLIENT_ID,
+            AuthParameters: {
+                USERNAME: username,
+                PASSWORD: password,
+            },
+        };
+        const command = new InitiateAuthCommand(input);
+        const response = await COGNITO_CLIENT.send(command);
+        return response; // CommandOutput
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
 
 /**
  * @description: service for resend email.
@@ -389,111 +397,113 @@ const completeSignUpAndGetCognitoToken = async (username, password) => {
  */
 
 const resendEmail = async (modelName, email, req) => {
-  try {
-    const query = { email: email };
-    const user = await findOne(modelName, query);
-    if (!user) {
-      return {
-        flag: true,
-        data: "User not exists",
-      };
+    try {
+        const query = { email: email };
+        const user = await findOne(modelName, query);
+        if (!user) {
+            return {
+                flag: true,
+                data: 'User not exists',
+            };
+        }
+        const userData = user.toObject();
+        if (userData.emailVerfiyStatus === true) {
+            return {
+                flag: true,
+                data: 'Email already verified',
+            };
+        }
+        let token = uuid();
+        let expires = dayjs()
+            .add(EMAIL_VERIFY.EXPIRE_TIME, 'minute')
+            .toISOString();
+        let updateData = {
+            emailVerifyCode: token,
+            emailVerifyExpiryTime: expires,
+        };
+        await updateOne(modelName, { _id: userData._id }, updateData);
+        let mailObj = {
+            subject: EMAIL_VERIFY.SUBJECT,
+            to: email,
+            template: '/views/email/EmailVerification.ejs',
+            data: {
+                link: `${req}/verifyLink/` + token,
+            },
+        };
+        const isEmailSend = await sendMail(mailObj);
+        if (isEmailSend) {
+            return {
+                flag: false,
+                data: 'Email sent successfully',
+            };
+        } else {
+            return {
+                flag: true,
+                data: 'Email not sent',
+            };
+        }
+    } catch (error) {
+        throw new Error(error.message);
     }
-    const userData = user.toObject();
-    if (userData.emailVerfiyStatus === true) {
-      return {
-        flag: true,
-        data: "Email already verified",
-      };
-    }
-    let token = uuid();
-    let expires = dayjs().add(EMAIL_VERIFY.EXPIRE_TIME, "minute").toISOString();
-    let updateData = {
-      emailVerifyCode: token,
-      emailVerifyExpiryTime: expires,
-    };
-    await updateOne(modelName, { _id: userData._id }, updateData);
-    let mailObj = {
-      subject: EMAIL_VERIFY.SUBJECT,
-      to: email,
-      template: "/views/email/EmailVerification.ejs",
-      data: {
-        link: `${req}/verifyLink/` + token,
-      },
-    };
-    const isEmailSend = await sendMail(mailObj);
-    if (isEmailSend) {
-      return {
-        flag: false,
-        data: "Email sent successfully",
-      };
-    } else {
-      return {
-        flag: true,
-        data: "Email not sent",
-      };
-    }
-  } catch (error) {
-    throw new Error(error.message);
-  }
 };
 
 /**
  * @description: service for changing the password.
- * @param {string} id - User's ID.
  * @param {string} token - User's token.
+ * @param {string} email - User's email.
  * @param {string} newPassword - New password.
  * @param {string} oldPassword - Old password.
  * @param {string} modelName - Mongoose model for user data.
  * @returns {Object} - Password change status: { flag, data }.
  */
 const changePassword = async (
-  id,
-  token,
-  oldPassword,
-  newPassword,
-  modelName
+    token,
+    email,
+    oldPassword,
+    newPassword,
+    modelName,
 ) => {
-  try {
-    const user = await modelName.findOne({
-      _id: id,
-      isActive: true,
-      isDeleted: false,
-    });
+    try {
+        const user = await modelName.findOne({
+            email: email,
+            isActive: true,
+            isDeleted: false,
+        });
 
-    if (!user) {
-      return {
-        flag: true,
-        data: "User not exists",
-      };
+        if (!user) {
+            return {
+                flag: true,
+                data: 'User not exists',
+            };
+        }
+
+        var input = {
+            AccessToken: token /* required */,
+            PreviousPassword: oldPassword /* required */,
+            ProposedPassword: newPassword /* required */,
+        };
+
+        const command = new ChangePasswordCommand(input);
+        const response = await COGNITO_CLIENT.send(command);
+        if (response) {
+            const updateData = {
+                password: crypto(newPassword, ENC_TYPE[0]),
+            };
+            await updateOne(modelName, { email: email }, updateData);
+        } else {
+            return {
+                flag: true,
+                data: 'Password could not be changed due to an error. Please try again',
+            };
+        }
+
+        return {
+            flag: false,
+            data: [],
+        };
+    } catch (error) {
+        throw new Error(error.message);
     }
-
-    var input = {
-      AccessToken: token /* required */,
-      PreviousPassword: oldPassword /* required */,
-      ProposedPassword: newPassword /* required */,
-    };
-
-    const command = new ChangePasswordCommand(input);
-    const response = await client.send(command);
-    if (response) {
-      const updateData = {
-        password: crypto(newPassword, ENC_TYPE[0]),
-      };
-      await updateOne(modelName, { _id: id }, updateData);
-    } else {
-      return {
-        flag: true,
-        data: "Password could not be changed due to an error. Please try again",
-      };
-    }
-
-    return {
-      flag: false,
-      data: [],
-    };
-  } catch (error) {
-    throw new Error(error.message);
-  }
 };
 
 /**
@@ -504,74 +514,124 @@ const changePassword = async (
  * @returns {Object} - Password reset status: { flag, data }.
  */
 const forgotPassword = async (email, modelName, req) => {
-  try {
-    let query = { email: email };
-    const userCheck = await modelName.findOne(query);
-    if (!userCheck) {
-      return {
-        flag: true,
-        data: "Email not exists",
-      };
-    }
-    const userData = userCheck.toObject();
-    if (userData.isActive === 0) {
-      return {
-        flag: true,
-        data: "You are blocked by Admin, please contact Admin.",
-      };
-    }
-    if (userData.cogintoStatus !== COGNITO_STATUS[1]) {
-      return {
-        flag: true,
-        data: "Please verify your email first",
-      };
-    }
+    try {
+        let query = { email: email };
+        const userCheck = await modelName.findOne(query);
+        if (!userCheck) {
+            return {
+                flag: true,
+                data: 'Email not exists',
+            };
+        }
+        const userData = userCheck.toObject();
+        if (userData.isActive === 0) {
+            return {
+                flag: true,
+                data: 'You are blocked by Admin, please contact Admin.',
+            };
+        }
+        if (userData.cogintoStatus !== COGNITO_STATUS[1]) {
+            return {
+                flag: true,
+                data: 'Please verify your email first',
+            };
+        }
 
-    const input = {
-      ClientId: process.env.COGNITO_APP_CLIENT_ID,
-      Username: email,
-    };
-
-    const command = new ForgotPasswordCommand(input);
-    const response = await COGNITO_CLIENT.send(command);
-    if (response) {
-      let token = uuid();
-      let expires = dayjs()
-        .add(EMAIL_FORGOT_PASSWORD.EXPIRE_TIME, "minute")
-        .toISOString();
-
-      let updateData = {
-        emailVerifyCode: token,
-        emailVerifyExpiryTime: expires,
-        emailVerfiyStatus: false,
-      };
-      await updateOne(modelName, query, updateData);
-
-      let mailObj = {
-        subject: EMAIL_FORGOT_PASSWORD.SUBJECT,
-        to: email,
-        template: "/views/email/ForgetPassword.ejs",
-        data: {
-          link: `${req}/resetPassword/` + token,
-        },
-      };
-
-      const isEmailSend = await sendMail(mailObj);
-      if (isEmailSend) {
-        return {
-          flag: false,
-          data: "Email sent successfully",
+        const input = {
+            ClientId: process.env.COGNITO_APP_CLIENT_ID,
+            Username: email,
         };
-      } else {
-        return {
-          flag: true,
-          data: "Email not sent",
-        };
-      }
+
+        const command = new ForgotPasswordCommand(input);
+        const response = await COGNITO_CLIENT.send(command);
+        if (response) {
+            let token = uuid();
+            let expires = dayjs()
+                .add(EMAIL_FORGOT_PASSWORD.EXPIRE_TIME, 'minute')
+                .toISOString();
+
+            let updateData = {
+                forgotEmailVerifyCode: token,
+                forgotEmailVerifyExpiryTime: expires,
+                forgotEmailVerfiyStatus: false,
+            };
+            await updateOne(modelName, query, updateData);
+
+            let mailObj = {
+                subject: EMAIL_FORGOT_PASSWORD.SUBJECT,
+                to: email,
+                template: '/views/email/ForgetPassword.ejs',
+                data: {
+                    link: `${req}/resetPassword/${token}`,
+                },
+            };
+
+            const isEmailSend = await sendMail(mailObj);
+            if (isEmailSend) {
+                return {
+                    flag: false,
+                    data: 'Email sent successfully',
+                };
+            } else {
+                return {
+                    flag: true,
+                    data: 'Email not sent',
+                };
+            }
+        }
+    } catch (error) {
+        throw new Error(error.message);
     }
-  } catch (error) {
-    throw new Error(error.message);
-  }
+};
+
+/**
+ * @description: service for user forgot email verify.
+ * @param {string} token - User's token.
+ * @param {string} modelName - Model name for user data (Mongoose model).
+ * @returns {Object} - Authentication status: { flag, data }.
+ */
+
+const forgotEmailVerify = async (token, modelName) => {
+    try {
+        const query = { forgotEmailVerifyCode: token };
+        const user = await findOne(modelName, query);
+        if (!user) {
+            return {
+                flag: true,
+                data: 'Invalid Link',
+            };
+        }
+        const userData = user.toObject();
+        if (userData.forgotEmailVerfiyStatus === true) {
+            return {
+                flag: true,
+                data: 'Email already verified',
+            };
+        }
+        if (userData.forgotEmailVerifyExpiryTime) {
+            if (
+                dayjs(new Date()).isAfter(
+                    dayjs(userData.forgotEmailVerifyExpiryTime),
+                ) &&
+                userData.forgotEmailVerfiyStatus === false
+            ) {
+                return {
+                    flag: true,
+                    data: 'Your email verification link is expired or invalid',
+                };
+            }
+        }
+        const updateData = {
+            emailVerfiyStatus: true,
+        };
+        await updateOne(modelName, { _id: userData._id }, updateData);
+        return {
+            flag: false,
+            data: user.email,
+        };
+    } catch (error) {
+        throw new Error(error.message);
+    }
 };
 
 /**
@@ -583,63 +643,71 @@ const forgotPassword = async (email, modelName, req) => {
  */
 
 const resetPassword = async (email, newPassword, modelName) => {
-  try {
-    const user = await modelName.findOne({
-      email: email,
-      isActive: true,
-      isDeleted: false,
-    });
+    try {
+        const user = await modelName.findOne({
+            email: email,
+            isActive: true,
+            isDeleted: false,
+        });
 
-    if (!user) {
-      return {
-        flag: true,
-        data: "User not exists",
-      };
-    }
+        if (!user) {
+            return {
+                flag: true,
+                data: 'User not exists',
+            };
+        }
 
-    const userData = user.toObject();
+        const userData = user.toObject();
 
-    if (userData.emailVerifyExpiryTime) {
-      if (dayjs(new Date()).isAfter(dayjs(userData.emailVerifyExpiryTime))) {
-        return {
-          flag: true,
-          data: "Your reset password link is expired or invalid",
+        if (userData.forgotEmailVerfiyStatus === false) {
+            return {
+                flag: true,
+                data: 'Please verify your email first',
+            };
+        }
+
+        if (userData.forgotEmailVerifyExpiryTime) {
+            if (
+                dayjs(new Date()).isAfter(
+                    dayjs(userData.forgotEmailVerifyExpiryTime),
+                )
+            ) {
+                return {
+                    flag: true,
+                    data: 'Your reset password link is expired or invalid',
+                };
+            }
+        }
+
+        const input = {
+            UserPoolId: process.env.COGNITO_USER_POOL_ID,
+            Username: email,
+            Password: newPassword,
+            Permanent: true,
         };
-      }
+
+        const command = new AdminSetUserPasswordCommand(input);
+        const response = await COGNITO_CLIENT.send(command);
+        if (response) {
+            const updateData = {
+                password: crypto(newPassword, ENC_TYPE[0]),
+            };
+            await updateOne(modelName, { _id: userData._id }, updateData);
+        } else {
+            return {
+                flag: true,
+                data: 'Password could not be changed due to an error. Please try again',
+            };
+        }
+
+        return {
+            flag: false,
+            data: [],
+        };
+    } catch (error) {
+        throw new Error(error.message);
     }
-
-    const input = {
-      UserPoolId: process.env.COGNITO_USER_POOL_ID,
-      Username: email,
-      Password: newPassword,
-      Permanent: true,
-    };
-
-    const command = new AdminSetUserPasswordCommand(input);
-    const response = await COGNITO_CLIENT.send(command);
-    if (response) {
-      const updateData = {
-        password: crypto(newPassword, ENC_TYPE[0]),
-        emailVerifyCode: "",
-        emailVerifyExpiryTime: "",
-        emailVerfiyStatus: false,
-      };
-      await updateOne(modelName, { _id: userData._id }, updateData);
-    } else {
-      return {
-        flag: true,
-        data: "Password could not be changed due to an error. Please try again",
-      };
-    }
-
-    return {
-      flag: false,
-      data: [],
-    };
-  } catch (error) {
-    throw new Error(error.message);
-  }
-}
+};
 
 /**
  * @description: service for createUserToken.
@@ -651,28 +719,28 @@ const resetPassword = async (email, newPassword, modelName) => {
  */
 
 const createUserToken = async (modelName, ...data) => {
-  const createdUserToken = await createOne(modelName, data);
-  if (!createdUserToken) {
+    const createdUserToken = await createOne(modelName, data);
+    if (!createdUserToken) {
+        return {
+            flag: true,
+            data: 'User token not created',
+        };
+    }
+    const userTokenData = createdUserToken.toObject();
     return {
-      flag: true,
-      data: "User token not created",
+        flag: false,
+        data: userTokenData,
     };
-  }
-  const userTokenData = createdUserToken.toObject();
-  return {
-    flag: false,
-    data: userTokenData,
-  };
 };
 
-
 module.exports = {
-  login,
-  signUp,
-  emailVerify,
-  completeSignUp,
-  resendEmail,
-  resetPassword,
-  changePassword,
-  forgotPassword,
+    login,
+    signUp,
+    emailVerify,
+    completeSignUp,
+    resendEmail,
+    changePassword,
+    forgotPassword,
+    forgotEmailVerify,
+    resetPassword,
 };

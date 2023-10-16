@@ -33,7 +33,7 @@ const roleController = require(`../../../controllers/${CUURENT_API_VERSION}/role
  */
 router.get('/organization/:organizationID', organizationController.getOrganization);
 router.post('/organization', organizationController.createOrganization);
-router.patch('/organization', organizationController.updateOrganization);
+router.patch('/organization/:organizationID', organizationController.updateOrganization);
 
 router.get('/role', roleController.getAllRole);
 

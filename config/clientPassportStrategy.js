@@ -24,6 +24,7 @@ const clientPassportStrategy = async (passport) => {
     new Strategy(options, async (payload, done) => {
       //here we will get organizationID and cognito token
       try {
+        console.log("payload",payload);
         const organizationData = await mongooseService.findOne(model.OrganizationMember, { _id: payload.organizationID });
         if (organizationData) {
           return done(null, { ...organizationData.toJSON() });

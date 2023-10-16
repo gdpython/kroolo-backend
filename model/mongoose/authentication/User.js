@@ -146,6 +146,18 @@ var UserSchema = new mongoose.Schema({
         type: Boolean,
        default: false
     },
+    forgotEmailVerifyCode: {
+        type: String,
+       default:''
+    },
+    forgotEmailVerifyExpiryTime: {
+        type: Date,
+       default: date
+    },
+    forgotEmailVerfiyStatus: {
+        type: Boolean,
+       default: false
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

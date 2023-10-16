@@ -29,7 +29,6 @@ const afterDB = (app, type) => {
     path.join(`postman/${CUURENT_API_VERSION}/swagger.yml`), { defaultTag: 'General' }).then(data => {
       let result = YAML.load(`postman/${CUURENT_API_VERSION}/swagger.yml`);
       result.servers[0].url = '/';
-      console.log("swaggerUi.serve");
       app.use('/swagger', swaggerUi.serve, swaggerUi.setup(result));
       app.use(routes);
       app.use((req, res, next) => {

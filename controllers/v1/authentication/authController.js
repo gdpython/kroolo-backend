@@ -5,8 +5,6 @@
 
 const ownerAuthService = require('../../../services/mongoose/auth');
 const model = require('../../../model/mongoose');
-const { PLATFORM_ACCESS } = require('../../../constants/authConstant');
-const formidable = require('formidable');
 
 /**
  * Handles the login of an owner.
@@ -59,8 +57,10 @@ const signUp = async (req, res) => {
     });
   }
   var ip = req.socket.remoteAddress;
+  const origin = req.get("origin") || req.get("host")
+
   let result = await ownerAuthService.signUp(
-    req.get("origin"),
+    origin,
     email,
     model.User,
     ip,
@@ -163,38 +163,6 @@ const resendEmail = async (req, res) => {
 };
 
 /**
- * Handles the change password.
- * @function
- * @param {Object} req - The Express request object.
- * @param {Object} res - The Express response object.
- */
-
-const changePassword = async (req, res) => {
-  let { currentPassword, newPassword, token } = req.body;
-  let {id} = req.params;
-  if (!currentPassword || !newPassword || !token || !id) {
-    return res.badRequest({
-      message:
-        "Insufficient request parameters! currentPassword and newPassword and token and id are required.",
-    });
-  }
-  let result = await ownerAuthService.changePassword(
-    id,
-    token,
-    currentPassword,
-    newPassword,
-    model.User,
-  );
-
-  if (result.flag) {
-    return res.badRequest({ message: result.data });
-  }
-  return res.success({
-    message: "Password changed successfully.",
-  });
-};
-
-/**
  * Handles the forgot password.
  * @function
  * @param {Object} req - The Express request object.
@@ -209,10 +177,11 @@ const forgotPassword = async (req, res) => {
         "Insufficient request parameters! email are required.",
     });
   }
+  const origin = req.get("origin") || req.get("host")
   let result = await ownerAuthService.forgotPassword(
     email,
     model.User,
-    req.get("origin")
+    origin,
   );
 
   if (result.flag) {
@@ -220,6 +189,34 @@ const forgotPassword = async (req, res) => {
   }
   return res.success({
     message: "Forgot password email sent successfully.",
+  });
+};
+
+/**
+ * Handles the forgot email verify of a user.
+ * @function
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ */
+
+const forgotEmailVerify = async (req, res) => {
+  let { token } = req.params;
+  if (!token) {
+    return res.badRequest({
+      message:
+        "Insufficient request parameters! token are required.",
+    });
+  }
+  let result = await ownerAuthService.forgotEmailVerify(
+    token,
+    model.User,
+  );
+  if (result.flag) {
+    return res.badRequest({ message: result.data });
+  }
+  return res.success({
+    message: "Forgot password email verified.",
+    data: result.data,
   });
 };
 
@@ -258,7 +255,7 @@ module.exports = {
   emailVerify,
   completeSignUp,
   resendEmail,
-  changePassword,
   forgotPassword,
+  forgotEmailVerify,
   resetPassword
 };

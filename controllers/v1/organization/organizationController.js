@@ -10,6 +10,7 @@ const {
     createOne,
     updateOne,
 } = require('../../../utils/mongooseService');
+const { DEFAULT_PERMISSION } = require('../../../constants/appConstants');
 
 /**
  * Handles the retrieval of organization data by its ID.
@@ -87,17 +88,13 @@ const createOrganization = async (req, res) => {
             createdBy: req.user._id,
         });
         if (organizationData) {
-            const organizationRoleData = await findOne(model.Role, {
-                moduleName: 'ORGANIZATION',
-                roleName: 'OWNER',
-            });//check this query
+            const organizationRoleData = await findOne(model.Role,DEFAULT_PERMISSION.ORGANIZATION);
             const organizationMemberData = await createOne(model.OrganizationMember, {
                 organizationID: organizationData._id,
                 userID: req.user._id,
                 roleID: organizationRoleData._id,
                 createdBy: req.user._id,
             });
-            console.log(organizationMemberData,'organizationMemberData')
         }
         return res.success({
             data: organizationData,
@@ -120,21 +117,24 @@ const updateOrganization = async (req, res) => {
         /**
          * The updated name of the organization.
          *
-         * @param {string} organizationName - The updated name of the organization.
+         * @param {string} organizationID - The updated name of the organization.
          */
-        const { organizationName, organizationID } = req.body;
+
+        const { organizationID } = req.params;
+        const { organizationName } = req.body;
 
         /**
          * The organization data updated successfully response.
          * @typedef {Object} SuccessResponse
-         * @property {OrganizationData} data - The updated organization data.
+         * @property {organizationData} data - The updated organization data.
          * @property {string} message - A success message.
          */
 
         const organizationData = await updateOne(
             model.Organizations,
-            { organizationName },
             { organizationID },
+            { organizationName },
+
         );
         return res.success({
             data: organizationData,
